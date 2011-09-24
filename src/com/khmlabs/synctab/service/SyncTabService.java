@@ -18,6 +18,8 @@ public class SyncTabService extends Service {
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
+
+        // TODO - if there are tabs to add, add
     }
 
     @Override

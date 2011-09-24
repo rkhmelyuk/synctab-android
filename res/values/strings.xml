@@ -6,4 +6,10 @@
     <string name="success_sync_queue">Tab is in the queue and will be synchronized as soon as possible.\nHave fun!</string>
     <string name="error_sync_queue">Error to sync tab. Sorry ;(</string>
     <string name="synctab_service">SyncTab Service</string>
+
+    <string name="pref_url_title">SyncTab URL</string>
+    <string name="pref_url_summary">SyncTab Service URL</string>
+    <string name="open">Open</string>
+    <string name="hide">Hide</string>
+    <string name="failed_retrieve_shared_tabs">Failed to refresh the list of shared tabs</string>
 </resources>

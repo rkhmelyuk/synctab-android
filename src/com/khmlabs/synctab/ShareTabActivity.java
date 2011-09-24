@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class SyncTabActivity extends Activity {
+public class ShareTabActivity extends Activity {
 
     private TextView statusText;
 
@@ -34,10 +34,8 @@ public class SyncTabActivity extends Activity {
     class SyncTabTask extends AsyncTask<String, String, Boolean> {
 
         protected Boolean doInBackground(String... strings) {
-            // enqueue the link
-
             SyncTabApplication application = (SyncTabApplication) getApplication();
-            SyncTabRemoteService service = application.getSyncTabService();
+            SyncTabRemoteService service = application.getSyncTabRemoteService();
             return service.enqueueSync(strings[0]);
         }
 
