@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class SyncTabRemoteService {
 
-    private static final String CONTEXT = "SyncTabRemoteService";
+    private static final String TAG = "SyncTabRemoteService";
 
     private final HttpHost host;
     private final SyncTabApplication application;
@@ -48,22 +49,21 @@ public class SyncTabRemoteService {
             final HttpClient client = new DefaultHttpClient();
             final HttpPost post = new HttpPost("/synctab-server/api/shareTab");
 
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("link", link));
             nameValuePairs.add(new BasicNameValuePair("device", AppConstants.SYNCTAB_DEVICE));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             HttpResponse response = client.execute(host, post);
-            boolean status = readResultStatus(response);
-
-            if (!status) {
-                Log.e(CONTEXT, "Failed to share a tab.");
+            if (!successResponseStatus(response)) {
+                Log.e(TAG, "Failed to share a tab.");
             }
-            return status;
+
+            return readResponse(response).success;
         }
         catch (Exception e) {
             e.printStackTrace();
-            Log.e(CONTEXT, "Error to share a tab.");
+            Log.e(TAG, "Error to share a tab.");
             return false;
         }
     }
@@ -76,32 +76,87 @@ public class SyncTabRemoteService {
             final HttpGet get = new HttpGet("/synctab-server/api/getShareTabs?since=" + since);
 
             HttpResponse response = client.execute(host, get);
-            boolean status = readResultStatus(response);
-
-            if (!status) {
-                Log.e(CONTEXT, "Failed to share a tab.");
+            if (!successResponseStatus(response)) {
+                Log.e(TAG, "Failed to share a tab.");
                 return false;
             }
 
-            return true;
+            JsonResponse jsonResponse = readResponse(response);
+            // TODO - fill shared tabs
+
+            return jsonResponse.success;
         }
         catch (Exception e) {
-            e.printStackTrace();
-            Log.e(CONTEXT, "Error to share a tab.");
+            Log.e(TAG, "Error to share a tab.");
             return false;
         }
     }
 
-    private boolean readResultStatus(HttpResponse response) throws Exception {
-        if (response.getStatusLine().getStatusCode() != 200) {
+    public boolean authenticate(String email, String password) {
+        try {
+            final HttpClient client = new DefaultHttpClient();
+            final HttpPost post = new HttpPost("/synctab-server/api/authorize");
+
+            final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+            nameValuePairs.add(new BasicNameValuePair("email", email));
+            nameValuePairs.add(new BasicNameValuePair("password", password));
+            post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            HttpResponse response = client.execute(host, post);
+            if (successResponseStatus(response)) {
+                JsonResponse jsonResponse = readResponse(response);
+                String token = jsonResponse.getString("token");
+                if (token != null && token.length() > 0) {
+                    application.setAuthEmail(email);
+                    application.setAuthToken(token);
+
+                    return true;
+                }
+            }
+            else {
+                Log.e(TAG, "Error to authenticate");
+            }
+
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to authorize.");
+        }
+        return false;
+    }
+
+    private boolean successResponseStatus(HttpResponse response) {
+        int statusCode = response.getStatusLine().getStatusCode();
+        if (statusCode == 401) {
+            application.setAuthToken(null);
+            application.setAuthEmail(null);
             return false;
         }
+
+        return statusCode == 200;
+    }
+
+    private JsonResponse readResponse(HttpResponse response) throws Exception {
         InputStream contentStream = response.getEntity().getContent();
-        String content = IOUtil.toString(contentStream, 50);
+        String content = IOUtil.toString(contentStream, 200);
 
         JSONObject object = (JSONObject) new JSONTokener(content).nextValue();
         String status = object.getString("status");
+        boolean success = "success".equals(status);
 
-        return status.equals("success");
+        return new JsonResponse(success, object);
+    }
+
+    private static class JsonResponse {
+        final boolean success;
+        final JSONObject json;
+
+        JsonResponse(boolean success, JSONObject json) {
+            this.success = success;
+            this.json = json;
+        }
+
+        String getString(String name) throws JSONException {
+            return json.getString(name);
+        }
     }
 }

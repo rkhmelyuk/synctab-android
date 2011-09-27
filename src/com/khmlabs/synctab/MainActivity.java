@@ -1,10 +1,14 @@
 package com.khmlabs.synctab;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -50,12 +54,17 @@ public class MainActivity extends Activity {
         new RefreshSharedTabsTask().execute();
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
 
-        refreshAdapter();
+        final SyncTabApplication app = (SyncTabApplication) getApplication();
+        if (!app.isAuthenticated()) {
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        else {
+            refreshAdapter();
+        }
     }
 
     @Override
@@ -75,6 +84,24 @@ public class MainActivity extends Activity {
 
         sharedTabsAdapter.setViewBinder(ROW_BINDER);
         sharedTabs.setAdapter(sharedTabsAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+         switch (item.getItemId()) {
+            case R.id.logout:
+                ((SyncTabApplication) getApplication()).logout();
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+        }
+        return true;
     }
 
     private class RefreshSharedTabsTask extends AsyncTask<String, String, Boolean> {

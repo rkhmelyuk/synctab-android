@@ -2,7 +2,9 @@ package com.khmlabs.synctab;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.net.URL;
@@ -11,6 +13,7 @@ public class SyncTabApplication extends Application {
 
     private static final String TAG = "SyncTabApplication";
 
+    private SharedPreferences preferences;
     private SyncTabRemoteService syncTabRemoteService;
     private boolean onLine = false;
 
@@ -18,7 +21,7 @@ public class SyncTabApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         //preferences.registerOnSharedPreferenceChangeListener(this);
         initSyncTabRemoteService();
 
@@ -54,5 +57,30 @@ public class SyncTabApplication extends Application {
 
     public void setOnLine(boolean onLine) {
         this.onLine = onLine;
+    }
+
+    public String getAuthEmail() {
+        return preferences.getString(AppConstants.AUTH_USER, null);
+    }
+
+    public void setAuthEmail(String email) {
+        preferences.edit().putString(AppConstants.AUTH_USER, email).commit();
+    }
+
+    public String getAuthToken() {
+        return preferences.getString(AppConstants.AUTH_TOKEN, null);
+    }
+
+    public void setAuthToken(String token) {
+        preferences.edit().putString(AppConstants.AUTH_TOKEN, token).commit();
+    }
+
+    public void logout() {
+        setAuthToken(null);
+        Log.i(TAG, "Logout");
+    }
+
+    public boolean isAuthenticated() {
+        return getAuthToken() != null;
     }
 }

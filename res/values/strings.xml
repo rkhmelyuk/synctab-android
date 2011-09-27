@@ -1,7 +1,9 @@
 <resources>
     <string name="application_label">SyncTab</string>
 
-    <string name="synctab">SyncTab</string>
+    <string name="synctab_activity">SyncTab</string>
+    <string name="login_activity">SyncTab: Login</string>
+
     <string name="enqueue_sync">Syncing Tab...</string>
     <string name="success_sync_queue">Tab is in the queue and will be synchronized as soon as possible.\nHave fun!</string>
     <string name="error_sync_queue">Error to sync tab. Sorry ;(</string>
@@ -12,4 +14,13 @@
     <string name="open">Open</string>
     <string name="hide">Hide</string>
     <string name="failed_retrieve_shared_tabs">Failed to refresh the list of shared tabs</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="please_login">Please Login</string>
+
+    <string name="email_password_required">Please enter email and password.</string>
+    <string name="error_authenticate">Incorrect email/password</string>
+    <string name="logout">Logout</string>
+
 </resources>

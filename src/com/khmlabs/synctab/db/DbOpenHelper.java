@@ -32,7 +32,7 @@ class DbOpenHelper extends SQLiteOpenHelper {
                 .append(DbMetadata.ID).append(" int primary key,")
                 .append(DbMetadata.TAB_ID).append(" text,")
                 .append(DbMetadata.LINK).append(" text,")
-                .append(DbMetadata.TITLE).append(" text);")
+                .append(DbMetadata.TITLE).append(" text,")
                 .append(DbMetadata.TIMESTAMP).append(" long);");
 
         return builder.toString();
