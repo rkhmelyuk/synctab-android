@@ -1,4 +1,9 @@
 
-    * enqueue tabs to add when offline
-    * show the list of shared tabs
-    * title support
+    . enqueue tabs to add when offline
+    . show the list of shared tabs
+    . title support
+
+    . login when disconnected
+    . queue task processing
+
+    . if no shared tabs, than use since (today - 10 days), else use afterTab={last-tab-id}

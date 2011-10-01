@@ -4,15 +4,16 @@
                  android:label="@string/application_label"
                  android:name=".SyncTabApplication">
 
-        <activity android:name=".LoginActivity" android:noHistory="true"
-                  android:label="@string/login_activity">
+        <activity android:name=".MainActivity" android:label="@string/synctab_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" android:label="@string/synctab_activity"/>
+        <activity android:name=".LoginActivity"
+                  android:noHistory="true"
+                  android:label="@string/login_activity"/>
 
         <activity android:name=".ShareTabActivity" android:label="@string/synctab_activity">
             <intent-filter android:label="SyncTab">

@@ -24,7 +24,6 @@ public class LoginActivity extends Activity {
         Button loginButton = (Button) findViewById(R.id.login);
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                // TODO - getText(), getString()
                 String email = emailInput.getText().toString().trim();
                 String password = passwordInput.getText().toString().trim();
 
@@ -45,34 +44,56 @@ public class LoginActivity extends Activity {
         final SyncTabApplication app = (SyncTabApplication) getApplication();
         if (app.isAuthenticated()) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
         }
     }
 
-    private class AuthorizeTask extends AsyncTask<String, String, Boolean> {
+    private class AuthorizeTask extends AsyncTask<String, String, Integer> {
+
+        static final int RESULT_SUCCESS = 0;
+        static final int RESULT_FAILED = 1;
+        static final int RESULT_OFFLINE = 2;
+        static final int RESULT_ERROR = 3;
 
         @Override
-        protected Boolean doInBackground(String... strings) {
+        protected Integer doInBackground(String... strings) {
             try {
                 final SyncTabApplication app = (SyncTabApplication) getApplication();
-                final SyncTabRemoteService service = app.getSyncTabRemoteService();
+                if (app.isOnLine()) {
+                    final SyncTabRemoteService service = app.getSyncTabRemoteService();
+                    final boolean result = service.authenticate(strings[0], strings[1]);
 
-                return service.authenticate(strings[0], strings[1]);
+                    return result ? RESULT_SUCCESS : RESULT_FAILED;
+                }
+                return RESULT_OFFLINE;
             }
             catch (Exception e) {
                 Log.e(TAG, "Failed to authenticate");
-                return false;
+                return RESULT_ERROR;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean status) {
+        protected void onPostExecute(Integer status) {
             super.onPostExecute(status);
 
-            if (status) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            if (status == RESULT_SUCCESS) {
+                //if (getParent() != null) {
+                    setResult(RESULT_OK);
+                    finish();
+                //}
+                /*else {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                }*/
             }
-            else {
+            else if (status == RESULT_FAILED) {
+                Toast.makeText(LoginActivity.this, R.string.failed_authenticate, 5000).show();
+            }
+            else if (status == RESULT_ERROR) {
                 Toast.makeText(LoginActivity.this, R.string.error_authenticate, 5000).show();
+            }
+            else if (status == RESULT_OFFLINE) {
+                Toast.makeText(LoginActivity.this, R.string.no_connection, 5000).show();
             }
         }
     }

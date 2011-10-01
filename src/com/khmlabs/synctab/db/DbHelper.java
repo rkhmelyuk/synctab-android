@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import com.khmlabs.synctab.queue.QueueTask;
 import com.khmlabs.synctab.tab.SharedTab;
 
 import java.util.List;
@@ -38,6 +39,33 @@ public class DbHelper {
                 DbMetadata.SHARED_TABS_TABLE,
                 null, null, null, null, null,
                 DbMetadata.ID + " DESC");
+    }
+
+    public void insertQueueTask(QueueTask task) {
+        if (task != null) {
+            SQLiteDatabase db = null;
+            try {
+                db = dbOpenHelper.getWritableDatabase();
+                db.beginTransaction();
+
+                ContentValues values = new ContentValues();
+
+                values.put(DbMetadata.TYPE, task.getType().getId());
+                values.put(DbMetadata.PARAM, task.getParam());
+
+                db.insertOrThrow(DbMetadata.QUEUE_TASK_TABLE, null, values);
+
+                db.setTransactionSuccessful();
+            }
+            finally {
+                if (db != null && db.isOpen()) {
+                    if (db.inTransaction()) {
+                        db.endTransaction();
+                    }
+                    db.close();
+                }
+            }
+        }
     }
 
     public void insertSharedTabs(List<SharedTab> tabs) {

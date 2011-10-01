@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 class DbOpenHelper extends SQLiteOpenHelper {
 
-    private static int DB_VERSION = 1;
+    private static int DB_VERSION = 3;
 
     private static String DB_NAME = "synctab.db";
 
@@ -17,12 +17,17 @@ class DbOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createSharedTabsTable());
+        db.execSQL(createQueueTasksTable());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(dropSharedTabsTable());
+        /*
+        db.execSQL(dropQueueTasksTable());
         db.execSQL(createSharedTabsTable());
+        db.execSQL(dropQueueTasksTable());
+        db.execSQL(createQueueTasksTable());
+        */
     }
 
     private String createSharedTabsTable() {
@@ -38,9 +43,27 @@ class DbOpenHelper extends SQLiteOpenHelper {
         return builder.toString();
     }
 
+    private String createQueueTasksTable() {
+        final StringBuilder builder = new StringBuilder(150);
+        builder
+                .append("create table ").append(DbMetadata.QUEUE_TASK_TABLE).append("(")
+                .append(DbMetadata.ID).append(" int primary key,")
+                .append(DbMetadata.TYPE).append(" int,")
+                .append(DbMetadata.PARAM).append(" text,")
+                .append(DbMetadata.TIMESTAMP).append(" long);");
+
+        return builder.toString();
+    }
+
     private String dropSharedTabsTable() {
         final StringBuilder builder = new StringBuilder(40);
         builder.append("drop table ").append(DbMetadata.SHARED_TABS_TABLE).append(";");
+        return builder.toString();
+    }
+
+    private String dropQueueTasksTable() {
+        final StringBuilder builder = new StringBuilder(40);
+        builder.append("drop table ").append(DbMetadata.QUEUE_TASK_TABLE).append(";");
         return builder.toString();
     }
 }

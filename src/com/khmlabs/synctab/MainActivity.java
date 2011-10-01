@@ -1,8 +1,8 @@
 package com.khmlabs.synctab;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,28 +10,26 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.khmlabs.synctab.db.DbHelper;
 import com.khmlabs.synctab.db.DbMetadata;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
 
-    static final String[] ADAPTER_FROM = { DbMetadata.TITLE, DbMetadata.LINK, DbMetadata.TIMESTAMP };
-    static final int[] ADAPTER_TO = { R.id.tab_title, R.id.tab_link, R.id.tab_date };
+    static final String[] ADAPTER_FROM = {/*DbMetadata.TITLE, */DbMetadata.LINK, DbMetadata.TIMESTAMP};
+    static final int[] ADAPTER_TO = {/*R.id.tab_title, */R.id.tab_link, R.id.tab_date};
 
     private final static SimpleCursorAdapter.ViewBinder ROW_BINDER = new SimpleCursorAdapter.ViewBinder() {
         public boolean setViewValue(View element, Cursor cursor, int columnIndex) {
             if (element.getId() == R.id.tab_date) {
                 Date date = new Date(cursor.getLong(columnIndex));
                 ((TextView) element).setText(new SimpleDateFormat("dd MMMMM yyyy, HH:mm").format(date));
+
                 return true;
             }
             return false;
@@ -39,7 +37,6 @@ public class MainActivity extends Activity {
     };
 
     private ListView sharedTabs;
-    private SimpleCursorAdapter sharedTabsAdapter;
 
     private DbHelper dbHelper;
 
@@ -48,22 +45,26 @@ public class MainActivity extends Activity {
         setContentView(R.layout.main);
 
         sharedTabs = (ListView) findViewById(R.id.tabs);
-
         dbHelper = new DbHelper(this);
 
-        new RefreshSharedTabsTask().execute();
+        sharedTabs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                final Cursor cursor = (Cursor) adapterView.getAdapter().getItem(position);
+                final int linkColumn = cursor.getColumnIndex(DbMetadata.LINK);
+                final String link = cursor.getString(linkColumn);
+
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        final SyncTabApplication app = (SyncTabApplication) getApplication();
-        if (!app.isAuthenticated()) {
-            startActivity(new Intent(this, LoginActivity.class));
-        }
-        else {
+        if (getSyncTabApplication().isAuthenticated()) {
             refreshAdapter();
+            new RefreshSharedTabsTask().execute();
         }
     }
 
@@ -78,7 +79,7 @@ public class MainActivity extends Activity {
         Cursor cursor = dbHelper.findSharedTabs();
         startManagingCursor(cursor);
 
-        sharedTabsAdapter = new SimpleCursorAdapter(
+        SimpleCursorAdapter sharedTabsAdapter = new SimpleCursorAdapter(
                 this, R.layout.tab_row,
                 cursor, ADAPTER_FROM, ADAPTER_TO);
 
@@ -95,10 +96,13 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-         switch (item.getItemId()) {
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                new RefreshSharedTabsTask().execute();
+                break;
             case R.id.logout:
-                ((SyncTabApplication) getApplication()).logout();
-                startActivity(new Intent(this, LoginActivity.class));
+                getSyncTabApplication().logout();
+                showLogin();
                 break;
         }
         return true;
@@ -109,7 +113,7 @@ public class MainActivity extends Activity {
         @Override
         protected Boolean doInBackground(String... strings) {
             try {
-                SyncTabApplication application = ((SyncTabApplication) getApplication());
+                SyncTabApplication application = getSyncTabApplication();
                 SyncTabRemoteService service = application.getSyncTabRemoteService();
                 return service.refreshSharedTabs();
             }
@@ -125,6 +129,10 @@ public class MainActivity extends Activity {
                 Toast.makeText(MainActivity.this,
                         R.string.failed_retrieve_shared_tabs, 5000);
             }
+            else {
+                refreshAdapter();
+            }
         }
     }
+
 }

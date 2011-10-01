@@ -22,7 +22,6 @@ public class SyncTabApplication extends Application {
         super.onCreate();
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        //preferences.registerOnSharedPreferenceChangeListener(this);
         initSyncTabRemoteService();
 
         ConnectivityManager connectionManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -30,7 +29,6 @@ public class SyncTabApplication extends Application {
     }
 
     private synchronized void initSyncTabRemoteService() {
-
         try {
             final URL url = new URL(AppConstants.SERVICE_URL);
             syncTabRemoteService = new SyncTabRemoteService(
@@ -77,10 +75,22 @@ public class SyncTabApplication extends Application {
 
     public void logout() {
         setAuthToken(null);
+        if (onLine) {
+            syncTabRemoteService.logout();
+        }
+
         Log.i(TAG, "Logout");
     }
 
     public boolean isAuthenticated() {
         return getAuthToken() != null;
+    }
+
+    public long getLastSyncTime() {
+        return preferences.getLong(AppConstants.LAST_SYNC_TIME, 0);
+    }
+
+    public void setLastSyncTime(long timestamp) {
+        preferences.edit().putLong(AppConstants.LAST_SYNC_TIME, timestamp).commit();
     }
 }

@@ -20,7 +20,11 @@
     <string name="please_login">Please Login</string>
 
     <string name="email_password_required">Please enter email and password.</string>
-    <string name="error_authenticate">Incorrect email/password</string>
+    <string name="error_authenticate">Error to login. Try again!</string>
+    <string name="failed_authenticate">Incorrect email/password</string>
+    <string name="no_connection">Can&quot;t connect to server.</string>
     <string name="logout">Logout</string>
+    <string name="refresh">Refresh</string>
+    <string name="view_shared_tabs">Shared Tabs</string>
 
 </resources>
