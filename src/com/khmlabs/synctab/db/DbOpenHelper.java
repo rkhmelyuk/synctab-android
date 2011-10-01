@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 class DbOpenHelper extends SQLiteOpenHelper {
 
-    private static int DB_VERSION = 3;
+    private static int DB_VERSION = 5;
 
     private static String DB_NAME = "synctab.db";
 
@@ -22,19 +22,17 @@ class DbOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        /*
-        db.execSQL(dropQueueTasksTable());
+        db.execSQL(dropSharedTabsTable());
         db.execSQL(createSharedTabsTable());
         db.execSQL(dropQueueTasksTable());
         db.execSQL(createQueueTasksTable());
-        */
     }
 
     private String createSharedTabsTable() {
         final StringBuilder builder = new StringBuilder(150);
         builder
                 .append("create table ").append(DbMetadata.SHARED_TABS_TABLE).append("(")
-                .append(DbMetadata.ID).append(" int primary key,")
+                .append(DbMetadata.ID).append(" integer primary key,")
                 .append(DbMetadata.TAB_ID).append(" text,")
                 .append(DbMetadata.LINK).append(" text,")
                 .append(DbMetadata.TITLE).append(" text,")
@@ -47,10 +45,9 @@ class DbOpenHelper extends SQLiteOpenHelper {
         final StringBuilder builder = new StringBuilder(150);
         builder
                 .append("create table ").append(DbMetadata.QUEUE_TASK_TABLE).append("(")
-                .append(DbMetadata.ID).append(" int primary key,")
-                .append(DbMetadata.TYPE).append(" int,")
-                .append(DbMetadata.PARAM).append(" text,")
-                .append(DbMetadata.TIMESTAMP).append(" long);");
+                .append(DbMetadata.ID).append(" integer primary key,")
+                .append(DbMetadata.TYPE).append(" integer,")
+                .append(DbMetadata.PARAM).append(" text);");
 
         return builder.toString();
     }

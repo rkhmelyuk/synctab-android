@@ -16,7 +16,9 @@
                   android:noHistory="true"
                   android:label="@string/login_activity"/>
 
-        <activity android:name=".ShareTabActivity" android:label="@string/synctab_activity">
+        <activity android:name=".ShareTabActivity"
+                  android:label="@string/synctab_activity"
+                  android:noHistory="true">
             <intent-filter android:label="SyncTab">
                 <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>

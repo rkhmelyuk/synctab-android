@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.khmlabs.synctab.queue.QueueTask;
+import com.khmlabs.synctab.queue.TaskType;
 import com.khmlabs.synctab.tab.SharedTab;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DbHelper {
@@ -17,6 +19,7 @@ public class DbHelper {
 
     public DbHelper(Context context) {
         dbOpenHelper = new DbOpenHelper(context);
+        dbOpenHelper.getWritableDatabase().close();
     }
 
     public SQLiteDatabase getReadableDatabase() {
@@ -96,6 +99,70 @@ public class DbHelper {
                     }
                     db.close();
                 }
+            }
+        }
+    }
+
+    public List<QueueTask> getQueuedTasks() {
+        final List<QueueTask> result = new ArrayList<QueueTask>();
+        final SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.query(DbMetadata.QUEUE_TASK_TABLE, null, null, null, null, null, null);
+
+        try {
+            while (cursor.moveToNext()) {
+                QueueTask task = new QueueTask();
+                task.setId(cursor.getInt(0));
+                task.setType(TaskType.findById(cursor.getInt(1)));
+                task.setParam(cursor.getString(2));
+
+                result.add(task);
+            }
+        }
+        finally {
+            cursor.close();
+        }
+
+        return result;
+    }
+
+    public void removeQueueTask(QueueTask task) {
+        SQLiteDatabase db = null;
+        try {
+            db = dbOpenHelper.getWritableDatabase();
+            db.beginTransaction();
+
+            db.delete(DbMetadata.QUEUE_TASK_TABLE, DbMetadata.ID + "="+ task.getId(), null);
+
+            db.setTransactionSuccessful();
+        }
+        finally {
+            if (db != null && db.isOpen()) {
+                if (db.inTransaction()) {
+                    db.endTransaction();
+                }
+                db.close();
+            }
+        }
+    }
+
+    public void removeUserData() {
+        SQLiteDatabase db = null;
+        try {
+            db = dbOpenHelper.getWritableDatabase();
+            db.beginTransaction();
+
+            db.delete(DbMetadata.QUEUE_TASK_TABLE, null, null);
+            db.delete(DbMetadata.SHARED_TABS_TABLE, null, null);
+
+            db.setTransactionSuccessful();
+        }
+        finally {
+            if (db != null && db.isOpen()) {
+                if (db.inTransaction()) {
+                    db.endTransaction();
+                }
+                db.close();
             }
         }
     }

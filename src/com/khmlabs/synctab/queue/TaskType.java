@@ -14,4 +14,14 @@ public enum TaskType {
     public int getId() {
         return id;
     }
+
+    public static TaskType findById(int id) {
+        if (id == Logout.id) {
+            return Logout;
+        }
+        else if (id == SyncTab.id) {
+            return SyncTab;
+        }
+        return null;
+    }
 }

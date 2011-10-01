@@ -39,7 +39,7 @@ public class SyncTabRemoteService {
         this.host = new HttpHost(hostname, port, scheme);
     }
 
-public boolean authenticate(String email, String password) {
+    public boolean authenticate(String email, String password) {
         try {
             final HttpClient client = new DefaultHttpClient();
             final HttpPost post = new HttpPost("/synctab-server/api/authorize");
@@ -52,12 +52,14 @@ public boolean authenticate(String email, String password) {
             HttpResponse response = client.execute(host, post);
             if (successResponseStatus(response)) {
                 JsonResponse jsonResponse = readResponse(response);
-                String token = jsonResponse.getString("token");
-                if (token != null && token.length() > 0) {
-                    application.setAuthEmail(email);
-                    application.setAuthToken(token);
+                if (jsonResponse.success) {
+                    String token = jsonResponse.getString("token");
+                    if (token != null && token.length() > 0 && !token.equals("null")) {
+                        application.setAuthEmail(email);
+                        application.setAuthToken(token);
 
-                    return true;
+                        return true;
+                    }
                 }
             }
             else {
@@ -71,8 +73,7 @@ public boolean authenticate(String email, String password) {
         return false;
     }
 
-    public RemoteOpState logout() {
-        final String token = application.getAuthToken();
+    public RemoteOpState logout(String token) {
         if (token != null) {
             if (application.isOnLine()) {
                 if (logoutOnServer(token)) {
@@ -235,6 +236,8 @@ public boolean authenticate(String email, String password) {
             dbHelper = new DbHelper(application);
             dbHelper.insertQueueTask(task);
 
+            Log.i(TAG, "Added task to QUEUE: " + task.getType() + " -> " + task.getParam());
+
             return RemoteOpState.Queued;
         }
         catch (Exception e) {
@@ -269,6 +272,35 @@ public boolean authenticate(String email, String password) {
         }
 
         return statusCode == 200;
+    }
+
+    public boolean syncTask(QueueTask task) {
+        if (task != null) {
+            if (task.getType() == TaskType.SyncTab) {
+                return shareTab(task.getParam());
+            }
+            else if (task.getType() == TaskType.Logout) {
+                return logoutOnServer(task.getParam());
+            }
+        }
+
+        return false;
+    }
+
+    public void removeUserData() {
+        DbHelper dbHelper = null;
+        try {
+            dbHelper = new DbHelper(application);
+            dbHelper.removeUserData();
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to remove user data", e);
+        }
+        finally {
+            if (dbHelper != null) {
+                dbHelper.close();
+            }
+        }
     }
 
     private static class JsonResponse {

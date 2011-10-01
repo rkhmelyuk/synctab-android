@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -13,19 +14,26 @@ public class SyncTabApplication extends Application {
 
     private static final String TAG = "SyncTabApplication";
 
+    private volatile boolean onLine = false;
+
     private SharedPreferences preferences;
     private SyncTabRemoteService syncTabRemoteService;
-    private boolean onLine = false;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        initSyncTabRemoteService();
 
+        setOnlineStatus();
+
+        initSyncTabRemoteService();
+    }
+
+    private void setOnlineStatus() {
         ConnectivityManager connectionManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        onLine = connectionManager.getActiveNetworkInfo() != null && connectionManager.getActiveNetworkInfo().isConnected();
+        NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
+        onLine =  networkInfo != null && connectionManager.getActiveNetworkInfo().isConnected();
     }
 
     private synchronized void initSyncTabRemoteService() {
@@ -74,9 +82,16 @@ public class SyncTabApplication extends Application {
     }
 
     public void logout() {
+        final String token = getAuthToken();
+
         setAuthToken(null);
+        setAuthEmail(null);
+        setLastSyncTime(0);
+
+        syncTabRemoteService.removeUserData();
+
         if (onLine) {
-            syncTabRemoteService.logout();
+            syncTabRemoteService.logout(token);
         }
 
         Log.i(TAG, "Logout");
