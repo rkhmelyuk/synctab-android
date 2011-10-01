@@ -4,7 +4,9 @@
 *.iml
 *.ipr
 *.iws
+*.apk
 
 bin/
 target/
 out/
+key/
