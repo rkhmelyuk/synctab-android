@@ -303,6 +303,10 @@ public class SyncTabRemoteService {
         }
     }
 
+    public boolean register(String email, String password) {
+        return false;
+    }
+
     private static class JsonResponse {
         final boolean success;
         final JSONObject json;

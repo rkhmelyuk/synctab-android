@@ -12,10 +12,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity"
-                  android:noHistory="true"
-                  android:label="@string/login_activity"/>
-
         <activity android:name=".ShareTabActivity"
                   android:label="@string/synctab_activity"
                   android:noHistory="true">
@@ -25,6 +21,15 @@
                 <data android:mimeType="text/plain"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".LoginActivity"
+                  android:noHistory="true"
+                  android:label="@string/login_activity"/>
+
+        <activity android:name=".RegistrationActivity"
+                  android:label="@string/registration_activity"
+                  android:noHistory="true"/>
+
 
         <receiver android:name=".broadcast.NetworkReceiver">
             <intent-filter>

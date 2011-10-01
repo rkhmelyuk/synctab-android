@@ -3,6 +3,7 @@
 
     <string name="synctab_activity">SyncTab</string>
     <string name="login_activity">SyncTab: Login</string>
+    <string name="registration_activity">SyncTab: Registration</string>
 
     <string name="enqueue_sync">Syncing Tab...</string>
     <string name="success_sync_queue">Tab is in the queue and will be synchronized as soon as possible.\nHave fun!</string>
@@ -18,6 +19,9 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="please_login">Please Login</string>
+    <string name="registration">Registration</string>
+    <string name="register">Register</string>
+    <string name="register_now">Register Now</string>
 
     <string name="email_password_required">Please enter email and password.</string>
     <string name="error_authenticate">Error to login. Try again!</string>
@@ -26,5 +30,6 @@
     <string name="logout">Logout</string>
     <string name="refresh">Refresh</string>
     <string name="view_shared_tabs">Shared Tabs</string>
+    <string name="not_a_user">Do not have account yet?</string>
 
 </resources>

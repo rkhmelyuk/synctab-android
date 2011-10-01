@@ -7,7 +7,7 @@
 
     <TextView android:layout_height="wrap_content"
               android:layout_width="fill_parent"
-              android:text="@string/please_login"
+              android:text="@string/registration"
               android:textSize="30sp"
               android:gravity="center"
               android:layout_marginTop="10dp"
@@ -31,36 +31,16 @@
               android:layout_marginTop="10dp"/>
 
     <EditText android:id="@+id/password"
-              android:inputType="textPassword"
               android:layout_height="wrap_content"
               android:layout_width="fill_parent"
+              android:inputType="textPassword"
               android:password="true"/>
 
-    <Button android:id="@+id/login"
+    <Button android:id="@+id/register"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:text="@string/login"
+            android:text="@string/register"
             android:layout_marginTop="20dp"
             android:textSize="20sp"/>
-
-
-    <LinearLayout android:orientation="horizontal"
-                  android:layout_height="fill_parent"
-                  android:layout_width="fill_parent">
-
-        <TextView android:layout_height="wrap_content"
-                  android:layout_width="wrap_content"
-                  android:text="@string/not_a_user"
-                  android:gravity="left"
-                  android:textSize="14sp"/>
-
-        <Button android:id="@+id/register"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="@string/register_now"
-                android:gravity="right"
-                android:textSize="14sp"/>
-    </LinearLayout>
-
 
 </LinearLayout>
