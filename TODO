@@ -1,9 +1,6 @@
 
-    . enqueue tabs to add when offline
-    . show the list of shared tabs
-    . title support
-
-    . login when disconnected
-    . queue task processing
+    . problems navigating the login screen
+    . problems share a link and need to login
+    . problems with refreshing data - maybe it's because of timestamp
 
     . if no shared tabs, than use since (today - 10 days), else use afterTab={last-tab-id}

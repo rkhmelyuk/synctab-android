@@ -68,6 +68,7 @@ public class RegistrationActivity extends Activity {
 
             if (status == RESULT_SUCCESS) {
                 startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                finish();
             }
             else if (status == RESULT_FAILED) {
                 Toast.makeText(RegistrationActivity.this, R.string.failed_authenticate, 5000).show();

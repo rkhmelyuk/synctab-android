@@ -44,6 +44,7 @@ public class LoginActivity extends Activity {
                 registerIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
                 startActivity(registerIntent);
+                finish();
             }
         });
     }

@@ -73,6 +73,31 @@ public class SyncTabRemoteService {
         return false;
     }
 
+    public boolean register(String email, String password) {
+        try {
+            final HttpClient client = new DefaultHttpClient();
+            final HttpPost post = new HttpPost("/synctab-server/api/register");
+
+            final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+            nameValuePairs.add(new BasicNameValuePair("email", email));
+            nameValuePairs.add(new BasicNameValuePair("password", password));
+            post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            HttpResponse response = client.execute(host, post);
+            if (successResponseStatus(response)) {
+                JsonResponse jsonResponse = readResponse(response);
+                return jsonResponse.success;
+            }
+            else {
+                Log.e(TAG, "Failed to register");
+            }
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to register.", e);
+        }
+        return false;
+    }
+
     public RemoteOpState logout(String token) {
         if (token != null) {
             if (application.isOnLine()) {
@@ -154,7 +179,7 @@ public class SyncTabRemoteService {
             String paramString = URLEncodedUtils.format(params, "utf-8");
 
             final long syncTime = System.currentTimeMillis();
-            final HttpGet get = new HttpGet("/synctab-server/api/getSharedTabs?" + paramString);
+            final HttpGet get = new HttpGet("/synctab-server/api/getSharedTabsSince?" + paramString);
 
             HttpResponse response = client.execute(host, get);
             if (!successResponseStatus(response)) {
@@ -301,10 +326,6 @@ public class SyncTabRemoteService {
                 dbHelper.close();
             }
         }
-    }
-
-    public boolean register(String email, String password) {
-        return false;
     }
 
     private static class JsonResponse {
