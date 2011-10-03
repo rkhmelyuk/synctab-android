@@ -5,6 +5,7 @@ public class SharedTab {
     private String id;
     private String title;
     private String link;
+    private String device;
     private long timestamp;
 
     public String getId() {
@@ -37,5 +38,13 @@ public class SharedTab {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getDevice() {
+        return device;
+    }
+
+    public void setDevice(String device) {
+        this.device = device;
     }
 }

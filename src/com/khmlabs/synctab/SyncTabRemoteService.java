@@ -31,6 +31,16 @@ public class SyncTabRemoteService {
 
     private static final String TAG = "SyncTabRemoteService";
 
+    private static final String API_AUTHORIZE = "/api/authorize";
+    private static final String API_REGISTER = "/api/register";
+    private static final String API_LOGOUT = "/api/logout";
+    private static final String API_SHARE_TAB = "/api/shareTab";
+    private static final String API_GET_SHARED_TABS_SINCE = "/api/getSharedTabsSince";
+    private static final String EMAIL = "email";
+    private static final String PASSWORD = "password";
+    private static final String TOKEN = "token";
+    private static final String DEVICE = "device";
+
     private final HttpHost host;
     private final SyncTabApplication application;
 
@@ -42,18 +52,18 @@ public class SyncTabRemoteService {
     public boolean authenticate(String email, String password) {
         try {
             final HttpClient client = new DefaultHttpClient();
-            final HttpPost post = new HttpPost("/synctab-server/api/authorize");
+            final HttpPost post = new HttpPost(API_AUTHORIZE);
 
             final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair("email", email));
-            nameValuePairs.add(new BasicNameValuePair("password", password));
+            nameValuePairs.add(new BasicNameValuePair(EMAIL, email));
+            nameValuePairs.add(new BasicNameValuePair(PASSWORD, password));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             HttpResponse response = client.execute(host, post);
             if (successResponseStatus(response)) {
                 JsonResponse jsonResponse = readResponse(response);
                 if (jsonResponse.success) {
-                    String token = jsonResponse.getString("token");
+                    String token = jsonResponse.getString(TOKEN);
                     if (token != null && token.length() > 0 && !token.equals("null")) {
                         application.setAuthEmail(email);
                         application.setAuthToken(token);
@@ -76,11 +86,11 @@ public class SyncTabRemoteService {
     public boolean register(String email, String password) {
         try {
             final HttpClient client = new DefaultHttpClient();
-            final HttpPost post = new HttpPost("/synctab-server/api/register");
+            final HttpPost post = new HttpPost(API_REGISTER);
 
             final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair("email", email));
-            nameValuePairs.add(new BasicNameValuePair("password", password));
+            nameValuePairs.add(new BasicNameValuePair(EMAIL, email));
+            nameValuePairs.add(new BasicNameValuePair(PASSWORD, password));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             HttpResponse response = client.execute(host, post);
@@ -114,10 +124,10 @@ public class SyncTabRemoteService {
     private boolean logoutOnServer(String token) {
         try {
             final HttpClient client = new DefaultHttpClient();
-            final HttpPost post = new HttpPost("/synctab-server/api/logout");
+            final HttpPost post = new HttpPost(API_LOGOUT);
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-            nameValuePairs.add(new BasicNameValuePair("token", token));
+            nameValuePairs.add(new BasicNameValuePair(TOKEN, token));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             HttpResponse response = client.execute(host, post);
@@ -145,12 +155,12 @@ public class SyncTabRemoteService {
     public boolean shareTab(String link) {
         try {
             final HttpClient client = new DefaultHttpClient();
-            final HttpPost post = new HttpPost("/synctab-server/api/shareTab");
+            final HttpPost post = new HttpPost(API_SHARE_TAB);
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
             nameValuePairs.add(new BasicNameValuePair("link", link));
-            nameValuePairs.add(new BasicNameValuePair("device", AppConstants.SYNCTAB_DEVICE));
-            nameValuePairs.add(new BasicNameValuePair("token", application.getAuthToken()));
+            nameValuePairs.add(new BasicNameValuePair(DEVICE, AppConstants.SYNCTAB_DEVICE));
+            nameValuePairs.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             HttpResponse response = client.execute(host, post);
@@ -175,11 +185,11 @@ public class SyncTabRemoteService {
 
             List<NameValuePair> params = new LinkedList<NameValuePair>();
             params.add(new BasicNameValuePair("since", Long.toString(since)));
-            params.add(new BasicNameValuePair("token", application.getAuthToken()));
+            params.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
             String paramString = URLEncodedUtils.format(params, "utf-8");
 
             final long syncTime = System.currentTimeMillis();
-            final HttpGet get = new HttpGet("/synctab-server/api/getSharedTabsSince?" + paramString);
+            final HttpGet get = new HttpGet(API_GET_SHARED_TABS_SINCE + "?"+ paramString);
 
             HttpResponse response = client.execute(host, get);
             if (!successResponseStatus(response)) {
@@ -227,7 +237,7 @@ public class SyncTabRemoteService {
         result.setTimestamp(row.getLong("ts"));
         result.setLink(row.getString("link"));
         result.setTitle(row.getString("title"));
-        result.setTitle(row.getString("title"));
+        result.setDevice(row.getString("device"));
 
         return result;
     }
