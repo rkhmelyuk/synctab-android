@@ -21,8 +21,8 @@ public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
 
-    static final String[] ADAPTER_FROM = {/*DbMetadata.TITLE, */DbMetadata.LINK, DbMetadata.TIMESTAMP, DbMetadata.DEVICE};
-    static final int[] ADAPTER_TO = {/*R.id.tab_title, */R.id.tab_link, R.id.tab_date, R.id.device};
+    static final String[] ADAPTER_FROM = {DbMetadata.TITLE, DbMetadata.LINK, DbMetadata.TIMESTAMP, DbMetadata.DEVICE};
+    static final int[] ADAPTER_TO = {R.id.tab_title, R.id.tab_link, R.id.tab_date, R.id.device};
 
     private final SimpleCursorAdapter.ViewBinder ROW_BINDER = new SimpleCursorAdapter.ViewBinder() {
         public boolean setViewValue(View element, Cursor cursor, int columnIndex) {
@@ -46,6 +46,26 @@ public class MainActivity extends BaseActivity {
 
                 return true;
             }
+            else if (element.getId() == R.id.tab_title) {
+                String title = cursor.getString(columnIndex);
+
+                if (title != null && title.length() > 0) {
+                    // TODO - max length should be a integer value, that depends on display size
+                    if (title.length() > 20) {
+                        title = title.substring(0, 17) + "...";
+                    }
+                    ((TextView) element).setText(title);
+                    element.setVisibility(View.VISIBLE);
+                }
+                else {
+                    //title = getResources().getString(R.string.unknown);
+                    element.setVisibility(View.GONE);
+                }
+
+
+                return true;
+            }
+
             return false;
         }
     };
