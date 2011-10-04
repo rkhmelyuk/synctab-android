@@ -3,5 +3,4 @@
     . problems share a link and need to login
     . problems with refreshing data - maybe it's because of timestamp
 
-    . if no shared tabs, than use since (today - 10 days), else use afterTab={last-tab-id}
     . save device info

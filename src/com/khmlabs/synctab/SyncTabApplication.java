@@ -87,6 +87,7 @@ public class SyncTabApplication extends Application {
         setAuthToken(null);
         setAuthEmail(null);
         setLastSyncTime(0);
+        setLastSharedTabId(null);
 
         syncTabRemoteService.removeUserData();
 
@@ -107,5 +108,13 @@ public class SyncTabApplication extends Application {
 
     public void setLastSyncTime(long timestamp) {
         preferences.edit().putLong(AppConstants.LAST_SYNC_TIME, timestamp).commit();
+    }
+
+    public String getLastSharedTabId() {
+        return preferences.getString(AppConstants.LAST_SHARED_TAB_ID, null);
+    }
+
+    public void setLastSharedTabId(String id) {
+        preferences.edit().putString(AppConstants.LAST_SHARED_TAB_ID, id).commit();
     }
 }
