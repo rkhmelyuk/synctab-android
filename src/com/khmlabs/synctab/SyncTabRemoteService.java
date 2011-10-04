@@ -65,7 +65,7 @@ public class SyncTabRemoteService {
                 JsonResponse jsonResponse = readResponse(response);
                 if (jsonResponse.success) {
                     String token = jsonResponse.getString(TOKEN);
-                    if (token != null && token.length() > 0 && !token.equals("null")) {
+                    if (token != null && token.length() > 0) {
                         application.setAuthEmail(email);
                         application.setAuthToken(token);
 
@@ -274,8 +274,13 @@ public class SyncTabRemoteService {
         result.setId(row.getString("id"));
         result.setTimestamp(row.getLong("ts"));
         result.setLink(row.getString("link"));
-        result.setTitle(row.getString("title"));
-        result.setDevice(row.getString("device"));
+
+        if (!row.isNull("device")) {
+            result.setDevice(row.getString("device"));
+        }
+        if (!row.isNull("title")) {
+            result.setTitle(row.getString("title"));
+        }
 
         return result;
     }
@@ -386,6 +391,9 @@ public class SyncTabRemoteService {
         }
 
         String getString(String name) throws JSONException {
+            if (json.isNull(name)) {
+                return null;
+            }
             return json.getString(name);
         }
     }
