@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 class DbOpenHelper extends SQLiteOpenHelper {
 
-    private static int DB_VERSION = 1;
+    private static int DB_VERSION = 2;
 
     private static String DB_NAME = "synctab.db";
 
@@ -28,6 +28,9 @@ class DbOpenHelper extends SQLiteOpenHelper {
             db.execSQL(dropQueueTasksTable());
             db.execSQL(createQueueTasksTable());
         }
+        else if (newVersion == 2) {
+            db.execSQL(addDeviceColumnToSharedTabsTable());
+        }
     }
 
     private String createSharedTabsTable() {
@@ -39,6 +42,15 @@ class DbOpenHelper extends SQLiteOpenHelper {
                 .append(DbMetadata.LINK).append(" text,")
                 .append(DbMetadata.TITLE).append(" text,")
                 .append(DbMetadata.TIMESTAMP).append(" long);");
+
+        return builder.toString();
+    }
+
+    private String addDeviceColumnToSharedTabsTable() {
+        final StringBuilder builder = new StringBuilder(150);
+        builder
+                .append("alter table ").append(DbMetadata.SHARED_TABS_TABLE)
+                .append(" add column ").append(DbMetadata.DEVICE).append(" text;");
 
         return builder.toString();
     }

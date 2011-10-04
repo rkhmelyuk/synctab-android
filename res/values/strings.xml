@@ -31,5 +31,6 @@
     <string name="refresh">Refresh</string>
     <string name="view_shared_tabs">Shared Tabs</string>
     <string name="not_a_user">Do not have account yet?</string>
+    <string name="unknown">Unknown</string>
 
 </resources>

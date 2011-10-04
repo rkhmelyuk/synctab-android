@@ -12,6 +12,7 @@ public interface DbMetadata {
     String TITLE = "title";
     String LINK = "link";
     String TIMESTAMP = "timestamp";
+    String DEVICE = "device";
 
     String TYPE = "type";
     String PARAM = "param";

@@ -21,14 +21,28 @@ public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
 
-    static final String[] ADAPTER_FROM = {/*DbMetadata.TITLE, */DbMetadata.LINK, DbMetadata.TIMESTAMP};
-    static final int[] ADAPTER_TO = {/*R.id.tab_title, */R.id.tab_link, R.id.tab_date};
+    static final String[] ADAPTER_FROM = {/*DbMetadata.TITLE, */DbMetadata.LINK, DbMetadata.TIMESTAMP, DbMetadata.DEVICE};
+    static final int[] ADAPTER_TO = {/*R.id.tab_title, */R.id.tab_link, R.id.tab_date, R.id.device};
 
-    private final static SimpleCursorAdapter.ViewBinder ROW_BINDER = new SimpleCursorAdapter.ViewBinder() {
+    private final SimpleCursorAdapter.ViewBinder ROW_BINDER = new SimpleCursorAdapter.ViewBinder() {
         public boolean setViewValue(View element, Cursor cursor, int columnIndex) {
             if (element.getId() == R.id.tab_date) {
                 Date date = new Date(cursor.getLong(columnIndex));
                 ((TextView) element).setText(new SimpleDateFormat("dd MMMMM yyyy, HH:mm").format(date));
+
+                return true;
+            }
+            else if (element.getId() == R.id.device) {
+                String device = cursor.getString(columnIndex);
+
+                final String deviceName;
+                if (AppConstants.ANDROID_SYNCTAB_DEVICE.equals(device)) {
+                    deviceName = "Android";
+                }
+                else {
+                    deviceName = getResources().getString(R.string.unknown);
+                }
+                ((TextView) element).setText(deviceName);
 
                 return true;
             }

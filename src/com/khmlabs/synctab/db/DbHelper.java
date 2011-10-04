@@ -84,6 +84,7 @@ public class DbHelper {
                     values.put(DbMetadata.LINK, each.getLink());
                     values.put(DbMetadata.TIMESTAMP, each.getTimestamp());
                     values.put(DbMetadata.TITLE, each.getTitle());
+                    values.put(DbMetadata.DEVICE, each.getDevice());
 
                     db.insertOrThrow(DbMetadata.SHARED_TABS_TABLE, null, values);
 

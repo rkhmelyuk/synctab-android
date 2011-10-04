@@ -160,7 +160,7 @@ public class SyncTabRemoteService {
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
             nameValuePairs.add(new BasicNameValuePair("link", link));
-            nameValuePairs.add(new BasicNameValuePair(DEVICE, AppConstants.SYNCTAB_DEVICE));
+            nameValuePairs.add(new BasicNameValuePair(DEVICE, AppConstants.ANDROID_SYNCTAB_DEVICE));
             nameValuePairs.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
