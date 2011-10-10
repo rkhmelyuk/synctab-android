@@ -36,6 +36,7 @@ public class SyncTabRemoteService {
     private static final String API_LOGOUT = "/api/logout";
     private static final String API_SHARE_TAB = "/api/shareTab";
     private static final String API_REMOVE_TAB = "/api/removeTab";
+    private static final String API_RESHARE_TAB = "/api/reshareTab";
     private static final String API_GET_SHARED_TABS_SINCE = "/api/getSharedTabsSince";
     private static final String API_GET_SHARED_TABS_AFTER = "/api/getSharedTabsAfter";
 
@@ -296,7 +297,7 @@ public class SyncTabRemoteService {
             DbHelper dbHelper = null;
             try {
                 dbHelper = new DbHelper(application);
-                dbHelper.insertSharedTabs(sharedTabs);
+                dbHelper.replaceSharedTabs(sharedTabs);
             }
             finally {
                 if (dbHelper != null) {
@@ -369,6 +370,9 @@ public class SyncTabRemoteService {
             else if (task.getType() == TaskType.RemoveSharedTab) {
                 return removeSharedTabOnServer(task.getParam());
             }
+            else if (task.getType() == TaskType.ReshareTab) {
+                return reshareTabOnServer(task.getParam());
+            }
         }
 
         return false;
@@ -420,10 +424,6 @@ public class SyncTabRemoteService {
         return RemoteOpState.Success;
     }
 
-    private RemoteOpState addRemoveTabToQueue(String sharedTabId) {
-        return addTask(new QueueTask(TaskType.RemoveSharedTab, sharedTabId));
-    }
-
     private boolean removeSharedTabOnServer(String tabId) {
         try {
             final HttpClient client = new DefaultHttpClient();
@@ -437,6 +437,7 @@ public class SyncTabRemoteService {
             HttpResponse response = client.execute(host, post);
             if (!successResponseStatus(response)) {
                 Log.e(TAG, "Failed to remove tab.");
+                return false;
             }
 
             return readResponse(response).success;
@@ -448,8 +449,68 @@ public class SyncTabRemoteService {
         }
     }
 
+    private RemoteOpState addRemoveTabToQueue(String sharedTabId) {
+        return addTask(new QueueTask(TaskType.RemoveSharedTab, sharedTabId));
+    }
+
     public RemoteOpState reshareTab(int tabId) {
-        return RemoteOpState.Queued;
+        DbHelper dbHelper = null;
+        try {
+            dbHelper = new DbHelper(application);
+            SharedTab sharedTab = dbHelper.getSharedTabById(tabId);
+            if (sharedTab != null) {
+                sharedTab.setTimestamp(System.currentTimeMillis());
+                dbHelper.replaceSharedTab(sharedTab);
+
+                if (application.isOnLine()) {
+                    if (reshareTabOnServer(sharedTab.getId())) {
+                        return RemoteOpState.Success;
+                    }
+                }
+
+                return addReshareTabToQueue(sharedTab.getId());
+            }
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to reshare tab.");
+            return RemoteOpState.Failed;
+        }
+        finally {
+            if (dbHelper != null) {
+                dbHelper.close();
+            }
+        }
+
+        return RemoteOpState.Failed;
+    }
+
+    private boolean reshareTabOnServer(String tabId) {
+        try {
+            final HttpClient client = new DefaultHttpClient();
+            final HttpPost post = new HttpPost(API_RESHARE_TAB);
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+            nameValuePairs.add(new BasicNameValuePair("id", tabId));
+            nameValuePairs.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
+            post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            HttpResponse response = client.execute(host, post);
+            if (!successResponseStatus(response)) {
+                Log.e(TAG, "Failed to reshare tab.");
+                return false;
+            }
+
+            return readResponse(response).success;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, "Error to reshare tab.", e);
+            return false;
+        }
+    }
+
+    private RemoteOpState addReshareTabToQueue(String sharedTabId) {
+        return addTask(new QueueTask(TaskType.ReshareTab, sharedTabId));
     }
 
     private static class JsonResponse {

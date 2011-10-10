@@ -4,7 +4,8 @@ public enum TaskType {
 
     Logout(1),
     SyncTab(2),
-    RemoveSharedTab(3);
+    RemoveSharedTab(3),
+    ReshareTab(4);
 
     private final int id;
 
