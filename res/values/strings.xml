@@ -34,6 +34,7 @@
     <string name="unknown">Unknown</string>
     <string name="reshare">Re-share</string>
     <string name="remove">Remove</string>
+    <string name="send_to">Send To</string>
 
     <string name="msg_tab_is_removed">Tab is removed</string>
     <string name="msg_tab_is_reshared">Tab is re-shared</string>

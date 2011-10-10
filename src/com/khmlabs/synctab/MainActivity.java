@@ -20,6 +20,7 @@ public class MainActivity extends BaseActivity {
 
     private static final int TAB_CONTEXT_MENU_RESHARE = 0;
     private static final int TAB_CONTEXT_MENU_REMOVE = 1;
+    private static final int TAB_CONTEXT_MENU_SEND = 2;
 
     static final String[] ADAPTER_FROM = {DbMetadata.TITLE, DbMetadata.LINK, DbMetadata.TIMESTAMP, DbMetadata.DEVICE};
     static final int[] ADAPTER_TO = {R.id.tab_title, R.id.tab_link, R.id.tab_date, R.id.device};
@@ -136,6 +137,9 @@ public class MainActivity extends BaseActivity {
 
             menu.add(Menu.NONE, TAB_CONTEXT_MENU_REMOVE, TAB_CONTEXT_MENU_REMOVE,
                     getResources().getString(R.string.remove));
+
+            menu.add(Menu.NONE, TAB_CONTEXT_MENU_SEND, TAB_CONTEXT_MENU_SEND,
+                    getResources().getString(R.string.send_to));
         }
     }
 
@@ -172,6 +176,16 @@ public class MainActivity extends BaseActivity {
                 break;
             case TAB_CONTEXT_MENU_REMOVE:
                 new RemoveTabTask().execute(tabId);
+                break;
+            case TAB_CONTEXT_MENU_SEND:
+                final int linkColumn = cursor.getColumnIndex(DbMetadata.LINK);
+                final int titleColumn = cursor.getColumnIndex(DbMetadata.TITLE);
+
+                final String link = cursor.getString(linkColumn);
+                final String title = cursor.getString(titleColumn);
+
+                new SendTabTask().execute(link, title);
+
                 break;
         }
 
@@ -274,6 +288,26 @@ public class MainActivity extends BaseActivity {
             String message = getResources().getString(messageId);
             Toast.makeText(MainActivity.this, message, 3000).show();
         }
+    }
+
+    private class SendTabTask extends AsyncTask<String, String, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            final String link = params[0];
+            final String title = params[1];
+
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, link);
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, title);
+
+            String chooserTitle = getResources().getString(R.string.send_to);
+            startActivity(Intent.createChooser(sendIntent, chooserTitle));
+
+            return true;
+        }
+
     }
 
 }
