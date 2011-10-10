@@ -1,11 +1,6 @@
 
     . problems navigating the login screen
     . problems share a link and need to login
-    . problems with refreshing data - maybe it's because of timestamp
-
-    . relative dates, like 2 day ago etc..
-
-    . title
 
     ! fix high cohesion between SyncTabApplication and SyncTabRemoteService
     ! split local from remote operations in SyncTabRemoteService

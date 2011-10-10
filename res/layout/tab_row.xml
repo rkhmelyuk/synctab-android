@@ -6,8 +6,8 @@
               android:layout_width="fill_parent"
               android:layout_marginTop="15dp"
               android:layout_marginBottom="15dp"
-              android:paddingLeft="10dp"
-              android:paddingRight="10dp">
+              android:paddingLeft="8dp"
+              android:paddingRight="8dp">
 
     <TextView android:layout_height="wrap_content"
               android:layout_width="fill_parent"

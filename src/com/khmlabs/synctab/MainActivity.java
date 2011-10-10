@@ -5,13 +5,13 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import com.khmlabs.synctab.db.DbHelper;
 import com.khmlabs.synctab.db.DbMetadata;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends BaseActivity {
@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity {
         public boolean setViewValue(View element, Cursor cursor, int columnIndex) {
             if (element.getId() == R.id.tab_date) {
                 Date date = new Date(cursor.getLong(columnIndex));
-                ((TextView) element).setText(new SimpleDateFormat("dd MMMMM yyyy, HH:mm").format(date));
+                ((TextView) element).setText(DateUtils.getRelativeTimeSpanString(date.getTime()));
 
                 return true;
             }
@@ -297,7 +297,8 @@ public class MainActivity extends BaseActivity {
             final String link = params[0];
             final String title = params[1];
 
-            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            final Intent sendIntent = new Intent(Intent.ACTION_SEND);
+
             sendIntent.setType("text/plain");
             sendIntent.putExtra(Intent.EXTRA_TEXT, link);
             sendIntent.putExtra(Intent.EXTRA_SUBJECT, title);
