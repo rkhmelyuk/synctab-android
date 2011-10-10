@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 class DbOpenHelper extends SQLiteOpenHelper {
 
-    private static int DB_VERSION = 1;
+    private static int DB_VERSION = 3;
 
     private static String DB_NAME = "synctab.db";
 
@@ -27,6 +27,10 @@ class DbOpenHelper extends SQLiteOpenHelper {
             db.execSQL(createSharedTabsTable());
             db.execSQL(dropQueueTasksTable());
             db.execSQL(createQueueTasksTable());
+        }
+        else if (newVersion == DB_VERSION) {
+            db.execSQL(dropSharedTabsTable());
+            db.execSQL(createSharedTabsTable());
         }
     }
 

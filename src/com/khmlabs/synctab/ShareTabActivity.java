@@ -39,10 +39,9 @@ public class ShareTabActivity extends BaseActivity {
             // get the shared link
             final Intent intent = getIntent();
             final String link = intent.getStringExtra(Intent.EXTRA_TEXT);
-            final String title = intent.getStringExtra(Intent.EXTRA_SUBJECT);
 
-            linkText.setText(title);
-            new SyncTabTask().execute(link, title);
+            linkText.setText(link);
+            new SyncTabTask().execute(link);
         }
     }
 
@@ -77,8 +76,7 @@ public class ShareTabActivity extends BaseActivity {
 
         protected Boolean doInBackground(String... strings) {
             final String link = strings[0];
-            final String title = strings[1];
-            Log.i(TAG, "Sharing link " + link + " and title " + title);
+            Log.i(TAG, "Sharing link " + link);
 
             SyncTabApplication application = (SyncTabApplication) getApplication();
             SyncTabRemoteService service = application.getSyncTabRemoteService();

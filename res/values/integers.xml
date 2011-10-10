@@ -1,4 +1,4 @@
 <resources>
-    <integer name="title_max_size">35</integer>
+    <integer name="title_max_size">28</integer>
     <integer name="link_max_size">65</integer>
 </resources>
