@@ -51,11 +51,31 @@ public class MainActivity extends BaseActivity {
                 String title = cursor.getString(columnIndex);
 
                 if (title != null && title.length() > 0) {
-                    // TODO - max length should be a integer value, that depends on display size
-                    if (title.length() > 35) {
-                        title = title.substring(0, 33) + "...";
+                    int maxlength = getResources().getInteger(R.integer.title_max_size);
+                    if (title.length() > maxlength) {
+                        title = title.substring(0, maxlength - 3) + "...";
                     }
                     ((TextView) element).setText(title);
+                    element.setVisibility(View.VISIBLE);
+                }
+                else {
+                    element.setVisibility(View.GONE);
+                }
+
+                return true;
+            }
+            else if (element.getId() == R.id.tab_link) {
+                String link = cursor.getString(columnIndex);
+
+                if (link != null && link.length() > 0) {
+                    int maxlength = getResources().getInteger(R.integer.link_max_size);
+                    if (link.length() > maxlength) {
+                        // cut link here...
+                        int start = maxlength - 18;
+                        link = link.substring(0, start) + "..." + link.substring(link.length() - 15);
+                    }
+
+                    ((TextView) element).setText(link);
                     element.setVisibility(View.VISIBLE);
                 }
                 else {

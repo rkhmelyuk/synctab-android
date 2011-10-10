@@ -4,3 +4,5 @@
 
     ! fix high cohesion between SyncTabApplication and SyncTabRemoteService
     ! split local from remote operations in SyncTabRemoteService
+
+    . cache
