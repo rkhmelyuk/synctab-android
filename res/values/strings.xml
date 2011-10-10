@@ -5,9 +5,10 @@
     <string name="login_activity">SyncTab: Login</string>
     <string name="registration_activity">SyncTab: Registration</string>
 
-    <string name="enqueue_sync">Syncing Tab...</string>
-    <string name="success_sync_queue">Tab is in the queue and will be synchronized as soon as possible.\nHave fun!</string>
-    <string name="error_sync_queue">Error to sync tab. Sorry ;(</string>
+    <string name="sync_in_progress">Syncing Tab...</string>
+    <string name="success_sync">Tab was shared.\n\nHave fun!</string>
+    <string name="enqueue_sync">Tab will be synced\n when you\'ll be online.\n\n Have fun!</string>
+    <string name="failed_sync">Error to sync tab.\n\nSorry ;(</string>
     <string name="synctab_service">SyncTab Service</string>
 
     <string name="pref_url_title">SyncTab URL</string>

@@ -7,24 +7,25 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ShareTabActivity extends BaseActivity {
 
     private static final String TAG = "ShareTabActivity";
 
-    private TextView linkText;
     private TextView statusText;
+    private ImageView statusImage;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.synctab);
+        setContentView(R.layout.sharetab);
 
         // show the link in the text view
         statusText = (TextView) findViewById(R.id.sync_tab_status);
-        statusText.setText(R.string.enqueue_sync);
+        statusText.setText(R.string.sync_in_progress);
 
-        linkText = (TextView) findViewById(R.id.sync_tab_link);
+        statusImage = (ImageView) findViewById(R.id.share_tab_status_img);
     }
 
     @Override
@@ -40,7 +41,6 @@ public class ShareTabActivity extends BaseActivity {
             final Intent intent = getIntent();
             final String link = intent.getStringExtra(Intent.EXTRA_TEXT);
 
-            linkText.setText(link);
             new SyncTabTask().execute(link);
         }
     }
@@ -72,26 +72,32 @@ public class ShareTabActivity extends BaseActivity {
         return true;
     }
 
-    class SyncTabTask extends AsyncTask<String, String, Boolean> {
+    class SyncTabTask extends AsyncTask<String, String, RemoteOpState> {
 
-        protected Boolean doInBackground(String... strings) {
+        protected RemoteOpState doInBackground(String... strings) {
             final String link = strings[0];
             Log.i(TAG, "Sharing link " + link);
 
             SyncTabApplication application = (SyncTabApplication) getApplication();
             SyncTabRemoteService service = application.getSyncTabRemoteService();
-            return service.enqueueSync(link) != RemoteOpState.Failed;
+            return service.enqueueSync(link);
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
+        protected void onPostExecute(RemoteOpState result) {
             super.onPostExecute(result);
 
-            if (result) {
-                statusText.setText(R.string.success_sync_queue);
+            if (result == RemoteOpState.Success) {
+                statusImage.setBackgroundResource(R.drawable.yes);
+                statusText.setText(R.string.success_sync);
             }
-            else {
-                statusText.setText(R.string.error_sync_queue);
+            else if (result == RemoteOpState.Queued) {
+                statusImage.setBackgroundResource(R.drawable.yes);
+                statusText.setText(R.string.enqueue_sync);
+            }
+            else if (result == RemoteOpState.Failed) {
+                statusImage.setBackgroundResource(R.drawable.fail);
+                statusText.setText(R.string.failed_sync);
             }
         }
     }

@@ -5,18 +5,17 @@
               android:layout_height="fill_parent"
               android:layout_width="fill_parent">
 
+    <ImageView android:id="@+id/share_tab_status_img"
+               android:layout_height="wrap_content"
+               android:layout_width="wrap_content"
+               android:layout_gravity="center"
+               android:layout_marginTop="50dp"/>
+
     <TextView android:id="@+id/sync_tab_status"
               android:layout_height="wrap_content"
               android:layout_width="fill_parent"
               android:layout_marginTop="20dp"
               android:gravity="center"
               android:textSize="26sp"/>
-
-    <TextView android:id="@+id/sync_tab_link"
-              android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:layout_marginTop="20dp"
-              android:gravity="center"
-              android:textSize="20sp"/>
 
 </LinearLayout>
