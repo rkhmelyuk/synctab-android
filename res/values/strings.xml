@@ -32,5 +32,12 @@
     <string name="view_shared_tabs">Shared Tabs</string>
     <string name="not_a_user">Do not have account yet?</string>
     <string name="unknown">Unknown</string>
+    <string name="reshare">Re-share</string>
+    <string name="remove">Remove</string>
+
+    <string name="msg_tab_is_removed">Tab is removed</string>
+    <string name="msg_tab_is_reshared">Tab is reshared</string>
+    <string name="msg_failed_to_reshared_tab">Failed to re-share a tab</string>
+    <string name="msg_failed_to_remove_tab">Failed to remove a tab</string>
 
 </resources>

@@ -2,11 +2,21 @@ package com.khmlabs.synctab.tab;
 
 public class SharedTab {
 
+    private int rowId;
+
     private String id;
     private String title;
     private String link;
     private String device;
     private long timestamp;
+
+    public int getRowId() {
+        return rowId;
+    }
+
+    public void setRowId(int rowId) {
+        this.rowId = rowId;
+    }
 
     public String getId() {
         return id;

@@ -3,7 +3,8 @@ package com.khmlabs.synctab.queue;
 public enum TaskType {
 
     Logout(1),
-    SyncTab(2);
+    SyncTab(2),
+    RemoveSharedTab(3);
 
     private final int id;
 

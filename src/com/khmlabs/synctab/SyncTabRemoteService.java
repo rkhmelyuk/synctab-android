@@ -35,8 +35,10 @@ public class SyncTabRemoteService {
     private static final String API_REGISTER = "/api/register";
     private static final String API_LOGOUT = "/api/logout";
     private static final String API_SHARE_TAB = "/api/shareTab";
+    private static final String API_REMOVE_TAB = "/api/removeTab";
     private static final String API_GET_SHARED_TABS_SINCE = "/api/getSharedTabsSince";
     private static final String API_GET_SHARED_TABS_AFTER = "/api/getSharedTabsAfter";
+
     private static final String EMAIL = "email";
     private static final String PASSWORD = "password";
     private static final String TOKEN = "token";
@@ -179,6 +181,10 @@ public class SyncTabRemoteService {
     }
 
     public boolean refreshSharedTabs() {
+        if (!application.isOnLine()) {
+            return true;
+        }
+
         try {
             final HttpClient client = new DefaultHttpClient();
 
@@ -360,6 +366,9 @@ public class SyncTabRemoteService {
             else if (task.getType() == TaskType.Logout) {
                 return logoutOnServer(task.getParam());
             }
+            else if (task.getType() == TaskType.RemoveSharedTab) {
+                return removeSharedTabOnServer(task.getParam());
+            }
         }
 
         return false;
@@ -379,6 +388,68 @@ public class SyncTabRemoteService {
                 dbHelper.close();
             }
         }
+    }
+
+    public RemoteOpState removeSharedTab(int tabId) {
+        DbHelper dbHelper = null;
+        try {
+            dbHelper = new DbHelper(application);
+            SharedTab sharedTab = dbHelper.getSharedTabById(tabId);
+            if (sharedTab != null) {
+                dbHelper.removeSharedTab(tabId);
+
+                if (application.isOnLine()) {
+                    if (removeSharedTabOnServer(sharedTab.getId())) {
+                        return RemoteOpState.Success;
+                    }
+                }
+
+                return addRemoveTabToQueue(sharedTab.getId());
+            }
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to remove shared tab.");
+            return RemoteOpState.Failed;
+        }
+        finally {
+            if (dbHelper != null) {
+                dbHelper.close();
+            }
+        }
+
+        return RemoteOpState.Success;
+    }
+
+    private RemoteOpState addRemoveTabToQueue(String sharedTabId) {
+        return addTask(new QueueTask(TaskType.RemoveSharedTab, sharedTabId));
+    }
+
+    private boolean removeSharedTabOnServer(String tabId) {
+        try {
+            final HttpClient client = new DefaultHttpClient();
+            final HttpPost post = new HttpPost(API_REMOVE_TAB);
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+            nameValuePairs.add(new BasicNameValuePair("id", tabId));
+            nameValuePairs.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
+            post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            HttpResponse response = client.execute(host, post);
+            if (!successResponseStatus(response)) {
+                Log.e(TAG, "Failed to remove tab.");
+            }
+
+            return readResponse(response).success;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, "Error to remove tab.", e);
+            return false;
+        }
+    }
+
+    public RemoteOpState reshareTab(int tabId) {
+        return RemoteOpState.Queued;
     }
 
     private static class JsonResponse {

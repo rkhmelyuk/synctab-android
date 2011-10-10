@@ -53,6 +53,10 @@ public final class R {
         public static final int login=0x7f05000f;
         public static final int login_activity=0x7f050002;
         public static final int logout=0x7f050018;
+        public static final int msg_failed_to_remove_tab=0x7f050022;
+        public static final int msg_failed_to_reshared_tab=0x7f050021;
+        public static final int msg_tab_is_removed=0x7f05001f;
+        public static final int msg_tab_is_reshared=0x7f050020;
         public static final int no_connection=0x7f050017;
         public static final int not_a_user=0x7f05001b;
         public static final int open=0x7f05000a;
@@ -65,6 +69,8 @@ public final class R {
         public static final int register_now=0x7f050013;
         public static final int registration=0x7f050011;
         public static final int registration_activity=0x7f050003;
+        public static final int remove=0x7f05001e;
+        public static final int reshare=0x7f05001d;
         public static final int success_sync_queue=0x7f050005;
         public static final int synctab_activity=0x7f050001;
         public static final int synctab_service=0x7f050007;

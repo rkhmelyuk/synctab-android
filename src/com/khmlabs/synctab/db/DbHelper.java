@@ -128,12 +128,17 @@ public class DbHelper {
     }
 
     public void removeQueueTask(QueueTask task) {
+        removeById(DbMetadata.QUEUE_TASK_TABLE, task.getId());
+    }
+
+    public void removeUserData() {
         SQLiteDatabase db = null;
         try {
             db = dbOpenHelper.getWritableDatabase();
             db.beginTransaction();
 
-            db.delete(DbMetadata.QUEUE_TASK_TABLE, DbMetadata.ID + "="+ task.getId(), null);
+            db.delete(DbMetadata.QUEUE_TASK_TABLE, null, null);
+            db.delete(DbMetadata.SHARED_TABS_TABLE, null, null);
 
             db.setTransactionSuccessful();
         }
@@ -147,14 +152,44 @@ public class DbHelper {
         }
     }
 
-    public void removeUserData() {
+    public SharedTab getSharedTabById(int id) {
+        final SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.query(DbMetadata.SHARED_TABS_TABLE, null,
+                DbMetadata.ID + "=" + id, null, null, null, null);
+
+        try {
+            if (cursor.moveToNext()) {
+                final SharedTab tab = new SharedTab();
+
+                tab.setRowId(cursor.getInt(0));
+                tab.setId(cursor.getString(cursor.getColumnIndex(DbMetadata.TAB_ID)));
+                tab.setLink(cursor.getString(cursor.getColumnIndex(DbMetadata.LINK)));
+                tab.setTitle(cursor.getString(cursor.getColumnIndex(DbMetadata.TITLE)));
+                tab.setDevice(cursor.getString(cursor.getColumnIndex(DbMetadata.DEVICE)));
+                tab.setTimestamp(cursor.getLong(cursor.getColumnIndex(DbMetadata.TIMESTAMP)));
+
+                return tab;
+            }
+        }
+        finally {
+            cursor.close();
+        }
+
+        return null;
+    }
+
+    public void removeSharedTab(int id) {
+        removeById(DbMetadata.SHARED_TABS_TABLE, id);
+    }
+
+    private void removeById(String table, int id) {
         SQLiteDatabase db = null;
         try {
             db = dbOpenHelper.getWritableDatabase();
             db.beginTransaction();
 
-            db.delete(DbMetadata.QUEUE_TASK_TABLE, null, null);
-            db.delete(DbMetadata.SHARED_TABS_TABLE, null, null);
+            db.delete(table, DbMetadata.ID + "=" + Integer.toString(id), null);
 
             db.setTransactionSuccessful();
         }
