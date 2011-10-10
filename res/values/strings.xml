@@ -6,7 +6,7 @@
     <string name="registration_activity">SyncTab: Registration</string>
 
     <string name="sync_in_progress">Syncing Tab...</string>
-    <string name="success_sync">Tab was shared.\n\nHave fun!</string>
+    <string name="success_sync">Tab is shared.\n\nHave fun!</string>
     <string name="enqueue_sync">Tab will be synced\n when you\'ll be online.\n\n Have fun!</string>
     <string name="failed_sync">Error to sync tab.\n\nSorry ;(</string>
     <string name="synctab_service">SyncTab Service</string>
