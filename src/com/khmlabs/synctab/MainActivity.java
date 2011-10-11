@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity {
         public boolean setViewValue(View element, Cursor cursor, int columnIndex) {
             if (element.getId() == R.id.tab_date) {
                 Date date = new Date(cursor.getLong(columnIndex));
-                ((TextView) element).setText(DateUtils.getRelativeTimeSpanString(date.getTime()));
+                ((TextView) element).setText(DateUtils.getRelativeTimeSpanString(date.getTime(), System.currentTimeMillis(), 1000));
 
                 return true;
             }
