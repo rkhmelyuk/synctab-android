@@ -1,4 +1,4 @@
-package com.khmlabs.synctab;
+package com.khmlabs.synctab.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,6 +9,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
+import com.khmlabs.synctab.*;
 import com.khmlabs.synctab.db.DbHelper;
 import com.khmlabs.synctab.db.DbMetadata;
 

@@ -1,10 +1,11 @@
-package com.khmlabs.synctab;
+package com.khmlabs.synctab.ui;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import com.khmlabs.synctab.SyncTabApplication;
 
-public abstract class BaseActivity extends Activity {
+abstract class BaseActivity extends Activity {
 
     private static final String TAG = "BaseActivity";
 

@@ -1,4 +1,4 @@
-package com.khmlabs.synctab;
+package com.khmlabs.synctab.ui;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,6 +9,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.khmlabs.synctab.R;
+import com.khmlabs.synctab.RemoteOpState;
+import com.khmlabs.synctab.SyncTabApplication;
+import com.khmlabs.synctab.SyncTabRemoteService;
 
 public class ShareTabActivity extends BaseActivity {
 

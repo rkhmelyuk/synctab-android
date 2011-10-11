@@ -5,14 +5,14 @@
                  android:label="@string/application_label"
                  android:name=".SyncTabApplication">
 
-        <activity android:name=".MainActivity" android:label="@string/synctab_activity">
+        <activity android:name=".ui.MainActivity" android:label="@string/synctab_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".ShareTabActivity"
+        <activity android:name=".ui.ShareTabActivity"
                   android:label="@string/synctab_activity"
                   android:noHistory="true">
             <intent-filter android:label="SyncTab">
@@ -22,11 +22,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity"
+        <activity android:name=".ui.LoginActivity"
                   android:noHistory="true"
                   android:label="@string/login_activity"/>
 
-        <activity android:name=".RegistrationActivity"
+        <activity android:name=".ui.RegistrationActivity"
                   android:label="@string/registration_activity"
                   android:noHistory="true"/>
 
