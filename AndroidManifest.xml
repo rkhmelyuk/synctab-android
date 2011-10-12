@@ -3,7 +3,8 @@
           android:versionCode="3" android:versionName="0.3.1">
     <application android:icon="@drawable/icon"
                  android:label="@string/application_label"
-                 android:name=".SyncTabApplication">
+                 android:name=".SyncTabApplication"
+                 android:debuggable="true">
 
         <activity android:name=".ui.MainActivity" android:label="@string/synctab_activity">
             <intent-filter>

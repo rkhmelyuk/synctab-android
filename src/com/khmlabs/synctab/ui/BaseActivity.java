@@ -7,8 +7,6 @@ import com.khmlabs.synctab.SyncTabApplication;
 
 abstract class BaseActivity extends Activity {
 
-    private static final String TAG = "BaseActivity";
-
     private static final int REQUEST_LOGIN = 1;
 
     public void onCreate(Bundle savedInstanceState) {
