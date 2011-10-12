@@ -10,9 +10,12 @@ public interface AppConstants {
 
     String LAST_SYNC_TIME = "LAST_SYNC_TIME";
 
+    String LAST_CACHE_CLEANUP_TIME = "LAST_CACHE_CLEANUP_TIME";
+
     String LAST_SHARED_TAB_ID = "LAST_SHARED_TAB_ID";
 
     String AUTH_TOKEN = "AUTH_TOKEN";
     String AUTH_USER = "AUTH_USER";
 
+    long CACHE_CLEANUP_PERIOD = 1000 * 60 * 60 * 24 * 30;
 }

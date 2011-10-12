@@ -33,6 +33,19 @@ public class SyncTabApplication extends Application {
         initSyncTabRemoteService();
     }
 
+    public void cleanupCacheIfNeed() {
+
+        final long now = System.currentTimeMillis();
+        final long time = getLastCacheCleanupTime();
+
+        if (time > 0 && (now - time > AppConstants.CACHE_CLEANUP_PERIOD)) {
+            if (cacheManager.isNeedCleanup()) {
+                cacheManager.clean();
+            }
+        }
+        setLastCacheCleanupTime(now);
+    }
+
     private void setOnlineStatus() {
         ConnectivityManager connectionManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
@@ -116,6 +129,14 @@ public class SyncTabApplication extends Application {
 
     public void setLastSyncTime(long timestamp) {
         preferences.edit().putLong(AppConstants.LAST_SYNC_TIME, timestamp).commit();
+    }
+
+    public long getLastCacheCleanupTime() {
+        return preferences.getLong(AppConstants.LAST_CACHE_CLEANUP_TIME, 0);
+    }
+
+    public void setLastCacheCleanupTime(long timestamp) {
+        preferences.edit().putLong(AppConstants.LAST_CACHE_CLEANUP_TIME, timestamp).commit();
     }
 
     public String getLastSharedTabId() {

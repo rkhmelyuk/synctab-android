@@ -64,6 +64,8 @@ public class MainActivity extends BaseActivity {
             refreshAdapter();
             new RefreshSharedTabsTask().execute();
         }
+
+        getSyncTabApplication().cleanupCacheIfNeed();
     }
 
     @Override

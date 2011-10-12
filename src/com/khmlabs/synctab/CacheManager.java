@@ -23,7 +23,7 @@ public class CacheManager {
     }
 
     @SuppressWarnings({"ResultOfMethodCallIgnored"})
-    private void deleteDirectory(File directory) {
+    private static void deleteDirectory(File directory) {
         final File[] files = directory.listFiles();
         for (File each : files) {
             if (each.isFile()) {
@@ -37,18 +37,25 @@ public class CacheManager {
 
     public boolean isNeedCleanup() {
         final File cacheDir = context.getCacheDir();
-        final File[] files = cacheDir.listFiles();
+        return calculateDirectorySize(cacheDir) < CACHE_MAXSIZE;
+    }
 
+    private static long calculateDirectorySize(File cacheDir) {
+        final File[] files = cacheDir.listFiles();
         long total = 0;
         for (File each : files) {
             if (each.isFile()) {
                 total += each.length();
-                if (total > CACHE_MAXSIZE) {
-                    return true;
-                }
+            }
+            else if (each.isDirectory()) {
+                total += calculateDirectorySize(each);
+            }
+
+            if (total > CACHE_MAXSIZE) {
+                return total;
             }
         }
-        return false;
+        return total;
     }
 
     public boolean store(String name, InputStream content) {
