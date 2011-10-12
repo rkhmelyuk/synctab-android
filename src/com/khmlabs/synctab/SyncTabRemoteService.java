@@ -91,27 +91,43 @@ public class SyncTabRemoteService {
         return false;
     }
 
-    public boolean register(String email, String password) {
-        try {
-            final HttpPost post = new HttpPost(API_REGISTER);
+    public RegistrationStatus register(String email, String password) {
+        final RegistrationStatus result = new RegistrationStatus(email, password);
 
-            final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair(EMAIL, email));
-            nameValuePairs.add(new BasicNameValuePair(PASSWORD, password));
-            post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        if (!application.isOnLine()) {
+            result.setStatus(RegistrationStatus.Status.Offline);
+        }
+        else {
+            result.setStatus(RegistrationStatus.Status.Failed);
 
-            HttpResponse response = client.execute(host, post);
-            if (successResponseStatus(response)) {
-                return readResponse(response).success;
+            try {
+                final HttpPost post = new HttpPost(API_REGISTER);
+
+                final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair(EMAIL, email));
+                nameValuePairs.add(new BasicNameValuePair(PASSWORD, password));
+                post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                HttpResponse response = client.execute(host, post);
+                if (successResponseStatus(response)) {
+                    JsonResponse json = readResponse(response);
+                    RegistrationStatus.Status status = json.success
+                            ? RegistrationStatus.Status.Succeed
+                            : RegistrationStatus.Status.Failed;
+
+                    result.setStatus(status);
+                    result.setMessage(json.getString("message"));
+                }
+                else {
+                    Log.e(TAG, "Failed to register");
+                }
             }
-            else {
-                Log.e(TAG, "Failed to register");
+            catch (Exception e) {
+                Log.e(TAG, "Error to register.", e);
             }
         }
-        catch (Exception e) {
-            Log.e(TAG, "Error to register.", e);
-        }
-        return false;
+
+        return result;
     }
 
     public RemoteOpState logout(String token) {

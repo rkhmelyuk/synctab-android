@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.khmlabs.synctab.R;
+import com.khmlabs.synctab.RegistrationStatus;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.SyncTabRemoteService;
 
@@ -34,54 +35,69 @@ public class RegistrationActivity extends Activity {
                     new RegisterTask().execute(email, password);
                 }
                 else {
-                    Toast.makeText(RegistrationActivity.this, R.string.email_password_required, 3000).show();
+                    Toast.makeText(
+                            RegistrationActivity.this,
+                            R.string.email_password_required, 3000).show();
                 }
             }
         });
     }
 
-    private class RegisterTask extends AsyncTask<String, String, Integer> {
-
-        static final int RESULT_SUCCESS = 0;
-        static final int RESULT_FAILED = 1;
-        static final int RESULT_OFFLINE = 2;
-        static final int RESULT_ERROR = 3;
+    private class RegisterTask extends AsyncTask<String, String, RegistrationStatus> {
 
         @Override
-        protected Integer doInBackground(String... strings) {
+        protected RegistrationStatus doInBackground(String... strings) {
             try {
                 final SyncTabApplication app = (SyncTabApplication) getApplication();
-                if (app.isOnLine()) {
-                    final SyncTabRemoteService service = app.getSyncTabRemoteService();
-                    final boolean result = service.register(strings[0], strings[1]);
-
-                    return result ? RESULT_SUCCESS : RESULT_FAILED;
-                }
-                return RESULT_OFFLINE;
+                final SyncTabRemoteService service = app.getSyncTabRemoteService();
+                return service.register(strings[0], strings[1]);
             }
             catch (Exception e) {
                 Log.e(TAG, "Failed to register");
-                return RESULT_ERROR;
+                return null;
             }
         }
 
         @Override
-        protected void onPostExecute(Integer status) {
+        protected void onPostExecute(RegistrationStatus status) {
             super.onPostExecute(status);
 
-            if (status == RESULT_SUCCESS) {
+            if (status == null) {
+                Toast.makeText(RegistrationActivity.this, R.string.error_register, 5000).show();
+            }
+            else if (status.getStatus() == RegistrationStatus.Status.Succeed) {
+                authenticate(status);
+            }
+            else if (status.getStatus() == RegistrationStatus.Status.Failed) {
+                String failMessage = getResources().getString(R.string.failed_register);
+                StringBuilder message = new StringBuilder(failMessage);
+                if (status.getMessage() != null) {
+                    message.append(": ").append(status.getMessage());
+                }
+                Toast.makeText(RegistrationActivity.this, message.toString(), 5000).show();
+            }
+            else if (status.getStatus() == RegistrationStatus.Status.Succeed) {
+                Toast.makeText(RegistrationActivity.this, R.string.no_connection, 5000).show();
+            }
+        }
+
+        private void authenticate(RegistrationStatus status) {
+            SyncTabApplication app = (SyncTabApplication) getApplication();
+            SyncTabRemoteService service = app.getSyncTabRemoteService();
+
+            if (service.authenticate(status.getEmail(), status.getPassword())) {
                 startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                 finish();
             }
-            else if (status == RESULT_FAILED) {
-                Toast.makeText(RegistrationActivity.this, R.string.failed_authenticate, 5000).show();
+            else {
+                Intent registerIntent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                registerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                registerIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+                startActivity(registerIntent);
+                finish();
             }
-            else if (status == RESULT_ERROR) {
-                Toast.makeText(RegistrationActivity.this, R.string.error_authenticate, 5000).show();
-            }
-            else if (status == RESULT_OFFLINE) {
-                Toast.makeText(RegistrationActivity.this, R.string.no_connection, 5000).show();
-            }
+
         }
     }
 
