@@ -15,10 +15,26 @@
               android:textSize="19sp"
               android:layout_marginBottom="3dp"/>
 
-    <TextView android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:id="@+id/tab_link"
-              android:textSize="15sp"/>
+    <RelativeLayout android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent">
+
+        <ImageView android:id="@+id/tab_icon"
+                   android:layout_height="wrap_content"
+                   android:layout_width="wrap_content"
+                   android:maxHeight="24dp"
+                   android:maxWidth="24dp"
+                   android:layout_alignParentLeft="true"
+                   android:layout_marginTop="2dp"
+                   android:layout_marginRight="5dp"/>
+
+        <TextView android:layout_height="wrap_content"
+                  android:layout_width="fill_parent"
+                  android:id="@+id/tab_link"
+                  android:textSize="15sp"
+                  android:layout_toRightOf="@+id/tab_icon"/>
+
+    </RelativeLayout>
 
     <RelativeLayout android:orientation="horizontal"
                     android:layout_height="wrap_content"

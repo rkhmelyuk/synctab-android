@@ -18,8 +18,8 @@ public class ShareTabActivity extends BaseActivity {
 
     private static final String TAG = "ShareTabActivity";
 
-    private TextView statusText;
-    private ImageView statusImage;
+    TextView statusText;
+    ImageView statusImage;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,15 +92,15 @@ public class ShareTabActivity extends BaseActivity {
             super.onPostExecute(result);
 
             if (result == RemoteOpState.Success) {
-                statusImage.setBackgroundResource(R.drawable.yes);
+                statusImage.setImageResource(R.drawable.yes);
                 statusText.setText(R.string.success_sync);
             }
             else if (result == RemoteOpState.Queued) {
-                statusImage.setBackgroundResource(R.drawable.yes);
+                statusImage.setImageResource(R.drawable.yes);
                 statusText.setText(R.string.enqueue_sync);
             }
             else if (result == RemoteOpState.Failed) {
-                statusImage.setBackgroundResource(R.drawable.fail);
+                statusImage.setImageResource(R.drawable.fail);
                 statusText.setText(R.string.failed_sync);
             }
         }

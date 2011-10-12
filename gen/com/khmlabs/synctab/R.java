@@ -16,20 +16,21 @@ public final class R {
         public static final int yes=0x7f020002;
     }
     public static final class id {
-        public static final int device=0x7f08000a;
+        public static final int device=0x7f08000b;
         public static final int email=0x7f080000;
         public static final int login=0x7f080002;
-        public static final int logout=0x7f08000c;
+        public static final int logout=0x7f08000d;
         public static final int password=0x7f080001;
-        public static final int refresh=0x7f08000b;
+        public static final int refresh=0x7f08000c;
         public static final int register=0x7f080003;
         public static final int share_tab_status_img=0x7f080005;
         public static final int sync_tab_status=0x7f080006;
-        public static final int tab_date=0x7f080009;
-        public static final int tab_link=0x7f080008;
+        public static final int tab_date=0x7f08000a;
+        public static final int tab_icon=0x7f080008;
+        public static final int tab_link=0x7f080009;
         public static final int tab_title=0x7f080007;
         public static final int tabs=0x7f080004;
-        public static final int view_shared_tabs=0x7f08000d;
+        public static final int view_shared_tabs=0x7f08000e;
     }
     public static final class integer {
         public static final int link_max_size=0x7f050001;

@@ -10,6 +10,8 @@ public class SharedTab {
     private String device;
     private long timestamp;
 
+    private String favicon;
+
     public int getRowId() {
         return rowId;
     }
@@ -56,5 +58,13 @@ public class SharedTab {
 
     public void setDevice(String device) {
         this.device = device;
+    }
+
+    public String getFavicon() {
+        return favicon;
+    }
+
+    public void setFavicon(String favicon) {
+        this.favicon = favicon;
     }
 }

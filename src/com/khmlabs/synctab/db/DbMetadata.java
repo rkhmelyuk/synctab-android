@@ -13,6 +13,7 @@ public interface DbMetadata {
     String LINK = "link";
     String TIMESTAMP = "timestamp";
     String DEVICE = "device";
+    String FAVICON = "favicon";
 
     String TYPE = "type";
     String PARAM = "param";

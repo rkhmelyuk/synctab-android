@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 class DbOpenHelper extends SQLiteOpenHelper {
 
-    private static int DB_VERSION = 3;
+    private static int DB_VERSION = 4;
 
     private static String DB_NAME = "synctab.db";
 
@@ -22,16 +22,17 @@ class DbOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (newVersion == -1) {
-            db.execSQL(dropSharedTabsTable());
-            db.execSQL(createSharedTabsTable());
-            db.execSQL(dropQueueTasksTable());
-            db.execSQL(createQueueTasksTable());
-        }
-        else if (newVersion == DB_VERSION) {
+        if (oldVersion == 2) {
             db.execSQL(dropSharedTabsTable());
             db.execSQL(createSharedTabsTable());
         }
+        else if (oldVersion == 3) {
+            db.execSQL(addFaviconColumn());
+        }
+    }
+
+    private String addFaviconColumn() {
+        return "alter table " + DbMetadata.SHARED_TABS_TABLE + " add column " + DbMetadata.FAVICON + " text";
     }
 
     private String createSharedTabsTable() {

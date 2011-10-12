@@ -1,7 +1,10 @@
 package com.khmlabs.synctab.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import com.khmlabs.synctab.*;
 import com.khmlabs.synctab.db.DbHelper;
 import com.khmlabs.synctab.db.DbMetadata;
 
+import java.io.InputStream;
 import java.util.Date;
 
 public class MainActivity extends BaseActivity {
@@ -23,72 +27,10 @@ public class MainActivity extends BaseActivity {
     private static final int TAB_CONTEXT_MENU_REMOVE = 1;
     private static final int TAB_CONTEXT_MENU_SEND = 2;
 
-    static final String[] ADAPTER_FROM = {DbMetadata.TITLE, DbMetadata.LINK, DbMetadata.TIMESTAMP, DbMetadata.DEVICE};
-    static final int[] ADAPTER_TO = {R.id.tab_title, R.id.tab_link, R.id.tab_date, R.id.device};
+    static final String[] ADAPTER_FROM = {DbMetadata.FAVICON, DbMetadata.TITLE, DbMetadata.LINK, DbMetadata.TIMESTAMP, DbMetadata.DEVICE};
+    static final int[] ADAPTER_TO = {R.id.tab_icon, R.id.tab_title, R.id.tab_link, R.id.tab_date, R.id.device};
 
-    private final SimpleCursorAdapter.ViewBinder ROW_BINDER = new SimpleCursorAdapter.ViewBinder() {
-        public boolean setViewValue(View element, Cursor cursor, int columnIndex) {
-            if (element.getId() == R.id.tab_date) {
-                Date date = new Date(cursor.getLong(columnIndex));
-                ((TextView) element).setText(DateUtils.getRelativeTimeSpanString(date.getTime(), System.currentTimeMillis(), 1000));
-
-                return true;
-            }
-            else if (element.getId() == R.id.device) {
-                String device = cursor.getString(columnIndex);
-
-                final String deviceName;
-                if (AppConstants.ANDROID_SYNCTAB_DEVICE.equals(device)) {
-                    deviceName = "Android";
-                }
-                else {
-                    deviceName = getResources().getString(R.string.unknown);
-                }
-                ((TextView) element).setText(deviceName);
-
-                return true;
-            }
-            else if (element.getId() == R.id.tab_title) {
-                String title = cursor.getString(columnIndex);
-
-                if (title != null && title.length() > 0) {
-                    int maxlength = getResources().getInteger(R.integer.title_max_size);
-                    if (title.length() > maxlength) {
-                        title = title.substring(0, maxlength - 3) + "...";
-                    }
-                    ((TextView) element).setText(title);
-                    element.setVisibility(View.VISIBLE);
-                }
-                else {
-                    element.setVisibility(View.GONE);
-                }
-
-                return true;
-            }
-            else if (element.getId() == R.id.tab_link) {
-                String link = cursor.getString(columnIndex);
-
-                if (link != null && link.length() > 0) {
-                    int maxlength = getResources().getInteger(R.integer.link_max_size);
-                    if (link.length() > maxlength) {
-                        // cut link here...
-                        int start = maxlength - 18;
-                        link = link.substring(0, start) + "..." + link.substring(link.length() - 15);
-                    }
-
-                    ((TextView) element).setText(link);
-                    element.setVisibility(View.VISIBLE);
-                }
-                else {
-                    element.setVisibility(View.GONE);
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-    };
+    private final SimpleCursorAdapter.ViewBinder ROW_BINDER = new SharedTabsBinder(this);
 
     private ListView sharedTabs;
 
@@ -329,7 +271,98 @@ public class MainActivity extends BaseActivity {
 
             return true;
         }
-
     }
+
+    private static class SharedTabsBinder implements SimpleCursorAdapter.ViewBinder {
+
+        private final Context context;
+        private final CacheManager cacheManager;
+
+        private SharedTabsBinder(Context context) {
+            this.context = context;
+            this.cacheManager = new CacheManager(context);
+        }
+
+        public boolean setViewValue(View element, Cursor cursor, int columnIndex) {
+            if (element.getId() == R.id.tab_icon) {
+                String favicon = cursor.getString(columnIndex);
+                if (favicon != null && favicon.length() > 0) {
+                    InputStream image = cacheManager.read(favicon);
+                    if (image != null) {
+                        final Bitmap bitmap = BitmapFactory.decodeStream(image);
+                        ((ImageView) element).setImageBitmap(bitmap);
+                        element.setVisibility(View.VISIBLE);
+
+                        return true;
+                    }
+                }
+
+                ((ImageView) element).setImageDrawable(null);
+
+                element.setVisibility(View.GONE);
+
+                return true;
+            }
+            else if (element.getId() == R.id.tab_date) {
+                Date date = new Date(cursor.getLong(columnIndex));
+                ((TextView) element).setText(DateUtils.getRelativeTimeSpanString(
+                        date.getTime(), System.currentTimeMillis(), 1000));
+
+                return true;
+            }
+            else if (element.getId() == R.id.device) {
+                String device = cursor.getString(columnIndex);
+
+                final String deviceName;
+                if (AppConstants.ANDROID_SYNCTAB_DEVICE.equals(device)) {
+                    deviceName = "Android";
+                }
+                else {
+                    deviceName = context.getResources().getString(R.string.unknown);
+                }
+                ((TextView) element).setText(deviceName);
+
+                return true;
+            }
+            else if (element.getId() == R.id.tab_title) {
+                String title = cursor.getString(columnIndex);
+
+                if (title != null && title.length() > 0) {
+                    int maxlength = context.getResources().getInteger(R.integer.title_max_size);
+                    if (title.length() > maxlength) {
+                        title = title.substring(0, maxlength - 3) + "...";
+                    }
+                    ((TextView) element).setText(title);
+                    element.setVisibility(View.VISIBLE);
+                }
+                else {
+                    element.setVisibility(View.GONE);
+                }
+
+                return true;
+            }
+            else if (element.getId() == R.id.tab_link) {
+                String link = cursor.getString(columnIndex);
+
+                if (link != null && link.length() > 0) {
+                    int maxlength = context.getResources().getInteger(R.integer.link_max_size);
+                    if (link.length() > maxlength) {
+                        int start = maxlength - 18;
+                        link = link.substring(0, start) + "..." + link.substring(link.length() - 15);
+                    }
+
+                    ((TextView) element).setText(link);
+                    element.setVisibility(View.VISIBLE);
+                }
+                else {
+                    element.setVisibility(View.GONE);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+    };
 
 }

@@ -1,5 +1,9 @@
 
 .idea
+.classpath
+.settings
+.project
+default.properties
 
 *.iml
 *.ipr

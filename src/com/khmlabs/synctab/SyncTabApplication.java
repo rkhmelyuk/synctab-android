@@ -18,6 +18,7 @@ public class SyncTabApplication extends Application {
 
     private SharedPreferences preferences;
     private SyncTabRemoteService syncTabRemoteService;
+    private CacheManager cacheManager;
 
     @Override
     public void onCreate() {
@@ -26,6 +27,8 @@ public class SyncTabApplication extends Application {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         setOnlineStatus();
+
+        cacheManager = new CacheManager(this);
 
         initSyncTabRemoteService();
     }
@@ -55,6 +58,10 @@ public class SyncTabApplication extends Application {
 
     public SyncTabRemoteService getSyncTabRemoteService() {
         return syncTabRemoteService;
+    }
+
+    public CacheManager getCacheManager() {
+        return cacheManager;
     }
 
     public boolean isOnLine() {
@@ -89,6 +96,7 @@ public class SyncTabApplication extends Application {
         setLastSyncTime(0);
         setLastSharedTabId(null);
 
+        cacheManager.clean();
         syncTabRemoteService.removeUserData();
 
         if (onLine) {

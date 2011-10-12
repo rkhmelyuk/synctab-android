@@ -8,6 +8,7 @@ import com.khmlabs.synctab.tab.SharedTab;
 import com.khmlabs.synctab.util.IOUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -21,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,22 +42,24 @@ public class SyncTabRemoteService {
     private static final String API_GET_SHARED_TABS_SINCE = "/api/getSharedTabsSince";
     private static final String API_GET_SHARED_TABS_AFTER = "/api/getSharedTabsAfter";
 
+    private static final String ID = "id";
     private static final String EMAIL = "email";
     private static final String PASSWORD = "password";
     private static final String TOKEN = "token";
     private static final String DEVICE = "device";
 
     private final HttpHost host;
+    private final HttpClient client;
     private final SyncTabApplication application;
 
     public SyncTabRemoteService(SyncTabApplication app, String scheme, String hostname, int port) {
         this.application = app;
         this.host = new HttpHost(hostname, port, scheme);
+        this.client = new DefaultHttpClient();
     }
 
     public boolean authenticate(String email, String password) {
         try {
-            final HttpClient client = new DefaultHttpClient();
             final HttpPost post = new HttpPost(API_AUTHORIZE);
 
             final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -89,7 +93,6 @@ public class SyncTabRemoteService {
 
     public boolean register(String email, String password) {
         try {
-            final HttpClient client = new DefaultHttpClient();
             final HttpPost post = new HttpPost(API_REGISTER);
 
             final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -99,8 +102,7 @@ public class SyncTabRemoteService {
 
             HttpResponse response = client.execute(host, post);
             if (successResponseStatus(response)) {
-                JsonResponse jsonResponse = readResponse(response);
-                return jsonResponse.success;
+                return readResponse(response).success;
             }
             else {
                 Log.e(TAG, "Failed to register");
@@ -127,7 +129,6 @@ public class SyncTabRemoteService {
 
     private boolean logoutOnServer(String token) {
         try {
-            final HttpClient client = new DefaultHttpClient();
             final HttpPost post = new HttpPost(API_LOGOUT);
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
@@ -142,7 +143,6 @@ public class SyncTabRemoteService {
             return readResponse(response).success;
         }
         catch (Exception e) {
-            e.printStackTrace();
             Log.e(TAG, "Error to logout.", e);
             return false;
         }
@@ -158,7 +158,6 @@ public class SyncTabRemoteService {
 
     public boolean shareTab(String link) {
         try {
-            final HttpClient client = new DefaultHttpClient();
             final HttpPost post = new HttpPost(API_SHARE_TAB);
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
@@ -175,7 +174,6 @@ public class SyncTabRemoteService {
             return readResponse(response).success;
         }
         catch (Exception e) {
-            e.printStackTrace();
             Log.e(TAG, "Error to share a tab.", e);
             return false;
         }
@@ -187,8 +185,6 @@ public class SyncTabRemoteService {
         }
 
         try {
-            final HttpClient client = new DefaultHttpClient();
-
             final String lastSharedTabId = application.getLastSharedTabId();
             final String paramString = buildGetSharedTabsParamsString(lastSharedTabId);
             final String operation = lastSharedTabId != null ? API_GET_SHARED_TABS_AFTER : API_GET_SHARED_TABS_SINCE;
@@ -208,6 +204,7 @@ public class SyncTabRemoteService {
                 if (sharedTabs.size() > 0) {
                     insertSharedTabs(sharedTabs);
                     updateLastSharedTabId(sharedTabs);
+                    cacheFavicons(sharedTabs);
                 }
                 application.setLastSyncTime(syncTime);
             }
@@ -220,10 +217,31 @@ public class SyncTabRemoteService {
         }
     }
 
+    private void cacheFavicons(List<SharedTab> tabs) {
+        for (SharedTab each : tabs) {
+            String favicon = each.getFavicon();
+            if (favicon != null && favicon.length() > 0) {
+                downloadAndCacheFavicon(favicon);
+            }
+        }
+    }
+
+    private void downloadAndCacheFavicon(String url) {
+        try {
+            final HttpResponse response = client.execute(new HttpGet(url));
+            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                application.getCacheManager().store(url, response.getEntity().getContent());
+            }
+        }
+        catch (IOException e) {
+            Log.w(TAG, "Error to download favicon " + url);
+        }
+    }
+
     private String buildGetSharedTabsParamsString(String lastSharedTabId) {
         final List<NameValuePair> params = new LinkedList<NameValuePair>();
         if (lastSharedTabId != null) {
-            params.add(new BasicNameValuePair("id", lastSharedTabId));
+            params.add(new BasicNameValuePair(ID, lastSharedTabId));
         }
         else {
             final long since = application.getLastSyncTime();
@@ -241,55 +259,6 @@ public class SyncTabRemoteService {
         else {
             application.setLastSharedTabId(null);
         }
-    }
-
-    private SharedTab getRecentSharedTab(List<SharedTab> sharedTabs) {
-        long max = 0;
-        SharedTab recent = null;
-
-        for (SharedTab each : sharedTabs) {
-            if (each.getTimestamp() > max) {
-                max = each.getTimestamp();
-                recent = each;
-            }
-        }
-
-        return recent;
-    }
-
-    private List<SharedTab> readSharedTabs(JsonResponse jsonResponse) throws Exception {
-        JSONArray array = jsonResponse.json.getJSONArray("tabs");
-        if (array.length() == 0) {
-            return Collections.emptyList();
-        }
-
-        final List<SharedTab> result = new ArrayList<SharedTab>(array.length());
-        for (int i = 0; i < array.length(); i++) {
-            JSONObject row = array.getJSONObject(i);
-            SharedTab tab = readSharedTabFromJson(row);
-            if (tab != null) {
-                result.add(tab);
-            }
-        }
-
-        return result;
-    }
-
-    private SharedTab readSharedTabFromJson(JSONObject row) throws JSONException {
-        final SharedTab result = new SharedTab();
-
-        result.setId(row.getString("id"));
-        result.setTimestamp(row.getLong("ts"));
-        result.setLink(row.getString("link"));
-
-        if (!row.isNull("device")) {
-            result.setDevice(row.getString("device"));
-        }
-        if (!row.isNull("title")) {
-            result.setTitle(row.getString("title"));
-        }
-
-        return result;
     }
 
     private void insertSharedTabs(List<SharedTab> sharedTabs) {
@@ -337,26 +306,15 @@ public class SyncTabRemoteService {
         return RemoteOpState.Failed;
     }
 
-    private JsonResponse readResponse(HttpResponse response) throws Exception {
-        InputStream contentStream = response.getEntity().getContent();
-        String content = IOUtil.toString(contentStream, 200);
-
-        Log.i(TAG, content);
-
-        JSONObject object = (JSONObject) new JSONTokener(content).nextValue();
-        boolean success = object.getBoolean("status");
-        return new JsonResponse(success, object);
-    }
-
     private boolean successResponseStatus(HttpResponse response) {
         int statusCode = response.getStatusLine().getStatusCode();
-        if (statusCode == 401) {
+        if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
             application.setAuthToken(null);
             application.setAuthEmail(null);
             return false;
         }
 
-        return statusCode == 200;
+        return statusCode == HttpStatus.SC_OK;
     }
 
     public boolean syncTask(QueueTask task) {
@@ -426,11 +384,10 @@ public class SyncTabRemoteService {
 
     private boolean removeSharedTabOnServer(String tabId) {
         try {
-            final HttpClient client = new DefaultHttpClient();
             final HttpPost post = new HttpPost(API_REMOVE_TAB);
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair("id", tabId));
+            nameValuePairs.add(new BasicNameValuePair(ID, tabId));
             nameValuePairs.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -443,7 +400,6 @@ public class SyncTabRemoteService {
             return readResponse(response).success;
         }
         catch (Exception e) {
-            e.printStackTrace();
             Log.e(TAG, "Error to remove tab.", e);
             return false;
         }
@@ -486,11 +442,10 @@ public class SyncTabRemoteService {
 
     private boolean reshareTabOnServer(String tabId) {
         try {
-            final HttpClient client = new DefaultHttpClient();
             final HttpPost post = new HttpPost(API_RESHARE_TAB);
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair("id", tabId));
+            nameValuePairs.add(new BasicNameValuePair(ID, tabId));
             nameValuePairs.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -503,7 +458,6 @@ public class SyncTabRemoteService {
             return readResponse(response).success;
         }
         catch (Exception e) {
-            e.printStackTrace();
             Log.e(TAG, "Error to reshare tab.", e);
             return false;
         }
@@ -511,6 +465,70 @@ public class SyncTabRemoteService {
 
     private RemoteOpState addReshareTabToQueue(String sharedTabId) {
         return addTask(new QueueTask(TaskType.ReshareTab, sharedTabId));
+    }
+
+    private static JsonResponse readResponse(HttpResponse response) throws Exception {
+        InputStream contentStream = response.getEntity().getContent();
+        String content = IOUtil.toString(contentStream, 200);
+
+        Log.i(TAG, content);
+
+        JSONObject object = (JSONObject) new JSONTokener(content).nextValue();
+        boolean success = object.getBoolean("status");
+
+        return new JsonResponse(success, object);
+    }
+
+    private static SharedTab getRecentSharedTab(List<SharedTab> sharedTabs) {
+        long max = 0;
+        SharedTab recent = null;
+
+        for (SharedTab each : sharedTabs) {
+            if (each.getTimestamp() > max) {
+                max = each.getTimestamp();
+                recent = each;
+            }
+        }
+
+        return recent;
+    }
+
+    private static List<SharedTab> readSharedTabs(JsonResponse jsonResponse) throws Exception {
+        JSONArray array = jsonResponse.json.getJSONArray("tabs");
+        if (array.length() == 0) {
+            return Collections.emptyList();
+        }
+
+        final List<SharedTab> result = new ArrayList<SharedTab>(array.length());
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject row = array.getJSONObject(i);
+            SharedTab tab = readSharedTabFromJson(row);
+            if (tab != null) {
+                result.add(tab);
+            }
+        }
+
+        return result;
+    }
+
+    private static SharedTab readSharedTabFromJson(JSONObject row) throws JSONException {
+        final SharedTab result = new SharedTab();
+
+        result.setId(row.getString("id"));
+        result.setTimestamp(row.getLong("ts"));
+        result.setLink(row.getString("link"));
+
+        if (!row.isNull("favicon")) {
+            result.setFavicon(row.getString("favicon"));
+        }
+        if (!row.isNull("device")) {
+            result.setDevice(row.getString("device"));
+        }
+        if (!row.isNull("title")) {
+            result.setTitle(row.getString("title"));
+        }
+
+        return result;
     }
 
     private static class JsonResponse {

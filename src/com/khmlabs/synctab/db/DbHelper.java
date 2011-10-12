@@ -85,6 +85,7 @@ public class DbHelper {
                     values.put(DbMetadata.TIMESTAMP, each.getTimestamp());
                     values.put(DbMetadata.TITLE, each.getTitle());
                     values.put(DbMetadata.DEVICE, each.getDevice());
+                    values.put(DbMetadata.FAVICON, each.getFavicon());
 
                     db.replaceOrThrow(DbMetadata.SHARED_TABS_TABLE, null, values);
 
@@ -118,6 +119,7 @@ public class DbHelper {
                 values.put(DbMetadata.TIMESTAMP, tab.getTimestamp());
                 values.put(DbMetadata.TITLE, tab.getTitle());
                 values.put(DbMetadata.DEVICE, tab.getDevice());
+                values.put(DbMetadata.FAVICON, tab.getFavicon());
 
                 db.replaceOrThrow(DbMetadata.SHARED_TABS_TABLE, null, values);
 
@@ -200,6 +202,7 @@ public class DbHelper {
                 tab.setTitle(cursor.getString(cursor.getColumnIndex(DbMetadata.TITLE)));
                 tab.setDevice(cursor.getString(cursor.getColumnIndex(DbMetadata.DEVICE)));
                 tab.setTimestamp(cursor.getLong(cursor.getColumnIndex(DbMetadata.TIMESTAMP)));
+                tab.setFavicon(cursor.getString(cursor.getColumnIndex(DbMetadata.FAVICON)));
 
                 return tab;
             }
