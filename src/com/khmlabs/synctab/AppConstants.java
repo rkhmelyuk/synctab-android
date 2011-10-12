@@ -17,5 +17,6 @@ public interface AppConstants {
     String AUTH_TOKEN = "AUTH_TOKEN";
     String AUTH_USER = "AUTH_USER";
 
-    long CACHE_CLEANUP_PERIOD = 1000 * 60 * 60 * 24 * 30;
+    // 30 days
+    long CACHE_CLEANUP_PERIOD = 1000L * 3600L * 24L * 30L;
 }
