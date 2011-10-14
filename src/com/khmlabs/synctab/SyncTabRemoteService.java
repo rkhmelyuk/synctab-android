@@ -39,8 +39,9 @@ public class SyncTabRemoteService {
     private static final String API_SHARE_TAB = "/api/shareTab";
     private static final String API_REMOVE_TAB = "/api/removeTab";
     private static final String API_RESHARE_TAB = "/api/reshareTab";
-    private static final String API_GET_SHARED_TABS_SINCE = "/api/getSharedTabsSince";
-    private static final String API_GET_SHARED_TABS_AFTER = "/api/getSharedTabsAfter";
+    private static final String API_GET_TABS_AFTER = "/api/getTabsAfter";
+    private static final String API_GET_TABS_BEFORE = "/api/getTabsBefore";
+    private static final String API_GET_LAST_TABS = "/api/getLastTabs";
 
     private static final String ID = "id";
     private static final String EMAIL = "email";
@@ -202,11 +203,14 @@ public class SyncTabRemoteService {
 
         try {
             final String lastSharedTabId = application.getLastSharedTabId();
-            final String paramString = buildGetSharedTabsParamsString(lastSharedTabId);
-            final String operation = lastSharedTabId != null ? API_GET_SHARED_TABS_AFTER : API_GET_SHARED_TABS_SINCE;
+            final long lastSyncTime = application.getLastSyncTime();
+
+            final boolean firstRequest = (lastSharedTabId == null && lastSyncTime == 0);
+            final String operation = firstRequest ? API_GET_LAST_TABS : API_GET_TABS_AFTER;
+            final String paramString = "?" + buildGetSharedTabsParamsString(lastSharedTabId, lastSyncTime);
 
             final long syncTime = System.currentTimeMillis();
-            final HttpGet get = new HttpGet(operation + "?" + paramString);
+            final HttpGet get = new HttpGet(operation + paramString);
 
             HttpResponse response = client.execute(host, get);
             if (!successResponseStatus(response)) {
@@ -254,14 +258,13 @@ public class SyncTabRemoteService {
         }
     }
 
-    private String buildGetSharedTabsParamsString(String lastSharedTabId) {
+    private String buildGetSharedTabsParamsString(String lastSharedTabId, long lastSyncTime) {
         final List<NameValuePair> params = new LinkedList<NameValuePair>();
         if (lastSharedTabId != null) {
             params.add(new BasicNameValuePair(ID, lastSharedTabId));
         }
-        else {
-            final long since = application.getLastSyncTime();
-            params.add(new BasicNameValuePair("since", Long.toString(since)));
+        if (lastSyncTime != 0) {
+            params.add(new BasicNameValuePair("ts", Long.toString(lastSyncTime)));
         }
         params.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
         return URLEncodedUtils.format(params, "utf-8");

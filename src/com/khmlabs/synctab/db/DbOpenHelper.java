@@ -44,6 +44,7 @@ class DbOpenHelper extends SQLiteOpenHelper {
                 .append(DbMetadata.LINK).append(" text,")
                 .append(DbMetadata.TITLE).append(" text,")
                 .append(DbMetadata.DEVICE).append(" text,")
+                .append(DbMetadata.FAVICON).append(" text,")
                 .append(DbMetadata.TIMESTAMP).append(" long);");
 
         return builder.toString();
