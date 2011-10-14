@@ -1,0 +1,27 @@
+<resources>
+
+    <style name="WindowStyle">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="TitleBar">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/titlebar_height</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@color/window_background</item>
+    </style>
+
+    <style name="TitleBarTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_marginLeft">@dimen/title_text_margin_left</item>
+        <item name="android:layout_marginTop">@dimen/title_text_margin_vertical</item>
+        <item name="android:layout_marginBottom">@dimen/title_text_margin_vertical</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:textSize">@dimen/title_text_size</item>
+        <item name="android:textColor">@color/window_title</item>
+        <item name="android:text">@string/synctab</item>
+        <item name="android:textColorHighlight">@color/window_background</item>
+    </style>
+
+</resources>

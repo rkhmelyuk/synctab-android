@@ -1,6 +1,7 @@
 package com.khmlabs.synctab.ui;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ public class LoginActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.activity_login);
 
         final EditText emailInput = (EditText) findViewById(R.id.email);
         final EditText passwordInput = (EditText) findViewById(R.id.password);
@@ -70,6 +71,16 @@ public class LoginActivity extends Activity {
         static final int RESULT_OFFLINE = 2;
         static final int RESULT_ERROR = 3;
 
+        private ProgressDialog progress;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            final String message = getResources().getString(R.string.authentication);
+            progress = ProgressDialog.show(LoginActivity.this, null, message, true, false);
+        }
+
         @Override
         protected Integer doInBackground(String... strings) {
             try {
@@ -91,6 +102,8 @@ public class LoginActivity extends Activity {
         @Override
         protected void onPostExecute(Integer status) {
             super.onPostExecute(status);
+
+            progress.dismiss();
 
             if (status == RESULT_SUCCESS) {
                 //if (getParent() != null) {

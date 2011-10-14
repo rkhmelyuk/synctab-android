@@ -1,6 +1,7 @@
 package com.khmlabs.synctab.ui;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ public class RegistrationActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.registration);
+        setContentView(R.layout.activity_registration);
 
         final EditText emailInput = (EditText) findViewById(R.id.email);
         final EditText passwordInput = (EditText) findViewById(R.id.password);
@@ -45,6 +46,16 @@ public class RegistrationActivity extends Activity {
 
     private class RegisterTask extends AsyncTask<String, String, RegistrationStatus> {
 
+        private ProgressDialog progress;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            final String message = getResources().getString(R.string.account_registration);
+            progress = ProgressDialog.show(RegistrationActivity.this, null, message, true, false);
+        }
+
         @Override
         protected RegistrationStatus doInBackground(String... strings) {
             try {
@@ -61,6 +72,8 @@ public class RegistrationActivity extends Activity {
         @Override
         protected void onPostExecute(RegistrationStatus status) {
             super.onPostExecute(status);
+
+            progress.dismiss();
 
             if (status == null) {
                 Toast.makeText(RegistrationActivity.this, R.string.error_register, 5000).show();

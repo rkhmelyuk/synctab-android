@@ -1,6 +1,8 @@
 <resources>
     <string name="application_label">SyncTab</string>
 
+    <string name="synctab">SyncTab</string>
+
     <string name="synctab_activity">SyncTab</string>
     <string name="login_activity">SyncTab: Login</string>
     <string name="registration_activity">SyncTab: Registration</string>
@@ -23,6 +25,9 @@
     <string name="registration">Registration</string>
     <string name="register">Register</string>
     <string name="register_now">Register Now</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="account_registration">Account registration</string>
+    <string name="authentication">Authentication</string>
 
     <string name="email_password_required">Please enter email and password.</string>
     <string name="error_authenticate">Error to login. Try again!</string>

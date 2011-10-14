@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_main);
 
         sharedTabs = (ListView) findViewById(R.id.tabs);
         dbHelper = new DbHelper(this);
