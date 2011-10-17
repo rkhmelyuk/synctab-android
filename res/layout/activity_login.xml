@@ -24,7 +24,8 @@
     <EditText android:id="@+id/email"
               android:layout_height="wrap_content"
               android:inputType="textEmailAddress"
-              android:layout_width="fill_parent"/>
+              android:layout_width="fill_parent"
+              android:autoText="true"/>
 
     <TextView android:layout_height="wrap_content"
               android:layout_width="fill_parent"
