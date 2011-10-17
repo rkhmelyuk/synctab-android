@@ -9,4 +9,4 @@ cp ../out/production/synctab-android/synctab-android.apk.unsigned ./synctab.apk
 jarsigner -verbose -keystore ../key/synctab.keystore -storepass "$STOREPASS" synctab.apk khmlabs
 /usr/local/android/tools/zipalign -v 4 synctab.apk synctab-aligned.apk
 rm synctab.apk
-mv synctab-aligned.apk synctab-3.apk
+mv synctab-aligned.apk synctab-4.apk

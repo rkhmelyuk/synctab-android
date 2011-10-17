@@ -15,19 +15,9 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_marginLeft">@dimen/titlebar_margin_left</item>
-        <item name="android:layout_marginTop">@dimen/titlebar_margin_vertical</item>
-        <item name="android:layout_marginBottom">@dimen/titlebar_margin_vertical</item>
         <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/titlebar_title_text_size</item>
-        <item name="android:textColor">@color/titlebar_title</item>
-        <item name="android:text">@string/synctab</item>
-    </style>
-
-    <style name="TitleBarSubtitle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/titlebar_title</item>
         <item name="android:text">@string/synctab</item>
     </style>

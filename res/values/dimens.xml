@@ -1,10 +1,9 @@
 <resources>
-    <dimen name="titlebar_height">38dp</dimen>
-    <dimen name="titlebar_button_height">38dp</dimen>
-    <dimen name="titlebar_button_width">38dp</dimen>
+    <dimen name="titlebar_height">45dp</dimen>
+    <dimen name="titlebar_button_height">45dp</dimen>
+    <dimen name="titlebar_button_width">45dp</dimen>
     <dimen name="titlebar_title_text_size">20sp</dimen>
-    <dimen name="titlebar_margin_left">5dp</dimen>
-    <dimen name="titlebar_margin_vertical">5dp</dimen>
+    <dimen name="titlebar_margin_left">8dp</dimen>
     <dimen name="titlebar_button_padding_top">0dp</dimen>
     <dimen name="titlebar_button_padding_bottom">0dp</dimen>
     <dimen name="titlebar_button_padding_left">5dp</dimen>
