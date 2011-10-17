@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.*;
@@ -15,6 +16,7 @@ import android.widget.*;
 import com.khmlabs.synctab.*;
 import com.khmlabs.synctab.db.DbHelper;
 import com.khmlabs.synctab.db.DbMetadata;
+import com.khmlabs.synctab.util.UrlUtil;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -334,10 +336,7 @@ public class MainActivity extends BaseActivity {
                 String title = cursor.getString(columnIndex);
 
                 if (title != null && title.length() > 0) {
-                    int maxlength = context.getResources().getInteger(R.integer.title_max_size);
-                    if (title.length() > maxlength) {
-                        title = title.substring(0, maxlength - 3) + "...";
-                    }
+                    title = prepareReadableTitle(title);
                     ((TextView) element).setText(title);
                     element.setVisibility(View.VISIBLE);
                 }
@@ -352,10 +351,8 @@ public class MainActivity extends BaseActivity {
 
                 if (link != null && link.length() > 0) {
                     int maxlength = context.getResources().getInteger(R.integer.link_max_size);
-                    if (link.length() > maxlength) {
-                        int start = maxlength - 18;
-                        link = link.substring(0, start) + "..." + link.substring(link.length() - 15);
-                    }
+                    link = UrlUtil.prepareReadableUrl(link);
+                    link = UrlUtil.shortenizeUrl(link, maxlength);
 
                     ((TextView) element).setText(link);
                     element.setVisibility(View.VISIBLE);
@@ -368,6 +365,16 @@ public class MainActivity extends BaseActivity {
             }
 
             return false;
+        }
+
+        private String prepareReadableTitle(String title) {
+            title = Html.fromHtml(title).toString();
+
+            int maxlength = context.getResources().getInteger(R.integer.title_max_size);
+            if (title.length() > maxlength) {
+                title = title.substring(0, maxlength - 3) + "...";
+            }
+            return title;
         }
     }
 
