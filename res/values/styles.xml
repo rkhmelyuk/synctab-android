@@ -15,11 +15,25 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_marginLeft">@dimen/titlebar_margin_left</item>
-        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_toRightOf">@id/titlebar_icon</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/titlebar_title_text_size</item>
         <item name="android:textColor">@color/titlebar_title</item>
         <item name="android:text">@string/synctab</item>
+        <item name="android:shadowColor">@color/titlebar_title_shadow</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="TitleBarIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_marginLeft">@dimen/titlebar_margin_left</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:src">@drawable/titlebar_icon</item>
     </style>
 
     <style name="SharedTabRowLayout">

@@ -6,16 +6,20 @@
     <TextView android:layout_height="wrap_content"
               android:layout_width="fill_parent"
               android:id="@+id/tab_title"
-              android:textSize="19sp"
-              android:layout_marginBottom="3dp"/>
+              android:textSize="@dimen/shared_tab_title_text_size"
+              android:layout_marginBottom="3dp"
+              android:shadowColor="@color/shared_tab_row_title_shadow"
+              android:shadowDx="1"
+              android:shadowDy="1"
+              android:shadowRadius="1"/>
 
     <RelativeLayout android:orientation="horizontal"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent">
 
         <ImageView android:id="@+id/tab_icon"
-                   android:layout_height="16dp"
-                   android:layout_width="16dp"
+                   android:layout_height="@dimen/shared_tab_row_icon_size"
+                   android:layout_width="@dimen/shared_tab_row_icon_size"
                    android:layout_alignParentLeft="true"
                    android:layout_marginTop="2dp"
                    android:layout_marginRight="5dp"/>
@@ -23,8 +27,11 @@
         <TextView android:layout_height="wrap_content"
                   android:layout_width="fill_parent"
                   android:id="@+id/tab_link"
-                  android:textSize="15sp"
-                  android:layout_toRightOf="@+id/tab_icon"/>
+                  android:textSize="@dimen/shared_tab_link_text_size"
+                  android:layout_toRightOf="@+id/tab_icon"
+                  android:shadowColor="@color/shared_tab_row_link_shadow"
+                  android:shadowDx="1"
+                  android:shadowDy="1"/>
 
     </RelativeLayout>
 
@@ -37,7 +44,7 @@
         <TextView android:layout_height="wrap_content"
                   android:layout_width="wrap_content"
                   android:id="@+id/tab_date"
-                  android:textSize="11sp"
+                  android:textSize="@dimen/shared_tab_details_text_size"
                   android:gravity="left"
                   android:layout_alignParentLeft="true"
                   android:textColor="@color/shared_tab_row_details"/>
@@ -45,16 +52,14 @@
         <TextView android:layout_height="wrap_content"
                   android:layout_width="wrap_content"
                   android:text="Shared from "
-                  android:textSize="11sp"
-                  android:layout_weight="1"
+                  android:textSize="@dimen/shared_tab_details_text_size"
                   android:layout_toLeftOf="@+id/device"
                   android:textColor="@color/shared_tab_row_details"/>
 
         <TextView android:layout_height="wrap_content"
                   android:layout_width="wrap_content"
                   android:id="@+id/device"
-                  android:textSize="11sp"
-                  android:layout_weight="2"
+                  android:textSize="@dimen/shared_tab_details_text_size"
                   android:layout_alignParentRight="true"
                   android:textColor="@color/shared_tab_row_details"/>
 

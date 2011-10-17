@@ -1,6 +1,16 @@
 <resources>
     <color name="titlebar_title">#ffffff</color>
+    <color name="titlebar_title_shadow">#111111</color>
     <color name="titlebar_background">#444444</color>
     <color name="shared_tab_row_details">#666666</color>
-    <color name="titlebar_button_pressed">#aa000000</color>
+    <color name="shared_tab_row_title_shadow">#ffffff</color>
+    <color name="shared_tab_row_link_shadow">#ffffff</color>
+    <color name="titlebar_button_pressed">#22000000</color>
+
+    <color name="shared_tab_row_gradient_start">#efefef</color>
+    <color name="shared_tab_row_gradient_end">#ffffff</color>
+
+    <color name="titlebar_gradient_start">#444444</color>
+    <color name="titlebar_gradient_end">#222222</color>
+
 </resources>
