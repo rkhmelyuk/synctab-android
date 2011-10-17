@@ -1,8 +1,6 @@
 <resources>
 
-    <style name="Theme.SyncTab" parent="android:style/Theme.Light.NoTitleBar">
-        <item name="android:windowNoTitle">true</item>
-    </style>
+    <style name="Theme.SyncTab" parent="android:style/Theme.Light.NoTitleBar"/>
 
     <style name="TitleBar">
         <item name="android:layout_width">fill_parent</item>
@@ -24,7 +22,7 @@
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">1</item>
-        <item name="android:typeface">sans</item>
+        <item name="android:typeface">normal</item>
     </style>
 
     <style name="TitleBarIcon">

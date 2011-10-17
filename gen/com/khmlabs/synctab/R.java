@@ -42,15 +42,17 @@ public final class R {
     }
     public static final class drawable {
         public static final int fail=0x7f020000;
-        public static final int ic_title_home=0x7f020001;
-        public static final int ic_title_refresh=0x7f020002;
-        public static final int icon=0x7f020003;
-        public static final int tab_row_background=0x7f020004;
-        public static final int titlebar_background=0x7f020005;
-        public static final int titlebar_button=0x7f020006;
-        public static final int titlebar_icon=0x7f020007;
-        public static final int titlebar_separator=0x7f020008;
-        public static final int yes=0x7f020009;
+        public static final int ic_menu_home=0x7f020001;
+        public static final int ic_menu_refresh=0x7f020002;
+        public static final int ic_title_home=0x7f020003;
+        public static final int ic_title_refresh=0x7f020004;
+        public static final int icon=0x7f020005;
+        public static final int tab_row_background=0x7f020006;
+        public static final int titlebar_background=0x7f020007;
+        public static final int titlebar_button=0x7f020008;
+        public static final int titlebar_icon=0x7f020009;
+        public static final int titlebar_separator=0x7f02000a;
+        public static final int yes=0x7f02000b;
     }
     public static final class id {
         public static final int device=0x7f0b000b;
@@ -72,8 +74,7 @@ public final class R {
         public static final int view_shared_tabs=0x7f0b0010;
     }
     public static final class integer {
-        public static final int link_max_size=0x7f070001;
-        public static final int title_max_size=0x7f070000;
+        public static final int link_max_size=0x7f070000;
     }
     public static final class layout {
         public static final int activity_login=0x7f030000;
@@ -92,45 +93,46 @@ public final class R {
         public static final int application_label=0x7f080000;
         public static final int authentication=0x7f080018;
         public static final int email=0x7f08000f;
-        public static final int email_password_required=0x7f080019;
+        public static final int email_password_required=0x7f08001a;
         public static final int enqueue_sync=0x7f080007;
-        public static final int error_authenticate=0x7f08001a;
-        public static final int error_register=0x7f08001c;
-        public static final int failed_authenticate=0x7f08001b;
-        public static final int failed_register=0x7f08001d;
+        public static final int error_authenticate=0x7f08001b;
+        public static final int error_register=0x7f08001d;
+        public static final int failed_authenticate=0x7f08001c;
+        public static final int failed_register=0x7f08001e;
         public static final int failed_retrieve_shared_tabs=0x7f08000e;
         public static final int failed_sync=0x7f080008;
         public static final int hide=0x7f08000d;
+        public static final int home=0x7f080022;
+        public static final int loading_tabs=0x7f080019;
         public static final int login=0x7f080011;
         public static final int login_activity=0x7f080003;
-        public static final int logout=0x7f08001f;
-        public static final int msg_failed_to_remove_tab=0x7f08002a;
-        public static final int msg_failed_to_reshared_tab=0x7f080029;
-        public static final int msg_tab_is_removed=0x7f080027;
-        public static final int msg_tab_is_reshared=0x7f080028;
-        public static final int no_connection=0x7f08001e;
-        public static final int not_a_user=0x7f080022;
+        public static final int logout=0x7f080020;
+        public static final int msg_failed_to_remove_tab=0x7f08002b;
+        public static final int msg_failed_to_reshared_tab=0x7f08002a;
+        public static final int msg_tab_is_removed=0x7f080028;
+        public static final int msg_tab_is_reshared=0x7f080029;
+        public static final int no_connection=0x7f08001f;
+        public static final int not_a_user=0x7f080023;
         public static final int open=0x7f08000c;
         public static final int password=0x7f080010;
         public static final int please_login=0x7f080012;
         public static final int please_wait=0x7f080016;
         public static final int pref_url_summary=0x7f08000b;
         public static final int pref_url_title=0x7f08000a;
-        public static final int refresh=0x7f080020;
+        public static final int refresh=0x7f080021;
         public static final int register=0x7f080014;
         public static final int register_now=0x7f080015;
         public static final int registration=0x7f080013;
         public static final int registration_activity=0x7f080004;
-        public static final int remove=0x7f080025;
-        public static final int reshare=0x7f080024;
-        public static final int send_to=0x7f080026;
+        public static final int remove=0x7f080026;
+        public static final int reshare=0x7f080025;
+        public static final int send_to=0x7f080027;
         public static final int success_sync=0x7f080006;
         public static final int sync_in_progress=0x7f080005;
         public static final int synctab=0x7f080001;
         public static final int synctab_activity=0x7f080002;
         public static final int synctab_service=0x7f080009;
-        public static final int unknown=0x7f080023;
-        public static final int view_shared_tabs=0x7f080021;
+        public static final int unknown=0x7f080024;
     }
     public static final class style {
         public static final int SharedTabRowLayout=0x7f090004;

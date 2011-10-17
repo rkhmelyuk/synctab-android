@@ -1,5 +1,6 @@
 package com.khmlabs.synctab.ui;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -76,8 +77,8 @@ public class MainActivity extends BaseActivity {
         dbHelper.close();
     }
 
-    private void refreshAdapter() {
-        Cursor cursor = dbHelper.findSharedTabs();
+    private boolean refreshAdapter() {
+        final Cursor cursor = dbHelper.findSharedTabs();
         startManagingCursor(cursor);
 
         SimpleCursorAdapter sharedTabsAdapter = new SimpleCursorAdapter(
@@ -86,6 +87,8 @@ public class MainActivity extends BaseActivity {
 
         sharedTabsAdapter.setViewBinder(ROW_BINDER);
         sharedTabs.setAdapter(sharedTabsAdapter);
+
+        return (cursor.getCount() != 0);
     }
 
     @Override
@@ -180,11 +183,29 @@ public class MainActivity extends BaseActivity {
     }
 
     public void refreshSharedTabs() {
-        refreshAdapter();
-        new RefreshSharedTabsTask().execute();
+        boolean filled = refreshAdapter();
+        new RefreshSharedTabsTask(filled).execute();
     }
 
     private class RefreshSharedTabsTask extends AsyncTask<String, String, Boolean> {
+
+        final boolean filled;
+
+        ProgressDialog progress;
+
+        private RefreshSharedTabsTask(boolean filled) {
+            this.filled = filled;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            if (!filled) {
+                final String message = getResources().getString(R.string.loading_tabs);
+                progress = ProgressDialog.show(MainActivity.this, null, message, true, false);
+            }
+        }
 
         @Override
         protected Boolean doInBackground(String... strings) {
@@ -201,6 +222,12 @@ public class MainActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(Boolean status) {
+
+            if (progress != null) {
+                progress.dismiss();
+                progress = null;
+            }
+
             if (!status) {
                 Toast.makeText(MainActivity.this,
                         R.string.failed_retrieve_shared_tabs, 5000);
@@ -368,13 +395,7 @@ public class MainActivity extends BaseActivity {
         }
 
         private String prepareReadableTitle(String title) {
-            title = Html.fromHtml(title).toString();
-
-            int maxlength = context.getResources().getInteger(R.integer.title_max_size);
-            if (title.length() > maxlength) {
-                title = title.substring(0, maxlength - 3) + "...";
-            }
-            return title;
+            return Html.fromHtml(title).toString();
         }
     }
 

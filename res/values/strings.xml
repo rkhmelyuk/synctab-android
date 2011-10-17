@@ -27,7 +27,8 @@
     <string name="register_now">Register Now</string>
     <string name="please_wait">Please wait...</string>
     <string name="account_registration">Account registration</string>
-    <string name="authentication">Authentication</string>
+    <string name="authentication">Authenticating</string>
+    <string name="loading_tabs">Loading a List of Shared Tabs...</string>
 
     <string name="email_password_required">Please enter email and password.</string>
     <string name="error_authenticate">Error to login. Try again!</string>
@@ -37,7 +38,7 @@
     <string name="no_connection">Can&quot;t connect to server.</string>
     <string name="logout">Logout</string>
     <string name="refresh">Refresh</string>
-    <string name="view_shared_tabs">Shared Tabs</string>
+    <string name="home">Home</string>
     <string name="not_a_user">Do not have account yet?</string>
     <string name="unknown">Unknown</string>
     <string name="reshare">Re-share</string>
