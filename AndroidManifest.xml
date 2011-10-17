@@ -3,11 +3,11 @@
           android:versionCode="4" android:versionName="0.4">
     <application android:icon="@drawable/icon"
                  android:label="@string/application_label"
+                 android:theme="@style/Theme.SyncTab"
                  android:name=".SyncTabApplication"
                  android:debuggable="true">
 
-        <activity android:name=".ui.MainActivity" android:label="@string/synctab_activity"
-                  android:theme="@style/WindowStyle">
+        <activity android:name=".ui.MainActivity" android:label="@string/synctab_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -15,7 +15,6 @@
         </activity>
 
         <activity android:name=".ui.ShareTabActivity"
-                  android:theme="@style/WindowStyle"
                   android:label="@string/synctab_activity"
                   android:noHistory="true">
             <intent-filter android:label="SyncTab">
@@ -27,11 +26,9 @@
 
         <activity android:name=".ui.LoginActivity"
                   android:noHistory="true"
-                  android:theme="@style/WindowStyle"
                   android:label="@string/login_activity"/>
 
         <activity android:name=".ui.RegistrationActivity"
-                  android:theme="@style/WindowStyle"
                   android:label="@string/registration_activity"
                   android:noHistory="true"/>
 

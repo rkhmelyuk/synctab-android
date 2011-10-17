@@ -4,5 +4,6 @@
                 android:id="@+id/titlebar" style="@style/TitleBar">
 
     <TextView style="@style/TitleBarTitle"/>
+    <!--<TextView style="@style/TitleBarSubtitle"/>-->
 
 </RelativeLayout>

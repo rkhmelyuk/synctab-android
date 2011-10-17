@@ -11,19 +11,35 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int window_background=0x7f050001;
-        public static final int window_title=0x7f050000;
+        public static final int shared_tab_row_details=0x7f050002;
+        public static final int titlebar_background=0x7f050001;
+        public static final int titlebar_button_pressed=0x7f050003;
+        public static final int titlebar_title=0x7f050000;
     }
     public static final class dimen {
-        public static final int title_text_margin_left=0x7f060002;
-        public static final int title_text_margin_vertical=0x7f060003;
-        public static final int title_text_size=0x7f060001;
+        public static final int shared_tab_row_padding=0x7f06000b;
+        public static final int shared_tab_row_side_padding=0x7f06000a;
+        public static final int titlebar_button_height=0x7f060001;
+        public static final int titlebar_button_padding_bottom=0x7f060007;
+        public static final int titlebar_button_padding_left=0x7f060008;
+        public static final int titlebar_button_padding_right=0x7f060009;
+        public static final int titlebar_button_padding_top=0x7f060006;
+        public static final int titlebar_button_width=0x7f060002;
         public static final int titlebar_height=0x7f060000;
+        public static final int titlebar_margin_left=0x7f060004;
+        public static final int titlebar_margin_vertical=0x7f060005;
+        public static final int titlebar_title_text_size=0x7f060003;
     }
     public static final class drawable {
         public static final int fail=0x7f020000;
-        public static final int icon=0x7f020001;
-        public static final int yes=0x7f020002;
+        public static final int ic_title_home=0x7f020001;
+        public static final int ic_title_refresh=0x7f020002;
+        public static final int icon=0x7f020003;
+        public static final int tab_row_background=0x7f020004;
+        public static final int titlebar_background=0x7f020005;
+        public static final int titlebar_button=0x7f020006;
+        public static final int titlebar_separator=0x7f020007;
+        public static final int yes=0x7f020008;
     }
     public static final class id {
         public static final int device=0x7f0b000b;
@@ -105,9 +121,11 @@ public final class R {
         public static final int view_shared_tabs=0x7f080021;
     }
     public static final class style {
+        public static final int SharedTabRowLayout=0x7f090004;
+        public static final int Theme_SyncTab=0x7f090000;
         public static final int TitleBar=0x7f090001;
+        public static final int TitleBarSubtitle=0x7f090003;
         public static final int TitleBarTitle=0x7f090002;
-        public static final int WindowStyle=0x7f090000;
     }
     public static final class xml {
         public static final int prefs=0x7f040000;

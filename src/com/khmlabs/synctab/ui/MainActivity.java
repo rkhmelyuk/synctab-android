@@ -61,8 +61,7 @@ public class MainActivity extends BaseActivity {
         super.onResume();
 
         if (getSyncTabApplication().isAuthenticated()) {
-            refreshAdapter();
-            new RefreshSharedTabsTask().execute();
+            refreshSharedTabs();
         }
 
         getSyncTabApplication().cleanupCacheIfNeed();
@@ -168,7 +167,7 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh:
-                new RefreshSharedTabsTask().execute();
+                refreshSharedTabs();
                 break;
             case R.id.logout:
                 getSyncTabApplication().logout();
@@ -176,6 +175,11 @@ public class MainActivity extends BaseActivity {
                 break;
         }
         return true;
+    }
+
+    public void refreshSharedTabs() {
+        refreshAdapter();
+        new RefreshSharedTabsTask().execute();
     }
 
     private class RefreshSharedTabsTask extends AsyncTask<String, String, Boolean> {
@@ -222,7 +226,7 @@ public class MainActivity extends BaseActivity {
             }
             else {
                 messageId = R.string.msg_tab_is_removed;
-                new RefreshSharedTabsTask().execute();
+                refreshSharedTabs();
             }
 
             String message = getResources().getString(messageId);
@@ -247,7 +251,7 @@ public class MainActivity extends BaseActivity {
             }
             else {
                 messageId = R.string.msg_tab_is_reshared;
-                new RefreshSharedTabsTask().execute();
+                refreshSharedTabs();
             }
 
             String message = getResources().getString(messageId);

@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="WindowStyle">
+    <style name="Theme.SyncTab" parent="android:style/Theme.Light.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
     </style>
 
@@ -8,20 +8,35 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">@dimen/titlebar_height</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:background">@color/window_background</item>
+        <item name="android:background">@drawable/titlebar_background</item>
     </style>
 
     <style name="TitleBarTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:layout_marginLeft">@dimen/title_text_margin_left</item>
-        <item name="android:layout_marginTop">@dimen/title_text_margin_vertical</item>
-        <item name="android:layout_marginBottom">@dimen/title_text_margin_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/titlebar_margin_left</item>
+        <item name="android:layout_marginTop">@dimen/titlebar_margin_vertical</item>
+        <item name="android:layout_marginBottom">@dimen/titlebar_margin_vertical</item>
         <item name="android:layout_alignParentLeft">true</item>
-        <item name="android:textSize">@dimen/title_text_size</item>
-        <item name="android:textColor">@color/window_title</item>
+        <item name="android:textSize">@dimen/titlebar_title_text_size</item>
+        <item name="android:textColor">@color/titlebar_title</item>
         <item name="android:text">@string/synctab</item>
-        <item name="android:textColorHighlight">@color/window_background</item>
+    </style>
+
+    <style name="TitleBarSubtitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/titlebar_title</item>
+        <item name="android:text">@string/synctab</item>
+    </style>
+
+    <style name="SharedTabRowLayout">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/tab_row_background</item>
     </style>
 
 </resources>

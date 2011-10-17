@@ -1,6 +1,15 @@
 <resources>
-    <dimen name="titlebar_height">35dp</dimen>
-    <dimen name="title_text_size">20sp</dimen>
-    <dimen name="title_text_margin_left">5dp</dimen>
-    <dimen name="title_text_margin_vertical">5dp</dimen>
+    <dimen name="titlebar_height">38dp</dimen>
+    <dimen name="titlebar_button_height">38dp</dimen>
+    <dimen name="titlebar_button_width">38dp</dimen>
+    <dimen name="titlebar_title_text_size">20sp</dimen>
+    <dimen name="titlebar_margin_left">5dp</dimen>
+    <dimen name="titlebar_margin_vertical">5dp</dimen>
+    <dimen name="titlebar_button_padding_top">0dp</dimen>
+    <dimen name="titlebar_button_padding_bottom">0dp</dimen>
+    <dimen name="titlebar_button_padding_left">5dp</dimen>
+    <dimen name="titlebar_button_padding_right">5dp</dimen>
+
+    <dimen name="shared_tab_row_side_padding">8dp</dimen>
+    <dimen name="shared_tab_row_padding">4dp</dimen>
 </resources>
