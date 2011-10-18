@@ -4,7 +4,6 @@
     <gradient android:startColor="@color/shared_tab_row_gradient_start"
               android:endColor="@color/shared_tab_row_gradient_end"
               android:angle="270"
-              android:centerY="0.3"
               android:type="linear"/>
 
     <padding android:left="@dimen/shared_tab_row_side_padding"

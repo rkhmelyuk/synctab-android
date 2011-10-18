@@ -11,7 +11,7 @@
 
     <dimen name="shared_tab_row_side_padding">8dp</dimen>
     <dimen name="shared_tab_row_padding">4dp</dimen>
-    <dimen name="shared_tab_title_text_size">18sp</dimen>
+    <dimen name="shared_tab_title_text_size">16sp</dimen>
     <dimen name="shared_tab_link_text_size">14sp</dimen>
     <dimen name="shared_tab_details_text_size">11sp</dimen>
     <dimen name="shared_tab_row_icon_size">24dp</dimen>

@@ -67,6 +67,7 @@ public class MainActivity extends BaseActivity {
             refreshSharedTabs();
         }
 
+        // TODO - cleanup in AsyncTask!
         getSyncTabApplication().cleanupCacheIfNeed();
     }
 
@@ -381,7 +382,7 @@ public class MainActivity extends BaseActivity {
                     link = UrlUtil.prepareReadableUrl(link);
                     link = UrlUtil.shortenizeUrl(link, maxlength);
 
-                    ((TextView) element).setText(link);
+                    ((TextView) element).setText(UrlUtil.colorizeUrl(link));
                     element.setVisibility(View.VISIBLE);
                 }
                 else {
