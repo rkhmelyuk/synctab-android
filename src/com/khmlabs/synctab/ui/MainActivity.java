@@ -154,11 +154,12 @@ public class MainActivity extends BaseActivity {
         final String title = cursor.getString(titleColumn);
 
         if (title != null && title.length() != 0) {
-            menu.setHeaderTitle(title);
+            menu.setHeaderTitle(Html.fromHtml(title).toString());
         }
         else {
             final int linkColumn = cursor.getColumnIndex(DbMetadata.LINK);
-            final String link = cursor.getString(linkColumn);
+            String link = cursor.getString(linkColumn);
+            link = UrlUtil.decodeLink(link);
             menu.setHeaderTitle(link);
         }
     }
