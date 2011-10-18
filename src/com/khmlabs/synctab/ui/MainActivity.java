@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.ClipboardManager;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -29,6 +30,7 @@ public class MainActivity extends BaseActivity {
     private static final int TAB_CONTEXT_MENU_RESHARE = 0;
     private static final int TAB_CONTEXT_MENU_REMOVE = 1;
     private static final int TAB_CONTEXT_MENU_SEND = 2;
+    private static final int TAB_CONTEXT_MENU_COPY = 3;
 
     static final String[] ADAPTER_FROM = {DbMetadata.FAVICON, DbMetadata.TITLE, DbMetadata.LINK, DbMetadata.TIMESTAMP, DbMetadata.DEVICE};
     static final int[] ADAPTER_TO = {R.id.tab_icon, R.id.tab_title, R.id.tab_link, R.id.tab_date, R.id.device};
@@ -110,6 +112,9 @@ public class MainActivity extends BaseActivity {
 
             menu.add(Menu.NONE, TAB_CONTEXT_MENU_SEND, TAB_CONTEXT_MENU_SEND,
                     getResources().getString(R.string.send_to));
+
+            menu.add(Menu.NONE, TAB_CONTEXT_MENU_COPY, TAB_CONTEXT_MENU_COPY,
+                    getResources().getString(R.string.copy_link));
         }
     }
 
@@ -148,18 +153,32 @@ public class MainActivity extends BaseActivity {
                 new RemoveTabTask().execute(tabId);
                 break;
             case TAB_CONTEXT_MENU_SEND:
-                final int linkColumn = cursor.getColumnIndex(DbMetadata.LINK);
-                final int titleColumn = cursor.getColumnIndex(DbMetadata.TITLE);
-
-                final String link = cursor.getString(linkColumn);
-                final String title = cursor.getString(titleColumn);
-
-                new SendTabTask().execute(link, title);
-
+                sendLink(cursor);
+                break;
+            case TAB_CONTEXT_MENU_COPY:
+                copyLink(cursor);
                 break;
         }
 
         return true;
+    }
+
+    private void sendLink(Cursor cursor) {
+        final int linkColumn = cursor.getColumnIndex(DbMetadata.LINK);
+        final int titleColumn = cursor.getColumnIndex(DbMetadata.TITLE);
+
+        final String link = cursor.getString(linkColumn);
+        final String title = cursor.getString(titleColumn);
+
+        new SendTabTask().execute(link, title);
+    }
+
+    private void copyLink(Cursor cursor) {
+        final int linkColumn = cursor.getColumnIndex(DbMetadata.LINK);
+        final String link = cursor.getString(linkColumn);
+
+        final ClipboardManager manager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        manager.setText(link);
     }
 
     @Override

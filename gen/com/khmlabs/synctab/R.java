@@ -92,6 +92,7 @@ public final class R {
         public static final int account_registration=0x7f080017;
         public static final int application_label=0x7f080000;
         public static final int authentication=0x7f080018;
+        public static final int copy_link=0x7f080028;
         public static final int email=0x7f08000f;
         public static final int email_password_required=0x7f08001a;
         public static final int enqueue_sync=0x7f080007;
@@ -107,10 +108,10 @@ public final class R {
         public static final int login=0x7f080011;
         public static final int login_activity=0x7f080003;
         public static final int logout=0x7f080020;
-        public static final int msg_failed_to_remove_tab=0x7f08002b;
-        public static final int msg_failed_to_reshared_tab=0x7f08002a;
-        public static final int msg_tab_is_removed=0x7f080028;
-        public static final int msg_tab_is_reshared=0x7f080029;
+        public static final int msg_failed_to_remove_tab=0x7f08002c;
+        public static final int msg_failed_to_reshared_tab=0x7f08002b;
+        public static final int msg_tab_is_removed=0x7f080029;
+        public static final int msg_tab_is_reshared=0x7f08002a;
         public static final int no_connection=0x7f08001f;
         public static final int not_a_user=0x7f080023;
         public static final int open=0x7f08000c;
