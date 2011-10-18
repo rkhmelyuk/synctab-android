@@ -49,6 +49,8 @@ public class SyncTabRemoteService {
     private static final String TOKEN = "token";
     private static final String DEVICE = "device";
 
+    private static final int PAGE_SIZE = 15;
+
     private final HttpHost host;
     private final SyncTabApplication application;
 
@@ -258,7 +260,7 @@ public class SyncTabRemoteService {
                 return false;
             }
 
-            final String paramString = "?" + buildGetOlderSharedTabsParamsString(oldestTabId, 10);
+            final String paramString = "?" + buildGetOlderSharedTabsParamsString(oldestTabId, PAGE_SIZE);
             final HttpGet get = new HttpGet(API_GET_TABS_BEFORE + paramString);
 
             return handleOlderSharedTabs(get);
