@@ -41,7 +41,7 @@ public class DbHelper {
         return getReadableDatabase().query(
                 DbMetadata.SHARED_TABS_TABLE,
                 null, null, null, null, null,
-                DbMetadata.ID + " DESC");
+                DbMetadata.TIMESTAMP + " DESC");
     }
 
     public void insertQueueTask(QueueTask task) {

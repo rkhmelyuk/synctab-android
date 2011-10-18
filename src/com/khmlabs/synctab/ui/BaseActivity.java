@@ -44,7 +44,6 @@ abstract class BaseActivity extends Activity {
     protected void showLogin() {
         final Intent loginIntent = new Intent(this, LoginActivity.class);
         loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        loginIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivityForResult(loginIntent, 1);
     }
 

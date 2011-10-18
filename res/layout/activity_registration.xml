@@ -7,43 +7,51 @@
 
     <include layout="@layout/titlebar"/>
 
-    <TextView android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:text="@string/registration"
-              android:textSize="30sp"
-              android:gravity="center"
-              android:layout_marginTop="10dp"
-              android:layout_marginBottom="20dp"/>
+    <LinearLayout android:orientation="vertical"
+                  android:layout_height="fill_parent"
+                  android:layout_width="fill_parent"
+                  android:paddingLeft="@dimen/simple_window_side_padding"
+                  android:paddingRight="@dimen/simple_window_side_padding">
 
-    <TextView android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:text="@string/email"
-              android:textSize="20sp"
-              android:layout_marginTop="10dp"/>
+        <TextView android:layout_height="wrap_content"
+                  android:layout_width="fill_parent"
+                  android:text="@string/registration"
+                  android:textSize="30sp"
+                  android:gravity="center"
+                  android:layout_marginTop="10dp"
+                  android:layout_marginBottom="20dp"/>
 
-    <EditText android:id="@+id/email"
-              android:layout_height="wrap_content"
-              android:inputType="textEmailAddress"
-              android:layout_width="fill_parent"
-              android:autoText="true"/>
+        <TextView android:layout_height="wrap_content"
+                  android:layout_width="fill_parent"
+                  android:text="@string/email"
+                  android:textSize="20sp"
+                  android:layout_marginTop="10dp"/>
 
-    <TextView android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:text="@string/password"
-              android:textSize="20sp"
-              android:layout_marginTop="10dp"/>
+        <EditText android:id="@+id/email"
+                  android:layout_height="wrap_content"
+                  android:inputType="textEmailAddress"
+                  android:layout_width="fill_parent"
+                  android:autoText="true"/>
 
-    <EditText android:id="@+id/password"
-              android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:inputType="textPassword"
-              android:password="true"/>
+        <TextView android:layout_height="wrap_content"
+                  android:layout_width="fill_parent"
+                  android:text="@string/password"
+                  android:textSize="20sp"
+                  android:layout_marginTop="10dp"/>
 
-    <Button android:id="@+id/register"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="@string/register"
-            android:layout_marginTop="20dp"
-            android:textSize="20sp"/>
+        <EditText android:id="@+id/password"
+                  android:layout_height="wrap_content"
+                  android:layout_width="fill_parent"
+                  android:inputType="textPassword"
+                  android:password="true"/>
+
+        <Button android:id="@+id/register"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:text="@string/register"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"/>
+
+    </LinearLayout>
 
 </LinearLayout>

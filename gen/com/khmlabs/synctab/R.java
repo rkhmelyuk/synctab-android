@@ -24,21 +24,22 @@ public final class R {
         public static final int titlebar_title_shadow=0x7f050001;
     }
     public static final class dimen {
-        public static final int shared_tab_details_text_size=0x7f06000d;
-        public static final int shared_tab_link_text_size=0x7f06000c;
-        public static final int shared_tab_row_icon_size=0x7f06000e;
-        public static final int shared_tab_row_padding=0x7f06000a;
-        public static final int shared_tab_row_side_padding=0x7f060009;
-        public static final int shared_tab_title_text_size=0x7f06000b;
-        public static final int titlebar_button_height=0x7f060001;
-        public static final int titlebar_button_padding_bottom=0x7f060006;
-        public static final int titlebar_button_padding_left=0x7f060007;
-        public static final int titlebar_button_padding_right=0x7f060008;
-        public static final int titlebar_button_padding_top=0x7f060005;
-        public static final int titlebar_button_width=0x7f060002;
-        public static final int titlebar_height=0x7f060000;
-        public static final int titlebar_margin_left=0x7f060004;
-        public static final int titlebar_title_text_size=0x7f060003;
+        public static final int shared_tab_details_text_size=0x7f06000e;
+        public static final int shared_tab_link_text_size=0x7f06000d;
+        public static final int shared_tab_row_icon_size=0x7f06000f;
+        public static final int shared_tab_row_padding=0x7f06000b;
+        public static final int shared_tab_row_side_padding=0x7f06000a;
+        public static final int shared_tab_title_text_size=0x7f06000c;
+        public static final int simple_window_side_padding=0x7f060000;
+        public static final int titlebar_button_height=0x7f060002;
+        public static final int titlebar_button_padding_bottom=0x7f060007;
+        public static final int titlebar_button_padding_left=0x7f060008;
+        public static final int titlebar_button_padding_right=0x7f060009;
+        public static final int titlebar_button_padding_top=0x7f060006;
+        public static final int titlebar_button_width=0x7f060003;
+        public static final int titlebar_height=0x7f060001;
+        public static final int titlebar_margin_left=0x7f060005;
+        public static final int titlebar_title_text_size=0x7f060004;
     }
     public static final class drawable {
         public static final int fail=0x7f020000;

@@ -21,13 +21,13 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="please_login">Please Login</string>
+    <string name="please_login">Login</string>
     <string name="registration">Registration</string>
     <string name="register">Register</string>
     <string name="register_now">Register Now</string>
     <string name="please_wait">Please wait...</string>
-    <string name="account_registration">Account registration</string>
-    <string name="authentication">Authenticating</string>
+    <string name="account_registration">Account registration...</string>
+    <string name="authentication">Authenticating...</string>
     <string name="loading_tabs">Loading a List of Shared Tabs...</string>
 
     <string name="email_password_required">Please enter email and password.</string>
@@ -39,7 +39,7 @@
     <string name="logout">Logout</string>
     <string name="refresh">Refresh</string>
     <string name="home">Home</string>
-    <string name="not_a_user">Do not have account yet?</string>
+    <string name="not_a_user">Do not have an account yet?</string>
     <string name="unknown">Unknown</string>
     <string name="reshare">Re-share</string>
     <string name="remove">Remove</string>

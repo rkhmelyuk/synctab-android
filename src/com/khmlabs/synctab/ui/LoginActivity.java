@@ -45,7 +45,6 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 Intent registerIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
                 registerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                registerIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
                 startActivity(registerIntent);
                 finish();
@@ -107,8 +106,8 @@ public class LoginActivity extends Activity {
 
             if (status == RESULT_SUCCESS) {
                 //if (getParent() != null) {
-                    setResult(RESULT_OK);
-                    finish();
+                setResult(RESULT_OK);
+                finish();
                 //}
                 /*else {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));

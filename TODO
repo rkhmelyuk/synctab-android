@@ -1,4 +1,6 @@
 
+    . logout can be long operation, show progress
+
     . problems navigating the login screen
     . problems share a link and need to login
 

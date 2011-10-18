@@ -50,13 +50,11 @@ public class SyncTabRemoteService {
     private static final String DEVICE = "device";
 
     private final HttpHost host;
-    private final HttpClient client;
     private final SyncTabApplication application;
 
     public SyncTabRemoteService(SyncTabApplication app, String scheme, String hostname, int port) {
         this.application = app;
         this.host = new HttpHost(hostname, port, scheme);
-        this.client = new DefaultHttpClient();
     }
 
     public boolean authenticate(String email, String password) {
@@ -68,6 +66,7 @@ public class SyncTabRemoteService {
             nameValuePairs.add(new BasicNameValuePair(PASSWORD, password));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+            final HttpClient client = new DefaultHttpClient();
             HttpResponse response = client.execute(host, post);
             if (successResponseStatus(response)) {
                 JsonResponse jsonResponse = readResponse(response);
@@ -109,6 +108,7 @@ public class SyncTabRemoteService {
                 nameValuePairs.add(new BasicNameValuePair(PASSWORD, password));
                 post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+                final HttpClient client = new DefaultHttpClient();
                 HttpResponse response = client.execute(host, post);
                 if (successResponseStatus(response)) {
                     JsonResponse json = readResponse(response);
@@ -152,6 +152,7 @@ public class SyncTabRemoteService {
             nameValuePairs.add(new BasicNameValuePair(TOKEN, token));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+            final HttpClient client = new DefaultHttpClient();
             HttpResponse response = client.execute(host, post);
             if (!successResponseStatus(response)) {
                 Log.e(TAG, "Failed to logout.");
@@ -183,6 +184,7 @@ public class SyncTabRemoteService {
             nameValuePairs.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+            final HttpClient client = new DefaultHttpClient();
             HttpResponse response = client.execute(host, post);
             if (!successResponseStatus(response)) {
                 Log.e(TAG, "Failed to share a tab.");
@@ -212,28 +214,117 @@ public class SyncTabRemoteService {
             final long syncTime = System.currentTimeMillis();
             final HttpGet get = new HttpGet(operation + paramString);
 
-            HttpResponse response = client.execute(host, get);
-            if (!successResponseStatus(response)) {
-                Log.e(TAG, "Failed to refresh a shared tabs.");
-                return false;
-            }
-
-            JsonResponse jsonResponse = readResponse(response);
-            if (jsonResponse.success) {
-                List<SharedTab> sharedTabs = readSharedTabs(jsonResponse);
-                if (sharedTabs.size() > 0) {
-                    insertSharedTabs(sharedTabs);
-                    updateLastSharedTabId(sharedTabs);
-                    cacheFavicons(sharedTabs);
-                }
+            if (handleRecentSharedTabs(get)) {
                 application.setLastSyncTime(syncTime);
+                return true;
             }
-
-            return jsonResponse.success;
         }
         catch (Exception e) {
             Log.e(TAG, "Error to refresh a shared tabs.", e);
+        }
+        return false;
+    }
+
+    private boolean handleRecentSharedTabs(HttpGet get) throws Exception {
+        final HttpClient client = new DefaultHttpClient();
+        HttpResponse response = client.execute(host, get);
+        if (!successResponseStatus(response)) {
+            Log.e(TAG, "Failed to refresh a shared tabs.");
             return false;
+        }
+
+        JsonResponse jsonResponse = readResponse(response);
+        if (jsonResponse.success) {
+            List<SharedTab> sharedTabs = readSharedTabs(jsonResponse);
+            if (sharedTabs.size() > 0) {
+                insertSharedTabs(sharedTabs);
+                updateRecentSharedTabId(sharedTabs);
+                updateOldestSharedTabId(sharedTabs);
+                cacheFavicons(sharedTabs);
+            }
+        }
+
+        return jsonResponse.success;
+    }
+
+    public boolean getOlderSharedTabs() {
+        if (!application.isOnLine()) {
+            return true;
+        }
+
+        try {
+            final String oldestTabId = application.getOldestSharedTabId();
+            if (oldestTabId == null) {
+                return false;
+            }
+
+            final String paramString = "?" + buildGetOlderSharedTabsParamsString(oldestTabId, 10);
+            final HttpGet get = new HttpGet(API_GET_TABS_BEFORE + paramString);
+
+            return handleOlderSharedTabs(get);
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to load older shared tabs.", e);
+            return false;
+        }
+    }
+
+    private boolean handleOlderSharedTabs(HttpGet get) throws Exception {
+        final HttpClient client = new DefaultHttpClient();
+        HttpResponse response = client.execute(host, get);
+        if (!successResponseStatus(response)) {
+            Log.e(TAG, "Failed to load older shared tabs.");
+            return false;
+        }
+
+        final JsonResponse jsonResponse = readResponse(response);
+        if (jsonResponse.success) {
+            List<SharedTab> sharedTabs = readSharedTabs(jsonResponse);
+            if (sharedTabs.size() > 0) {
+                insertSharedTabs(sharedTabs);
+                updateOldestSharedTabId(sharedTabs);
+                cacheFavicons(sharedTabs);
+            }
+            else {
+                application.setOldestSharedTabId(null);
+            }
+        }
+
+        return true;
+    }
+
+    private String buildGetSharedTabsParamsString(String lastSharedTabId, long lastSyncTime) {
+        final List<NameValuePair> params = new LinkedList<NameValuePair>();
+        if (lastSharedTabId != null) {
+            params.add(new BasicNameValuePair(ID, lastSharedTabId));
+        }
+        if (lastSyncTime != 0) {
+            params.add(new BasicNameValuePair("ts", Long.toString(lastSyncTime)));
+        }
+        params.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
+
+        return URLEncodedUtils.format(params, "utf-8");
+    }
+
+    private String buildGetOlderSharedTabsParamsString(String oldestSharedTabId, int max) {
+        final List<NameValuePair> params = new ArrayList<NameValuePair>(3);
+        params.add(new BasicNameValuePair(ID, oldestSharedTabId));
+        params.add(new BasicNameValuePair("max", Integer.toString(max)));
+        params.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
+
+        return URLEncodedUtils.format(params, "utf-8");
+    }
+
+    private void downloadAndCacheFavicon(String url) {
+        try {
+            final HttpClient client = new DefaultHttpClient();
+            final HttpResponse response = client.execute(new HttpGet(url));
+            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                application.getCacheManager().store(url, response.getEntity().getContent());
+            }
+        }
+        catch (IOException e) {
+            Log.w(TAG, "Error to download favicon " + url);
         }
     }
 
@@ -246,37 +337,23 @@ public class SyncTabRemoteService {
         }
     }
 
-    private void downloadAndCacheFavicon(String url) {
-        try {
-            final HttpResponse response = client.execute(new HttpGet(url));
-            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                application.getCacheManager().store(url, response.getEntity().getContent());
-            }
-        }
-        catch (IOException e) {
-            Log.w(TAG, "Error to download favicon " + url);
-        }
-    }
-
-    private String buildGetSharedTabsParamsString(String lastSharedTabId, long lastSyncTime) {
-        final List<NameValuePair> params = new LinkedList<NameValuePair>();
-        if (lastSharedTabId != null) {
-            params.add(new BasicNameValuePair(ID, lastSharedTabId));
-        }
-        if (lastSyncTime != 0) {
-            params.add(new BasicNameValuePair("ts", Long.toString(lastSyncTime)));
-        }
-        params.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
-        return URLEncodedUtils.format(params, "utf-8");
-    }
-
-    private void updateLastSharedTabId(List<SharedTab> sharedTabs) {
+    private void updateRecentSharedTabId(List<SharedTab> sharedTabs) {
         final SharedTab recent = getRecentSharedTab(sharedTabs);
         if (recent != null) {
             application.setLastSharedTabId(recent.getId());
         }
         else {
             application.setLastSharedTabId(null);
+        }
+    }
+
+    private void updateOldestSharedTabId(List<SharedTab> sharedTabs) {
+        final SharedTab oldest = getOldestSharedTab(sharedTabs);
+        if (oldest != null) {
+            application.setOldestSharedTabId(oldest.getId());
+        }
+        else {
+            application.setOldestSharedTabId(null);
         }
     }
 
@@ -410,6 +487,7 @@ public class SyncTabRemoteService {
             nameValuePairs.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+            final HttpClient client = new DefaultHttpClient();
             HttpResponse response = client.execute(host, post);
             if (!successResponseStatus(response)) {
                 Log.e(TAG, "Failed to remove tab.");
@@ -468,6 +546,7 @@ public class SyncTabRemoteService {
             nameValuePairs.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+            final HttpClient client = new DefaultHttpClient();
             HttpResponse response = client.execute(host, post);
             if (!successResponseStatus(response)) {
                 Log.e(TAG, "Failed to reshare tab.");
@@ -505,6 +584,20 @@ public class SyncTabRemoteService {
         for (SharedTab each : sharedTabs) {
             if (each.getTimestamp() > max) {
                 max = each.getTimestamp();
+                recent = each;
+            }
+        }
+
+        return recent;
+    }
+
+    private static SharedTab getOldestSharedTab(List<SharedTab> sharedTabs) {
+        long min = System.currentTimeMillis();
+        SharedTab recent = null;
+
+        for (SharedTab each : sharedTabs) {
+            if (each.getTimestamp() < min) {
+                min = each.getTimestamp();
                 recent = each;
             }
         }

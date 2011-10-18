@@ -37,7 +37,8 @@ public class MainActivity extends BaseActivity {
 
     private final SimpleCursorAdapter.ViewBinder ROW_BINDER = new SharedTabsBinder(this);
 
-    private ListView sharedTabs;
+    ListView sharedTabs;
+    SimpleCursorAdapter sharedTabsAdapter;
 
     private DbHelper dbHelper;
 
@@ -45,8 +46,27 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedTabs = (ListView) findViewById(R.id.tabs);
         dbHelper = new DbHelper(this);
+
+        sharedTabs = (ListView) findViewById(R.id.tabs);
+        sharedTabs.setOnScrollListener(new AbsListView.OnScrollListener() {
+            int prevTotalCount = 0;
+
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+            }
+
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleCount, int totalCount) {
+                if (firstVisibleItem + visibleCount != 0) {
+                    boolean needLoad = (5 + firstVisibleItem + visibleCount >= totalCount);
+                    needLoad &= (prevTotalCount != totalCount);
+
+                    if (needLoad) {
+                        prevTotalCount = totalCount;
+                        new LoadNextPageTask().execute();
+                    }
+                }
+            }
+        });
 
         sharedTabs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -67,10 +87,11 @@ public class MainActivity extends BaseActivity {
 
         if (getSyncTabApplication().isAuthenticated()) {
             refreshSharedTabs();
-        }
 
-        // TODO - cleanup in AsyncTask!
-        getSyncTabApplication().cleanupCacheIfNeed();
+            // if not authenticated - then no cache
+            // because we cleanup cache on logout
+            new CleanupCacheTask().execute();
+        }
     }
 
     @Override
@@ -84,12 +105,18 @@ public class MainActivity extends BaseActivity {
         final Cursor cursor = dbHelper.findSharedTabs();
         startManagingCursor(cursor);
 
-        SimpleCursorAdapter sharedTabsAdapter = new SimpleCursorAdapter(
-                this, R.layout.tab_row,
-                cursor, ADAPTER_FROM, ADAPTER_TO);
+        if (sharedTabsAdapter == null) {
+            sharedTabsAdapter = new SimpleCursorAdapter(
+                    this, R.layout.tab_row,
+                    cursor, ADAPTER_FROM, ADAPTER_TO);
 
-        sharedTabsAdapter.setViewBinder(ROW_BINDER);
-        sharedTabs.setAdapter(sharedTabsAdapter);
+            sharedTabsAdapter.setViewBinder(ROW_BINDER);
+            sharedTabs.setAdapter(sharedTabsAdapter);
+        }
+        else {
+            sharedTabsAdapter.getCursor().requery();
+            sharedTabsAdapter.notifyDataSetChanged();
+        }
 
         return (cursor.getCount() != 0);
     }
@@ -325,6 +352,38 @@ public class MainActivity extends BaseActivity {
             startActivity(Intent.createChooser(sendIntent, chooserTitle));
 
             return true;
+        }
+    }
+
+    private class CleanupCacheTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            getSyncTabApplication().cleanupCacheIfNeed();
+            return true;
+        }
+    }
+
+    private class LoadNextPageTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            try {
+                SyncTabRemoteService service = getSyncTabApplication().getSyncTabRemoteService();
+                return !service.getOlderSharedTabs();
+            }
+            catch (Exception e) {
+                Log.e(MainActivity.TAG, "error to load older shared tabs", e);
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean empty) {
+            super.onPostExecute(empty);
+            if (!empty) {
+                refreshAdapter();
+            }
         }
     }
 

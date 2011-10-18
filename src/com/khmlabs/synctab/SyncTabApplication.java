@@ -146,4 +146,12 @@ public class SyncTabApplication extends Application {
     public void setLastSharedTabId(String id) {
         preferences.edit().putString(AppConstants.LAST_SHARED_TAB_ID, id).commit();
     }
+
+    public String getOldestSharedTabId() {
+        return preferences.getString(AppConstants.OLDEST_SHARED_TAB_ID, null);
+    }
+
+    public void setOldestSharedTabId(String id) {
+        preferences.edit().putString(AppConstants.OLDEST_SHARED_TAB_ID, id).commit();
+    }
 }

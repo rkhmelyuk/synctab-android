@@ -7,62 +7,71 @@
 
     <include layout="@layout/titlebar"/>
 
-    <TextView android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:text="@string/please_login"
-              android:textSize="30sp"
-              android:gravity="center"
-              android:layout_marginTop="10dp"
-              android:layout_marginBottom="20dp"/>
-
-    <TextView android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:text="@string/email"
-              android:textSize="20sp"
-              android:layout_marginTop="10dp"/>
-
-    <EditText android:id="@+id/email"
-              android:layout_height="wrap_content"
-              android:inputType="textEmailAddress"
-              android:layout_width="fill_parent"
-              android:autoText="true"/>
-
-    <TextView android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:text="@string/password"
-              android:textSize="20sp"
-              android:layout_marginTop="10dp"/>
-
-    <EditText android:id="@+id/password"
-              android:inputType="textPassword"
-              android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:password="true"/>
-
-    <Button android:id="@+id/login"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="@string/login"
-            android:layout_marginTop="20dp"
-            android:textSize="20sp"/>
-
-
-    <LinearLayout android:orientation="horizontal"
+    <LinearLayout android:orientation="vertical"
                   android:layout_height="fill_parent"
-                  android:layout_width="fill_parent">
+                  android:layout_width="fill_parent"
+                  android:paddingLeft="@dimen/simple_window_side_padding"
+                  android:paddingRight="@dimen/simple_window_side_padding">
 
         <TextView android:layout_height="wrap_content"
-                  android:layout_width="wrap_content"
-                  android:text="@string/not_a_user"
-                  android:gravity="left"
-                  android:textSize="14sp"/>
+                  android:layout_width="fill_parent"
+                  android:text="@string/please_login"
+                  android:textSize="30sp"
+                  android:gravity="center"
+                  android:layout_marginTop="10dp"
+                  android:layout_marginBottom="20dp"/>
 
-        <Button android:id="@+id/register"
+        <TextView android:layout_height="wrap_content"
+                  android:layout_width="fill_parent"
+                  android:text="@string/email"
+                  android:textSize="20sp"
+                  android:layout_marginTop="10dp"/>
+
+        <EditText android:id="@+id/email"
+                  android:layout_height="wrap_content"
+                  android:inputType="textEmailAddress"
+                  android:layout_width="fill_parent"
+                  android:autoText="true"/>
+
+        <TextView android:layout_height="wrap_content"
+                  android:layout_width="fill_parent"
+                  android:text="@string/password"
+                  android:textSize="20sp"
+                  android:layout_marginTop="10dp"/>
+
+        <EditText android:id="@+id/password"
+                  android:inputType="textPassword"
+                  android:layout_height="wrap_content"
+                  android:layout_width="fill_parent"
+                  android:password="true"/>
+
+        <Button android:id="@+id/login"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="@string/register_now"
-                android:gravity="right"
-                android:textSize="14sp"/>
+                android:layout_width="fill_parent"
+                android:text="@string/login"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"/>
+
+        <RelativeLayout android:orientation="horizontal"
+                      android:layout_height="fill_parent"
+                      android:layout_width="fill_parent">
+
+            <Button android:id="@+id/register"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="@string/register_now"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:textSize="14sp"/>
+
+            <TextView android:layout_height="wrap_content"
+                      android:layout_width="wrap_content"
+                      android:text="@string/not_a_user"
+                      android:layout_alignBaseline="@id/register"
+                      android:layout_toLeftOf="@id/register"
+                      android:textSize="14sp"/>
+        </RelativeLayout>
+
     </LinearLayout>
 
 
