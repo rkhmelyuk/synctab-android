@@ -18,13 +18,7 @@ public class UrlUtil {
     private static final int URL_PATH_COLOR = 0xff999999;
 
     public static String prepareReadableUrl(String url) {
-        try {
-            url = URLDecoder.decode(url, "utf-8");
-        }
-        catch (UnsupportedEncodingException e) {
-            Log.e(TAG, "Error to decode url " + url);
-        }
-
+        url = decodeLink(url);
         url = url.replaceFirst("[a-z]+://", "");
         url = url.replaceAll("[?#].*", "");
         url = url.replaceAll("(.*)/+$", "$1");
@@ -55,6 +49,16 @@ public class UrlUtil {
             }
         }
 
+        return url;
+    }
+
+    public static String decodeLink(String url) {
+        try {
+            url = URLDecoder.decode(url, "utf-8");
+        }
+        catch (UnsupportedEncodingException e) {
+            Log.e(TAG, "Error to decode url " + url);
+        }
         return url;
     }
 }
