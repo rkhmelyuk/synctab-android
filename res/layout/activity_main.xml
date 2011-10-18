@@ -9,6 +9,7 @@
     <ListView android:layout_height="fill_parent"
               android:layout_width="fill_parent"
               android:layout_weight="1"
-              android:id="@+id/tabs"/>
+              android:id="@+id/tabs"
+              android:fadeScrollbars="true"/>
 
 </LinearLayout>
