@@ -41,6 +41,7 @@ public class MainActivity extends BaseActivity {
     SimpleCursorAdapter sharedTabsAdapter;
 
     private DbHelper dbHelper;
+    private boolean refreshing = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -231,8 +232,22 @@ public class MainActivity extends BaseActivity {
     }
 
     public void refreshSharedTabs() {
-        boolean filled = refreshAdapter();
-        new RefreshSharedTabsTask(filled).execute();
+        if (!refreshing) {
+            // use some events
+            boolean filled = refreshAdapter();
+            new RefreshSharedTabsTask(filled).execute();
+        }
+    }
+
+    void setRefreshing(boolean refreshing) {
+        this.refreshing = refreshing;
+
+        if (refreshing) {
+            titlebarHelper.setRefreshing(true);
+        }
+        else {
+            titlebarHelper.setRefreshing(false);
+        }
     }
 
     private class RefreshSharedTabsTask extends AsyncTask<String, String, Boolean> {
@@ -249,6 +264,8 @@ public class MainActivity extends BaseActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
+            setRefreshing(true);
+
             if (!filled) {
                 final String message = getResources().getString(R.string.loading_tabs);
                 progress = ProgressDialog.show(MainActivity.this, null, message, true, false);
@@ -260,6 +277,13 @@ public class MainActivity extends BaseActivity {
             try {
                 SyncTabApplication application = getSyncTabApplication();
                 SyncTabRemoteService service = application.getSyncTabRemoteService();
+                try {
+                    Thread.sleep(5000);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 return service.refreshSharedTabs();
             }
             catch (Exception e) {
@@ -283,6 +307,8 @@ public class MainActivity extends BaseActivity {
             else {
                 refreshAdapter();
             }
+
+            setRefreshing(false);
         }
     }
 

@@ -47,13 +47,18 @@ public final class R {
         public static final int ic_menu_refresh=0x7f020002;
         public static final int ic_title_home=0x7f020003;
         public static final int ic_title_refresh=0x7f020004;
-        public static final int icon=0x7f020005;
-        public static final int tab_row_background=0x7f020006;
-        public static final int titlebar_background=0x7f020007;
-        public static final int titlebar_button=0x7f020008;
-        public static final int titlebar_icon=0x7f020009;
-        public static final int titlebar_separator=0x7f02000a;
-        public static final int yes=0x7f02000b;
+        public static final int ic_title_refreshing=0x7f020005;
+        public static final int icon=0x7f020006;
+        public static final int refreshing0=0x7f020007;
+        public static final int refreshing1=0x7f020008;
+        public static final int refreshing2=0x7f020009;
+        public static final int refreshing3=0x7f02000a;
+        public static final int tab_row_background=0x7f02000b;
+        public static final int titlebar_background=0x7f02000c;
+        public static final int titlebar_button=0x7f02000d;
+        public static final int titlebar_icon=0x7f02000e;
+        public static final int titlebar_separator=0x7f02000f;
+        public static final int yes=0x7f020010;
     }
     public static final class id {
         public static final int device=0x7f0b000b;

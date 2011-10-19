@@ -3,6 +3,7 @@ package com.khmlabs.synctab.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.AnimationDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -11,9 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.khmlabs.synctab.R;
 
-public class TitleBarHelper {
+class TitleBarHelper {
 
     final Activity activity;
+
+    private static final int HOME_BUTTON_ID = 0x7f0b9999;
+    private static final int REFRESH_BUTTON_ID = 0x7f0b9998;
 
     public TitleBarHelper(Activity activity) {
         this.activity = activity;
@@ -28,19 +32,22 @@ public class TitleBarHelper {
 
         if (activity instanceof MainActivity) {
             addSeparator(layout);
-            addButton(layout, layoutParams, R.drawable.ic_title_refresh, new View.OnClickListener() {
-                public void onClick(View view) {
-                    refreshTabs();
-                }
-            });
+            addButton(layout, layoutParams, R.drawable.ic_title_refresh, REFRESH_BUTTON_ID,
+                    new View.OnClickListener() {
+                        public void onClick(View view) {
+                            refreshTabs();
+                        }
+                    });
         }
-
-        addSeparator(layout);
-        addButton(layout, layoutParams, R.drawable.ic_title_home, new View.OnClickListener() {
-            public void onClick(View view) {
-                goHome();
-            }
-        });
+        else {
+            addSeparator(layout);
+            addButton(layout, layoutParams, R.drawable.ic_title_home, HOME_BUTTON_ID,
+                    new View.OnClickListener() {
+                        public void onClick(View view) {
+                            goHome();
+                        }
+                    });
+        }
     }
 
     private void refreshTabs() {
@@ -76,8 +83,9 @@ public class TitleBarHelper {
     }
 
     private void addButton(LinearLayout layout, LinearLayout.LayoutParams layoutParams,
-                           int icon, View.OnClickListener action) {
+                           int icon, int id, View.OnClickListener action) {
         final ImageButton button = new ImageButton(activity);
+        button.setId(id);
         button.setLayoutParams(layoutParams);
         button.setImageResource(icon);
         button.setScaleType(ImageView.ScaleType.CENTER);
@@ -102,5 +110,20 @@ public class TitleBarHelper {
         separator.setScaleType(ImageView.ScaleType.FIT_XY);
 
         layout.addView(separator);
+    }
+
+    public void setRefreshing(boolean refreshing) {
+        final ImageButton button = (ImageButton) activity.findViewById(REFRESH_BUTTON_ID);
+
+        if (refreshing) {
+            button.setClickable(false);
+            button.setImageResource(R.drawable.ic_title_refreshing);
+            ((AnimationDrawable) button.getDrawable()).start();
+        }
+        else {
+            ((AnimationDrawable) button.getDrawable()).stop();
+            button.setImageResource(R.drawable.ic_title_refresh);
+            button.setClickable(true);
+        }
     }
 }
