@@ -87,7 +87,7 @@ public class MainActivity extends BaseActivity {
         super.onResume();
 
         if (getSyncTabApplication().isAuthenticated()) {
-            refreshSharedTabs();
+            refreshSharedTabs();      // TODO - move to async task?
 
             // if not authenticated - then no cache
             // because we cleanup cache on logout
@@ -240,13 +240,15 @@ public class MainActivity extends BaseActivity {
     }
 
     void setRefreshing(boolean refreshing) {
-        this.refreshing = refreshing;
+        if (this.refreshing != refreshing) {
+            this.refreshing = refreshing;
 
-        if (refreshing) {
-            titlebarHelper.setRefreshing(true);
-        }
-        else {
-            titlebarHelper.setRefreshing(false);
+            if (refreshing) {
+                titlebarHelper.setRefreshing(true);
+            }
+            else {
+                titlebarHelper.setRefreshing(false);
+            }
         }
     }
 
@@ -264,11 +266,12 @@ public class MainActivity extends BaseActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            setRefreshing(true);
-
             if (!filled) {
                 final String message = getResources().getString(R.string.loading_tabs);
                 progress = ProgressDialog.show(MainActivity.this, null, message, true, false);
+            }
+            else {
+                setRefreshing(true);
             }
         }
 
@@ -283,7 +286,6 @@ public class MainActivity extends BaseActivity {
                 catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 return service.refreshSharedTabs();
             }
             catch (Exception e) {
