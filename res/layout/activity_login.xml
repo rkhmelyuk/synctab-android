@@ -11,7 +11,8 @@
                   android:layout_height="fill_parent"
                   android:layout_width="fill_parent"
                   android:paddingLeft="@dimen/simple_window_side_padding"
-                  android:paddingRight="@dimen/simple_window_side_padding">
+                  android:paddingRight="@dimen/simple_window_side_padding"
+                  android:paddingBottom="@dimen/simple_window_bottom_padding">
 
         <TextView android:layout_height="wrap_content"
                   android:layout_width="fill_parent"
@@ -45,24 +46,18 @@
                   android:layout_width="fill_parent"
                   android:password="true"/>
 
-        <Button android:id="@+id/login"
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:text="@string/login"
-                android:layout_marginTop="20dp"
-                android:textSize="20sp"/>
+        <Button android:id="@+id/login" style="@style/LoginButton"/>
 
         <RelativeLayout android:orientation="horizontal"
-                      android:layout_height="fill_parent"
-                      android:layout_width="fill_parent">
+                        android:layout_height="fill_parent"
+                        android:layout_width="fill_parent">
 
             <Button android:id="@+id/register"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
+                    style="@style/SmallRegisterButton"
                     android:text="@string/register_now"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:textSize="14sp"/>
+                    android:layout_marginLeft="4dp"/>
 
             <TextView android:layout_height="wrap_content"
                       android:layout_width="wrap_content"

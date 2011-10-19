@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <shape>
+            <corners android:radius="3dp"/>
+
+            <padding android:top="@dimen/main_button_top_margin" android:bottom="@dimen/main_button_bottom_margin"
+                     android:left="@dimen/main_button_side_margin" android:right="@dimen/main_button_side_margin"/>
+
+            <gradient android:startColor="@color/main_button_pressed_gradient_start"
+                      android:endColor="@color/main_button_pressed_gradient_end"
+                      android:angle="270" android:type="linear"/>
+        </shape>
+    </item>
+
+    <item android:state_focused="true">
+        <shape>
+            <stroke android:width="3dp" android:color="@color/custom_button_focus_border"
+                    android:topLeftRadius="3dp" android:topRightRadius="3dp"
+                    android:bottomLeftRadius="3dp" android:bottomRightRadius="3dp"/>
+
+            <corners android:radius="3dp"/>
+
+            <padding android:top="@dimen/main_button_top_margin" android:bottom="@dimen/main_button_bottom_margin"
+                     android:left="@dimen/main_button_side_margin" android:right="@dimen/main_button_side_margin"/>
+
+            <gradient android:startColor="@color/main_button_gradient_start"
+                      android:endColor="@color/main_button_gradient_end"
+                      android:angle="270" android:type="linear"/>
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <corners android:radius="3dp"/>
+
+            <padding android:top="@dimen/main_button_top_margin" android:bottom="@dimen/main_button_bottom_margin"
+                     android:left="@dimen/main_button_side_margin" android:right="@dimen/main_button_side_margin"/>
+
+            <gradient android:startColor="@color/main_button_gradient_start"
+                      android:endColor="@color/main_button_gradient_end"
+                      android:angle="270" android:type="linear"/>
+        </shape>
+    </item>
+
+</selector>

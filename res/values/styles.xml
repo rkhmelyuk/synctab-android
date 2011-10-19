@@ -41,4 +41,40 @@
         <item name="android:background">@drawable/tab_row_background</item>
     </style>
 
+    <style name="MainButton">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/main_button</item>
+        <item name="android:textColor">@color/custom_button_text</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:shadowColor">@color/custom_button_shadow</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
+    <style name="SmallRegisterButton">
+        <item name="android:background">@drawable/register_button</item>
+        <item name="android:textColor">@color/custom_button_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:shadowColor">@color/custom_button_shadow</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="LoginButton" parent="MainButton">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:text">@string/login</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="RegisterButton" parent="MainButton">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:text">@string/register</item>
+    </style>
+
 </resources>

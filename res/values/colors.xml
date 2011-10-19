@@ -13,4 +13,20 @@
     <color name="titlebar_gradient_start">#444444</color>
     <color name="titlebar_gradient_end">#222222</color>
 
+    <color name="register_button_gradient_start">#3a7f2f</color>
+    <color name="register_button_gradient_end">#2a5f2a</color>
+
+    <color name="register_button_pressed_gradient_start">#2a6f2a</color>
+    <color name="register_button_pressed_gradient_end">#203f20</color>
+
+    <color name="main_button_gradient_start">#3F6ED4</color>
+    <color name="main_button_gradient_end">#2B55AD</color>
+
+    <color name="main_button_pressed_gradient_start">#2253BA</color>
+    <color name="main_button_pressed_gradient_end">#073594</color>
+
+    <color name="custom_button_shadow">#222222</color>
+    <color name="custom_button_text">#ffffff</color>
+    <color name="custom_button_focus_border">#e76735</color>
+
 </resources>
