@@ -14,6 +14,7 @@ import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.RemoteOpState;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.SyncTabRemoteService;
+import com.khmlabs.synctab.util.UrlUtil;
 
 public class ShareTabActivity extends BaseActivity {
 
@@ -44,14 +45,21 @@ public class ShareTabActivity extends BaseActivity {
         if (getSyncTabApplication().isAuthenticated()) {
             // get the shared link
             final Intent intent = getIntent();
-            final String link = intent.getStringExtra(Intent.EXTRA_TEXT);
+            String link = intent.getStringExtra(Intent.EXTRA_TEXT);
 
-            if (URLUtil.isValidUrl(link)) {
-                new SyncTabTask().execute(link);
+            if (link != null && link.length() > 0) {
+                link = UrlUtil.decodeUrl(link);
+                if (URLUtil.isValidUrl(link)) {
+                    new SyncTabTask().execute(link);
+                }
+                else {
+                    statusImage.setImageResource(R.drawable.fail);
+                    statusText.setText(R.string.incorrect_url);
+                }
             }
             else {
                 statusImage.setImageResource(R.drawable.fail);
-                statusText.setText(R.string.incorrect_url);
+                    statusText.setText(R.string.nothing_to_share);
             }
         }
     }

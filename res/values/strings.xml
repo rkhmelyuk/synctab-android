@@ -12,6 +12,7 @@
     <string name="enqueue_sync">Tab will be synced\n when you\'ll be online.\n\n Have fun!</string>
     <string name="failed_sync">Error to sync tab.\n\nSorry ;(</string>
     <string name="incorrect_url">What you\'re trying to share is a not a URL.\n\n Try something else!</string>
+    <string name="nothing_to_share">Nothing to share:\n no URL received.</string>
     <string name="synctab_service">SyncTab Service</string>
 
     <string name="pref_url_title">SyncTab URL</string>

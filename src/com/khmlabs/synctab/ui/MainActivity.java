@@ -160,7 +160,6 @@ public class MainActivity extends BaseActivity {
         else {
             final int linkColumn = cursor.getColumnIndex(DbMetadata.LINK);
             String link = cursor.getString(linkColumn);
-            link = UrlUtil.decodeLink(link);
             menu.setHeaderTitle(link);
         }
     }
