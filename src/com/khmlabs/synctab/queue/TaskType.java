@@ -5,7 +5,8 @@ public enum TaskType {
     Logout(1),
     SyncTab(2),
     RemoveSharedTab(3),
-    ReshareTab(4);
+    ReshareTab(4),
+    LoadFavicon(5);
 
     private final int id;
 
@@ -18,11 +19,10 @@ public enum TaskType {
     }
 
     public static TaskType findById(int id) {
-        if (id == Logout.id) {
-            return Logout;
-        }
-        else if (id == SyncTab.id) {
-            return SyncTab;
+        for (TaskType each : values()) {
+            if (each.id == id) {
+                return each;
+            }
         }
         return null;
     }
