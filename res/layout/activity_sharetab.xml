@@ -7,17 +7,31 @@
 
     <include layout="@layout/titlebar"/>
 
-    <ImageView android:id="@+id/share_tab_status_img"
-               android:layout_height="wrap_content"
-               android:layout_width="wrap_content"
-               android:layout_gravity="center"
-               android:layout_marginTop="50dp"/>
+    <ScrollView android:fillViewport="true"
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent">
 
-    <TextView android:id="@+id/sync_tab_status"
-              android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:layout_marginTop="20dp"
-              android:gravity="center"
-              android:textSize="26sp"/>
+        <LinearLayout android:orientation="vertical"
+                      android:layout_height="fill_parent"
+                      android:layout_width="fill_parent"
+                      android:paddingLeft="@dimen/simple_window_side_padding"
+                      android:paddingRight="@dimen/simple_window_side_padding"
+                      android:paddingBottom="@dimen/simple_window_bottom_padding">
+
+            <ImageView android:id="@+id/share_tab_status_img"
+                       android:layout_height="wrap_content"
+                       android:layout_width="wrap_content"
+                       android:layout_gravity="center"
+                       android:layout_marginTop="50dp"/>
+
+            <TextView android:id="@+id/sync_tab_status"
+                      android:layout_height="wrap_content"
+                      android:layout_width="fill_parent"
+                      android:layout_marginTop="20dp"
+                      android:gravity="center"
+                      android:textSize="26sp"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

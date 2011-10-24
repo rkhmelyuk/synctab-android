@@ -59,7 +59,7 @@ public class ShareTabActivity extends BaseActivity {
             }
             else {
                 statusImage.setImageResource(R.drawable.fail);
-                    statusText.setText(R.string.nothing_to_share);
+                statusText.setText(R.string.nothing_to_share);
             }
         }
     }
