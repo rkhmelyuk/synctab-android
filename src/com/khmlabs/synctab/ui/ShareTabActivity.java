@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.khmlabs.synctab.R;
@@ -45,10 +46,15 @@ public class ShareTabActivity extends BaseActivity {
             final Intent intent = getIntent();
             final String link = intent.getStringExtra(Intent.EXTRA_TEXT);
 
-            new SyncTabTask().execute(link);
+            if (URLUtil.isValidUrl(link)) {
+                new SyncTabTask().execute(link);
+            }
+            else {
+                statusImage.setImageResource(R.drawable.fail);
+                statusText.setText(R.string.incorrect_url);
+            }
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
