@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,29 +20,44 @@ public class RegistrationActivity extends Activity {
 
     private static final String TAG = "RegistrationActivity";
 
+    EditText emailInput;
+    EditText passwordInput;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        final EditText emailInput = (EditText) findViewById(R.id.email);
-        final EditText passwordInput = (EditText) findViewById(R.id.password);
+        emailInput = (EditText) findViewById(R.id.email);
 
-        Button registerButton = (Button) findViewById(R.id.register);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                String email = emailInput.getText().toString().trim();
-                String password = passwordInput.getText().toString().trim();
-
-                if (email.length() != 0 && password.length() != 0) {
-                    new RegisterTask().execute(email, password);
+        passwordInput = (EditText) findViewById(R.id.password);
+        passwordInput.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    register();
+                    return true;
                 }
-                else {
-                    Toast.makeText(
-                            RegistrationActivity.this,
-                            R.string.email_password_required, 3000).show();
-                }
+                return false;
             }
         });
+
+        final Button registerButton = (Button) findViewById(R.id.register);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                register();
+            }
+        });
+    }
+
+    private void register() {
+        String email = emailInput.getText().toString().trim();
+        String password = passwordInput.getText().toString().trim();
+
+        if (email.length() != 0 && password.length() != 0) {
+            new RegisterTask().execute(email, password);
+        }
+        else {
+            Toast.makeText(this, R.string.email_password_required, 3000).show();
+        }
     }
 
     private class RegisterTask extends AsyncTask<String, String, RegistrationStatus> {
@@ -89,7 +105,7 @@ public class RegistrationActivity extends Activity {
                 }
                 Toast.makeText(RegistrationActivity.this, message.toString(), 5000).show();
             }
-            else if (status.getStatus() == RegistrationStatus.Status.Succeed) {
+            else if (status.getStatus() == RegistrationStatus.Status.Offline) {
                 Toast.makeText(RegistrationActivity.this, R.string.no_connection, 5000).show();
             }
         }

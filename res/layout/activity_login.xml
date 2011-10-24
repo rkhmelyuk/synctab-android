@@ -20,7 +20,7 @@
                       android:paddingBottom="@dimen/simple_window_bottom_padding">
 
             <RelativeLayout android:orientation="vertical"
-                            android:layout_height="fill_parent"
+                            android:layout_height="wrap_content"
                             android:layout_width="fill_parent">
 
                 <TextView android:id="@+id/login_label"
@@ -72,14 +72,14 @@
             <RelativeLayout android:orientation="horizontal"
                             android:layout_marginTop="20dp"
                             android:layout_height="wrap_content"
-                            android:layout_width="wrap_content">
+                            android:layout_width="fill_parent">
 
                 <Button android:id="@+id/register"
                         style="@style/ToolButton"
                         android:text="@string/register_now"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
-                        android:layout_marginLeft="8dp"/>
+                        android:layout_marginLeft="12dp"/>
 
                 <TextView android:layout_height="wrap_content"
                           android:layout_width="wrap_content"
