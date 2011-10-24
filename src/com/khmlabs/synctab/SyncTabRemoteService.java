@@ -322,7 +322,8 @@ public class SyncTabRemoteService {
             final HttpClient client = new DefaultHttpClient();
             final HttpResponse response = client.execute(new HttpGet(url));
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                application.getCacheManager().store(url, response.getEntity().getContent());
+                final String cacheKey = AppConstants.FAVICON_CACHE_PREFIX + url;
+                application.getCacheManager().store(cacheKey, response.getEntity().getContent());
             }
         }
         catch (IOException e) {

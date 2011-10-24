@@ -429,7 +429,8 @@ public class MainActivity extends BaseActivity {
             if (element.getId() == R.id.tab_icon) {
                 String favicon = cursor.getString(columnIndex);
                 if (favicon != null && favicon.length() > 0) {
-                    InputStream image = cacheManager.read(favicon);
+                    final String cacheKey = AppConstants.FAVICON_CACHE_PREFIX + favicon;
+                    final InputStream image = cacheManager.read(cacheKey);
                     if (image != null) {
                         final Bitmap bitmap = BitmapFactory.decodeStream(image);
                         ((ImageView) element).setImageBitmap(bitmap);

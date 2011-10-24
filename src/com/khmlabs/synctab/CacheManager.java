@@ -112,7 +112,11 @@ public class CacheManager {
     }
 
     private static String convertToFileName(String name) {
-        return name.replaceAll("[^a-zA-Z0-9]*", "");
+        name = name.replaceAll("[^a-zA-Z0-9_\\-]*", "");
+        if (name.length() > 256) {
+            name = name.substring(0, 255);
+        }
+        return name;
     }
 
 }
