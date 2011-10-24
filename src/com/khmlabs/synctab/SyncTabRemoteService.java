@@ -22,7 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -317,27 +316,8 @@ public class SyncTabRemoteService {
         return URLEncodedUtils.format(params, "utf-8");
     }
 
-    private void downloadAndCacheFavicon(String url) {
-        try {
-            final HttpClient client = new DefaultHttpClient();
-            final HttpResponse response = client.execute(new HttpGet(url));
-            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                final String cacheKey = AppConstants.FAVICON_CACHE_PREFIX + url;
-                application.getCacheManager().store(cacheKey, response.getEntity().getContent());
-            }
-        }
-        catch (IOException e) {
-            Log.w(TAG, "Error to download favicon " + url);
-        }
-    }
-
     private void cacheFavicons(List<SharedTab> tabs) {
-        for (SharedTab each : tabs) {
-            String favicon = each.getFavicon();
-            if (favicon != null && favicon.length() > 0) {
-                downloadAndCacheFavicon(favicon);
-            }
-        }
+        new FaviconPreloader(application).preloadForTabs(tabs);
     }
 
     private void updateRecentSharedTabId(List<SharedTab> sharedTabs) {

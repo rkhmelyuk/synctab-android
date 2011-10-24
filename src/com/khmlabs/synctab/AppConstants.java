@@ -21,5 +21,4 @@ public interface AppConstants {
     // 30 days
     long CACHE_CLEANUP_PERIOD = 1000L * 3600L * 24L * 30L;
 
-    String FAVICON_CACHE_PREFIX = "favicon_";
 }
