@@ -19,6 +19,7 @@ public class SyncTabApplication extends Application {
     private SharedPreferences preferences;
     private SyncTabRemoteService syncTabRemoteService;
     private CacheManager cacheManager;
+    private TaskQueueManager taskQueueManager;
 
     @Override
     public void onCreate() {
@@ -29,6 +30,7 @@ public class SyncTabApplication extends Application {
         setOnlineStatus();
 
         cacheManager = new CacheManager(this);
+        taskQueueManager = new TaskQueueManager(this);
 
         initSyncTabRemoteService();
     }
@@ -75,6 +77,10 @@ public class SyncTabApplication extends Application {
 
     public CacheManager getCacheManager() {
         return cacheManager;
+    }
+
+    public TaskQueueManager getTaskQueueManager() {
+        return taskQueueManager;
     }
 
     public boolean isOnLine() {
