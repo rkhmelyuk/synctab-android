@@ -15,24 +15,44 @@ public class FaviconPreloader {
 
     private static final String TAG = "FaviconPreloader";
 
+    private final CacheManager cacheManager;
     private final SyncTabApplication application;
 
     public FaviconPreloader(SyncTabApplication application) {
         this.application = application;
+        this.cacheManager = application.getCacheManager();
     }
 
     public void preloadForTabs(List<SharedTab> tabs) {
         new Thread(new Preloader(tabs)).start();
     }
 
+    public boolean preloadFavicon(String url) {
+        return downloadAndCacheFavicon(url);
+    }
+
+    private boolean downloadAndCacheFavicon(String url) {
+        try {
+            final HttpClient client = new DefaultHttpClient();
+            final HttpResponse response = client.execute(new HttpGet(url));
+            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                cacheManager.store(url, response.getEntity().getContent());
+                return true;
+            }
+        }
+        catch (IOException e) {
+            Log.w(TAG, "Error to download favicon " + url);
+        }
+
+        return false;
+    }
+
     private class Preloader implements Runnable {
 
         final List<SharedTab> tabs;
-        final CacheManager cacheManager;
 
         private Preloader(List<SharedTab> tabs) {
             this.tabs = tabs;
-            this.cacheManager = application.getCacheManager();
         }
 
         public void run() {
@@ -43,22 +63,9 @@ public class FaviconPreloader {
                         downloadAndCacheFavicon(favicon);
                     }
                     else {
-                        // TODO - enqueue to download when online
+                        application.getTaskQueueManager().addLoadFaviconTask(favicon);
                     }
                 }
-            }
-        }
-
-        private void downloadAndCacheFavicon(String url) {
-            try {
-                final HttpClient client = new DefaultHttpClient();
-                final HttpResponse response = client.execute(new HttpGet(url));
-                if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                    cacheManager.store(url, response.getEntity().getContent());
-                }
-            }
-            catch (IOException e) {
-                Log.w(TAG, "Error to download favicon " + url);
             }
         }
     }
