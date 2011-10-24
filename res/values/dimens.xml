@@ -23,7 +23,7 @@
     <dimen name="register_button_top_margin">4dp</dimen>
     <dimen name="register_button_bottom_margin">4dp</dimen>
 
-    <dimen name="main_button_side_margin">30dp</dimen>
+    <dimen name="main_button_side_margin">45dp</dimen>
     <dimen name="main_button_top_margin">7dp</dimen>
     <dimen name="main_button_bottom_margin">7dp</dimen>
 

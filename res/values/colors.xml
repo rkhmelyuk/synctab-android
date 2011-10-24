@@ -7,6 +7,8 @@
     <color name="shared_tab_row_link_shadow">#ffffff</color>
     <color name="titlebar_button_pressed">#33000000</color>
 
+    <color name="text_view_shadow">#fafafa</color>
+
     <color name="shared_tab_row_gradient_start">#f5f5f5</color>
     <color name="shared_tab_row_gradient_end">#ffffff</color>
 

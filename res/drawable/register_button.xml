@@ -3,7 +3,7 @@
 
     <item android:state_pressed="true">
         <shape>
-            <corners android:radius="3dp"/>
+            <corners android:radius="4dp"/>
 
             <padding android:top="@dimen/register_button_top_margin" android:bottom="@dimen/register_button_bottom_margin"
                      android:left="@dimen/register_button_side_margin" android:right="@dimen/register_button_side_margin"/>
@@ -16,11 +16,11 @@
 
     <item android:state_focused="true">
         <shape>
-            <stroke android:width="3dp" android:color="@color/custom_button_focus_border"
-                    android:topLeftRadius="3dp" android:topRightRadius="3dp"
-                    android:bottomLeftRadius="3dp" android:bottomRightRadius="3dp"/>
+            <stroke android:width="2dp" android:color="@color/custom_button_focus_border"
+                    android:topLeftRadius="2dp" android:topRightRadius="2dp"
+                    android:bottomLeftRadius="2dp" android:bottomRightRadius="2dp"/>
 
-            <corners android:radius="3dp"/>
+            <corners android:radius="4dp"/>
 
             <padding android:top="@dimen/register_button_top_margin" android:bottom="@dimen/register_button_bottom_margin"
                      android:left="@dimen/register_button_side_margin" android:right="@dimen/register_button_side_margin"/>
@@ -33,7 +33,7 @@
 
     <item>
         <shape>
-            <corners android:radius="3dp"/>
+            <corners android:radius="4dp"/>
 
             <padding android:top="@dimen/register_button_top_margin" android:bottom="@dimen/register_button_bottom_margin"
                      android:left="@dimen/register_button_side_margin" android:right="@dimen/register_button_side_margin"/>

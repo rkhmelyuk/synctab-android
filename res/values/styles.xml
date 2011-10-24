@@ -2,6 +2,18 @@
 
     <style name="Theme.SyncTab" parent="android:style/Theme.Light.NoTitleBar"/>
 
+    <style name="ActivityWithBackground" parent="Theme.SyncTab">
+        <item name="android:windowBackground">@drawable/background</item>
+        <item name="android:textViewStyle">@style/TextViewWithShadow</item>
+    </style>
+
+    <style name="TextViewWithShadow" parent="@android:style/Widget.TextView">
+        <item name="android:shadowColor">@color/text_view_shadow</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
     <style name="TitleBar">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">@dimen/titlebar_height</item>
@@ -42,7 +54,7 @@
     </style>
 
     <style name="MainButton">
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/main_button</item>
         <item name="android:textColor">@color/custom_button_text</item>
@@ -53,7 +65,7 @@
         <item name="android:shadowRadius">1</item>
     </style>
 
-    <style name="SmallRegisterButton">
+    <style name="ToolButton">
         <item name="android:background">@drawable/register_button</item>
         <item name="android:textColor">@color/custom_button_text</item>
         <item name="android:textSize">14sp</item>
@@ -67,8 +79,8 @@
 
     <style name="LoginButton" parent="MainButton">
         <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_alignParentRight">true</item>
         <item name="android:text">@string/login</item>
-        <item name="android:gravity">center</item>
     </style>
 
     <style name="RegisterButton" parent="MainButton">

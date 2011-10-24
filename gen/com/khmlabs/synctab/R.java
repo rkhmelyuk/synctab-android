@@ -11,26 +11,27 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int custom_button_focus_border=0x7f050015;
-        public static final int custom_button_shadow=0x7f050013;
-        public static final int custom_button_text=0x7f050014;
-        public static final int main_button_gradient_end=0x7f050010;
-        public static final int main_button_gradient_start=0x7f05000f;
-        public static final int main_button_pressed_gradient_end=0x7f050012;
-        public static final int main_button_pressed_gradient_start=0x7f050011;
-        public static final int register_button_gradient_end=0x7f05000c;
-        public static final int register_button_gradient_start=0x7f05000b;
-        public static final int register_button_pressed_gradient_end=0x7f05000e;
-        public static final int register_button_pressed_gradient_start=0x7f05000d;
+        public static final int custom_button_focus_border=0x7f050016;
+        public static final int custom_button_shadow=0x7f050014;
+        public static final int custom_button_text=0x7f050015;
+        public static final int main_button_gradient_end=0x7f050011;
+        public static final int main_button_gradient_start=0x7f050010;
+        public static final int main_button_pressed_gradient_end=0x7f050013;
+        public static final int main_button_pressed_gradient_start=0x7f050012;
+        public static final int register_button_gradient_end=0x7f05000d;
+        public static final int register_button_gradient_start=0x7f05000c;
+        public static final int register_button_pressed_gradient_end=0x7f05000f;
+        public static final int register_button_pressed_gradient_start=0x7f05000e;
         public static final int shared_tab_row_details=0x7f050003;
-        public static final int shared_tab_row_gradient_end=0x7f050008;
-        public static final int shared_tab_row_gradient_start=0x7f050007;
+        public static final int shared_tab_row_gradient_end=0x7f050009;
+        public static final int shared_tab_row_gradient_start=0x7f050008;
         public static final int shared_tab_row_link_shadow=0x7f050005;
         public static final int shared_tab_row_title_shadow=0x7f050004;
+        public static final int text_view_shadow=0x7f050007;
         public static final int titlebar_background=0x7f050002;
         public static final int titlebar_button_pressed=0x7f050006;
-        public static final int titlebar_gradient_end=0x7f05000a;
-        public static final int titlebar_gradient_start=0x7f050009;
+        public static final int titlebar_gradient_end=0x7f05000b;
+        public static final int titlebar_gradient_start=0x7f05000a;
         public static final int titlebar_title=0x7f050000;
         public static final int titlebar_title_shadow=0x7f050001;
     }
@@ -60,44 +61,50 @@ public final class R {
         public static final int titlebar_title_text_size=0x7f060005;
     }
     public static final class drawable {
-        public static final int fail=0x7f020000;
-        public static final int ic_menu_home=0x7f020001;
-        public static final int ic_menu_refresh=0x7f020002;
-        public static final int ic_title_home=0x7f020003;
-        public static final int ic_title_refresh=0x7f020004;
-        public static final int ic_title_refreshing=0x7f020005;
-        public static final int icon=0x7f020006;
-        public static final int main_button=0x7f020007;
-        public static final int refreshing0=0x7f020008;
-        public static final int refreshing1=0x7f020009;
-        public static final int refreshing2=0x7f02000a;
-        public static final int refreshing3=0x7f02000b;
-        public static final int register_button=0x7f02000c;
-        public static final int tab_row_background=0x7f02000d;
-        public static final int titlebar_background=0x7f02000e;
-        public static final int titlebar_button=0x7f02000f;
-        public static final int titlebar_icon=0x7f020010;
-        public static final int titlebar_separator=0x7f020011;
-        public static final int yes=0x7f020012;
+        public static final int background=0x7f020000;
+        public static final int bg=0x7f020001;
+        public static final int fail=0x7f020002;
+        public static final int ic_menu_home=0x7f020003;
+        public static final int ic_menu_refresh=0x7f020004;
+        public static final int ic_title_home=0x7f020005;
+        public static final int ic_title_refresh=0x7f020006;
+        public static final int ic_title_refreshing=0x7f020007;
+        public static final int icon=0x7f020008;
+        public static final int main_button=0x7f020009;
+        public static final int refreshing0=0x7f02000a;
+        public static final int refreshing1=0x7f02000b;
+        public static final int refreshing2=0x7f02000c;
+        public static final int refreshing3=0x7f02000d;
+        public static final int register_button=0x7f02000e;
+        public static final int tab_row_background=0x7f02000f;
+        public static final int titlebar_background=0x7f020010;
+        public static final int titlebar_button=0x7f020011;
+        public static final int titlebar_icon=0x7f020012;
+        public static final int titlebar_separator=0x7f020013;
+        public static final int yes=0x7f020014;
     }
     public static final class id {
-        public static final int device=0x7f0b000b;
-        public static final int email=0x7f0b0000;
-        public static final int login=0x7f0b0002;
-        public static final int logout=0x7f0b000f;
-        public static final int password=0x7f0b0001;
-        public static final int refresh=0x7f0b000e;
-        public static final int register=0x7f0b0003;
-        public static final int share_tab_status_img=0x7f0b0005;
-        public static final int sync_tab_status=0x7f0b0006;
-        public static final int tab_date=0x7f0b000a;
-        public static final int tab_icon=0x7f0b0008;
-        public static final int tab_link=0x7f0b0009;
-        public static final int tab_title=0x7f0b0007;
-        public static final int tabs=0x7f0b0004;
-        public static final int titlebar=0x7f0b000c;
-        public static final int titlebar_icon=0x7f0b000d;
-        public static final int view_shared_tabs=0x7f0b0010;
+        public static final int device=0x7f0b000f;
+        public static final int email=0x7f0b0002;
+        public static final int email_label=0x7f0b0001;
+        public static final int login=0x7f0b0005;
+        public static final int login_label=0x7f0b0000;
+        public static final int logout=0x7f0b0013;
+        public static final int password=0x7f0b0004;
+        public static final int password_label=0x7f0b0003;
+        public static final int refresh=0x7f0b0012;
+        public static final int register=0x7f0b0006;
+        public static final int registration_label=0x7f0b0008;
+        public static final int share_tab_status_img=0x7f0b0009;
+        public static final int sync_tab_status=0x7f0b000a;
+        public static final int tab_date=0x7f0b000e;
+        public static final int tab_icon=0x7f0b000c;
+        public static final int tab_link=0x7f0b000d;
+        public static final int tab_title=0x7f0b000b;
+        public static final int tabs=0x7f0b0007;
+        public static final int titlebar=0x7f0b0010;
+        public static final int titlebar_icon=0x7f0b0011;
+        public static final int view_shared_tabs=0x7f0b0014;
     }
     public static final class integer {
         public static final int link_max_size=0x7f070000;
@@ -164,15 +171,17 @@ public final class R {
         public static final int unknown=0x7f080026;
     }
     public static final class style {
-        public static final int LoginButton=0x7f090007;
-        public static final int MainButton=0x7f090005;
-        public static final int RegisterButton=0x7f090008;
-        public static final int SharedTabRowLayout=0x7f090004;
-        public static final int SmallRegisterButton=0x7f090006;
+        public static final int ActivityWithBackground=0x7f090001;
+        public static final int LoginButton=0x7f090009;
+        public static final int MainButton=0x7f090007;
+        public static final int RegisterButton=0x7f09000a;
+        public static final int SharedTabRowLayout=0x7f090006;
+        public static final int TextViewWithShadow=0x7f090002;
         public static final int Theme_SyncTab=0x7f090000;
-        public static final int TitleBar=0x7f090001;
-        public static final int TitleBarIcon=0x7f090003;
-        public static final int TitleBarTitle=0x7f090002;
+        public static final int TitleBar=0x7f090003;
+        public static final int TitleBarIcon=0x7f090005;
+        public static final int TitleBarTitle=0x7f090004;
+        public static final int ToolButton=0x7f090008;
     }
     public static final class xml {
         public static final int prefs=0x7f040000;

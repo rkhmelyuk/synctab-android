@@ -16,6 +16,7 @@
 
         <activity android:name=".ui.ShareTabActivity"
                   android:label="@string/synctab_activity"
+                  android:theme="@style/ActivityWithBackground"
                   android:noHistory="true">
             <intent-filter android:label="SyncTab">
                 <action android:name="android.intent.action.SEND"/>
@@ -25,11 +26,13 @@
         </activity>
 
         <activity android:name=".ui.LoginActivity"
-                  android:noHistory="true"
-                  android:label="@string/login_activity"/>
+                  android:label="@string/login_activity"
+                  android:theme="@style/ActivityWithBackground"
+                  android:noHistory="true"/>
 
         <activity android:name=".ui.RegistrationActivity"
                   android:label="@string/registration_activity"
+                  android:theme="@style/ActivityWithBackground"
                   android:noHistory="true"/>
 
 

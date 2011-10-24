@@ -3,7 +3,7 @@
 
     <item android:state_pressed="true">
         <shape>
-            <corners android:radius="3dp"/>
+            <corners android:radius="4dp"/>
 
             <padding android:top="@dimen/main_button_top_margin" android:bottom="@dimen/main_button_bottom_margin"
                      android:left="@dimen/main_button_side_margin" android:right="@dimen/main_button_side_margin"/>
@@ -20,7 +20,7 @@
                     android:topLeftRadius="3dp" android:topRightRadius="3dp"
                     android:bottomLeftRadius="3dp" android:bottomRightRadius="3dp"/>
 
-            <corners android:radius="3dp"/>
+            <corners android:radius="4dp"/>
 
             <padding android:top="@dimen/main_button_top_margin" android:bottom="@dimen/main_button_bottom_margin"
                      android:left="@dimen/main_button_side_margin" android:right="@dimen/main_button_side_margin"/>
@@ -33,7 +33,7 @@
 
     <item>
         <shape>
-            <corners android:radius="3dp"/>
+            <corners android:radius="4dp"/>
 
             <padding android:top="@dimen/main_button_top_margin" android:bottom="@dimen/main_button_bottom_margin"
                      android:left="@dimen/main_button_side_margin" android:right="@dimen/main_button_side_margin"/>
