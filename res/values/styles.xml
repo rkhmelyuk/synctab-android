@@ -4,7 +4,7 @@
 
     <style name="ActivityWithBackground" parent="Theme.SyncTab">
         <item name="android:windowBackground">@drawable/background</item>
-        <!--<item name="android:windowSoftInputMode">adjustResize</item>-->
+        <item name="android:windowSoftInputMode">adjustPan</item>
         <item name="android:textViewStyle">@style/TextViewWithShadow</item>
     </style>
 

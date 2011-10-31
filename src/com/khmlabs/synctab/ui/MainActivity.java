@@ -87,7 +87,7 @@ public class MainActivity extends BaseActivity {
         super.onResume();
 
         if (getSyncTabApplication().isAuthenticated()) {
-            refreshSharedTabs();      // TODO - move to async task?
+            refreshSharedTabs();
 
             // if not authenticated - then no cache
             // because we cleanup cache on logout
@@ -279,12 +279,6 @@ public class MainActivity extends BaseActivity {
             try {
                 SyncTabApplication application = getSyncTabApplication();
                 SyncTabRemoteService service = application.getSyncTabRemoteService();
-                try {
-                    Thread.sleep(5000);
-                }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 return service.refreshSharedTabs();
             }
             catch (Exception e) {
