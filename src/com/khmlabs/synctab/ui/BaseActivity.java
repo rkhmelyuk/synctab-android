@@ -3,7 +3,6 @@ package com.khmlabs.synctab.ui;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -66,7 +65,7 @@ abstract class BaseActivity extends Activity {
                 return true;
             case R.id.help:
                 // just opens a documentation page
-                browseLink(getResources().getString(R.string.help_url));
+                IntentHelper.browseDocumentation(this);
                 return true;
         }
         return false;
@@ -93,14 +92,6 @@ abstract class BaseActivity extends Activity {
 
     protected SyncTabApplication getSyncTabApplication() {
         return (SyncTabApplication) getApplication();
-    }
-
-    /**
-     * Open a link in the browser.
-     * @param link the link to open in the browser.
-     */
-    protected void browseLink(String link) {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
     }
 
     /**

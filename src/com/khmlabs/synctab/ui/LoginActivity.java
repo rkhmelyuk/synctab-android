@@ -1,6 +1,5 @@
 package com.khmlabs.synctab.ui;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,11 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.SyncTabRemoteService;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends GuestActivity {
 
     private static final String TAG = "LoginActivity";
 

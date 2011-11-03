@@ -24,11 +24,14 @@ class TitleBarHelper {
      */
     final Activity activity;
 
-    /** The id of the home button. */
+    /**
+     * The id of the home button.
+     */
     private static final int HOME_BUTTON_ID = 0x7f0b9999;
-    /** The id of the refresh button. */
+    /**
+     * The id of the refresh button.
+     */
     private static final int REFRESH_BUTTON_ID = 0x7f0b9998;
-
 
     public TitleBarHelper(Activity activity) {
         this.activity = activity;
@@ -38,6 +41,11 @@ class TitleBarHelper {
      * Setup the title bar.
      */
     public void setup() {
+        // titlebar isn't supported by all activities
+        if (!activityIsSupported()) {
+            return;
+        }
+
         final LinearLayout layout = getButtonsLayout();
 
         final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -64,6 +72,11 @@ class TitleBarHelper {
                         }
                     });
         }
+    }
+
+    private boolean activityIsSupported() {
+        // not supported activities for guest users
+        return !(activity instanceof GuestActivity);
     }
 
     private void refreshTabs() {
@@ -131,7 +144,7 @@ class TitleBarHelper {
     /**
      * If list of shared tabs is refreshing (<code>refreshing = true</code>), then replace
      * Refresh button in the title bar with an animation.
-     *
+     * <p/>
      * If list isn't refreshing (<code>refreshing = false</code>), then stop animation,
      * and show a Refresh button back.
      *

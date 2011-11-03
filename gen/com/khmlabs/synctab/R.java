@@ -89,13 +89,13 @@ public final class R {
         public static final int device=0x7f0b000f;
         public static final int email=0x7f0b0002;
         public static final int email_label=0x7f0b0001;
-        public static final int help=0x7f0b0013;
+        public static final int help=0x7f0b0012;
         public static final int login=0x7f0b0005;
         public static final int login_label=0x7f0b0000;
         public static final int logout=0x7f0b0014;
         public static final int password=0x7f0b0004;
         public static final int password_label=0x7f0b0003;
-        public static final int refresh=0x7f0b0012;
+        public static final int refresh=0x7f0b0013;
         public static final int register=0x7f0b0006;
         public static final int registration_label=0x7f0b0008;
         public static final int share_tab_status_img=0x7f0b0009;
@@ -121,8 +121,9 @@ public final class R {
         public static final int titlebar=0x7f030005;
     }
     public static final class menu {
-        public static final int main_activity=0x7f0a0000;
-        public static final int sharedtab_activity=0x7f0a0001;
+        public static final int guest_activity=0x7f0a0000;
+        public static final int main_activity=0x7f0a0001;
+        public static final int sharedtab_activity=0x7f0a0002;
     }
     public static final class string {
         public static final int account_registration=0x7f08001a;

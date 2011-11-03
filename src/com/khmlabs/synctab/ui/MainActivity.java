@@ -74,7 +74,8 @@ public class MainActivity extends BaseActivity {
                 final Cursor cursor = (Cursor) adapterView.getAdapter().getItem(position);
                 final int linkColumn = cursor.getColumnIndex(DbMetadata.LINK);
                 final String link = cursor.getString(linkColumn);
-                browseLink(link);
+
+                IntentHelper.browseLink(MainActivity.this, link);
             }
         });
 
