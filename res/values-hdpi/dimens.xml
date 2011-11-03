@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="simple_window_side_padding">50dp</dimen>
+    <dimen name="simple_window_bottom_padding">50dp</dimen>
+</resources>
