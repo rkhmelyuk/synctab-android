@@ -10,19 +10,33 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
 import com.khmlabs.synctab.R;
 
+/**
+ * Title bar is better known as ActionBar.
+ * Used to show an application title and action buttons.
+ */
 class TitleBarHelper {
 
+    /**
+     * The activity where to show a title bar.
+     */
     final Activity activity;
 
+    /** The id of the home button. */
     private static final int HOME_BUTTON_ID = 0x7f0b9999;
+    /** The id of the refresh button. */
     private static final int REFRESH_BUTTON_ID = 0x7f0b9998;
+
 
     public TitleBarHelper(Activity activity) {
         this.activity = activity;
     }
 
+    /**
+     * Setup the title bar.
+     */
     public void setup() {
         final LinearLayout layout = getButtonsLayout();
 
@@ -31,6 +45,7 @@ class TitleBarHelper {
                 (int) activity.getResources().getDimension(R.dimen.titlebar_button_height), 1);
 
         if (activity instanceof MainActivity) {
+            // Add refresh button only to MainActivity
             addSeparator(layout);
             addButton(layout, layoutParams, R.drawable.ic_title_refresh, REFRESH_BUTTON_ID,
                     new View.OnClickListener() {
@@ -40,6 +55,7 @@ class TitleBarHelper {
                     });
         }
         else {
+            // Add home button, but not for MainActivity (which is a Home itself).
             addSeparator(layout);
             addButton(layout, layoutParams, R.drawable.ic_title_home, HOME_BUTTON_ID,
                     new View.OnClickListener() {
@@ -112,6 +128,15 @@ class TitleBarHelper {
         layout.addView(separator);
     }
 
+    /**
+     * If list of shared tabs is refreshing (<code>refreshing = true</code>), then replace
+     * Refresh button in the title bar with an animation.
+     *
+     * If list isn't refreshing (<code>refreshing = false</code>), then stop animation,
+     * and show a Refresh button back.
+     *
+     * @param refreshing the boolean flag if refreshing.
+     */
     public void setRefreshing(boolean refreshing) {
         final ImageButton button = (ImageButton) activity.findViewById(REFRESH_BUTTON_ID);
 

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.ClipboardManager;
@@ -75,8 +74,7 @@ public class MainActivity extends BaseActivity {
                 final Cursor cursor = (Cursor) adapterView.getAdapter().getItem(position);
                 final int linkColumn = cursor.getColumnIndex(DbMetadata.LINK);
                 final String link = cursor.getString(linkColumn);
-
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
+                browseLink(link);
             }
         });
 
