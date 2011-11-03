@@ -15,6 +15,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
+
 import com.khmlabs.synctab.*;
 import com.khmlabs.synctab.db.DbHelper;
 import com.khmlabs.synctab.db.DbMetadata;
@@ -218,16 +219,15 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.refresh:
-                refreshSharedTabs();
-                break;
-            case R.id.logout:
-                getSyncTabApplication().logout();
-                showLogin();
-                break;
+        boolean result = super.onOptionsItemSelected(item);
+        if (!result) {
+            switch (item.getItemId()) {
+                case R.id.refresh:
+                    refreshSharedTabs();
+                    return true;
+            }
         }
-        return true;
+        return result;
     }
 
     public void refreshSharedTabs() {

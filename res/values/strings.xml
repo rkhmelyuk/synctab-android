@@ -39,6 +39,7 @@
     <string name="failed_register">Failed to register</string>
     <string name="no_connection">Lost Connection</string>
     <string name="logout">Logout</string>
+    <string name="help">Help</string>
     <string name="refresh">Refresh</string>
     <string name="home">Home</string>
     <string name="not_a_user">Do not have an account yet?</string>

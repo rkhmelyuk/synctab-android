@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.RemoteOpState;
 import com.khmlabs.synctab.SyncTabApplication;
@@ -73,21 +74,19 @@ public class ShareTabActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.view_shared_tabs:
-                final Intent intent = new Intent(this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-                finish();
-                break;
-            case R.id.logout:
-                getSyncTabApplication().logout();
-                showLogin();
-                break;
+        boolean result = super.onOptionsItemSelected(item);
+        if (!result) {
+            switch (item.getItemId()) {
+                case R.id.view_shared_tabs:
+                    final Intent intent = new Intent(this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
+                    finish();
+                    return true;
+            }
         }
-
-        return true;
+        return result;
     }
 
     class SyncTabTask extends AsyncTask<String, String, RemoteOpState> {

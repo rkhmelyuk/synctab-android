@@ -3,5 +3,12 @@
     <item android:id="@+id/view_shared_tabs"
           android:title="@string/home"
           android:icon="@drawable/ic_menu_home"/>
-    <item android:id="@+id/logout" android:title="@string/logout"/>
+
+    <item android:id="@+id/help"
+          android:title="@string/help"
+          android:icon="@drawable/ic_menu_help"/>
+
+    <item android:id="@+id/logout"
+          android:title="@string/logout"
+          android:icon="@drawable/ic_menu_logout"/>
 </menu>
