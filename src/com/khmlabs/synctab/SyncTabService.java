@@ -21,6 +21,7 @@ import com.khmlabs.synctab.db.SyncTabDatabase;
 import com.khmlabs.synctab.queue.QueueTask;
 import com.khmlabs.synctab.queue.TaskType;
 import com.khmlabs.synctab.tab.SharedTab;
+import com.khmlabs.synctab.tab.SharedTabUtil;
 import com.khmlabs.synctab.util.IOUtil;
 
 import java.io.InputStream;
@@ -322,7 +323,7 @@ public class SyncTabService {
     }
 
     private void updateRecentSharedTabId(List<SharedTab> sharedTabs) {
-        final SharedTab recent = getRecentSharedTab(sharedTabs);
+        final SharedTab recent = SharedTabUtil.getRecentSharedTab(sharedTabs);
         if (recent != null) {
             application.setLastSharedTabId(recent.getId());
         }
@@ -332,7 +333,7 @@ public class SyncTabService {
     }
 
     private void updateOldestSharedTabId(List<SharedTab> sharedTabs) {
-        final SharedTab oldest = getOldestSharedTab(sharedTabs);
+        final SharedTab oldest = SharedTabUtil.getOldestSharedTab(sharedTabs);
         if (oldest != null) {
             application.setOldestSharedTabId(oldest.getId());
         }
@@ -519,38 +520,12 @@ public class SyncTabService {
         InputStream contentStream = response.getEntity().getContent();
         String content = IOUtil.toString(contentStream, 200);
 
+        if (AppConstants.LOG) Log.i(TAG, content);
+
         JSONObject object = (JSONObject) new JSONTokener(content).nextValue();
         boolean success = object.getBoolean("status");
 
         return new JsonResponse(success, object);
-    }
-
-    private static SharedTab getRecentSharedTab(List<SharedTab> sharedTabs) {
-        long max = 0;
-        SharedTab recent = null;
-
-        for (SharedTab each : sharedTabs) {
-            if (each.getTimestamp() > max) {
-                max = each.getTimestamp();
-                recent = each;
-            }
-        }
-
-        return recent;
-    }
-
-    private static SharedTab getOldestSharedTab(List<SharedTab> sharedTabs) {
-        long min = System.currentTimeMillis();
-        SharedTab recent = null;
-
-        for (SharedTab each : sharedTabs) {
-            if (each.getTimestamp() < min) {
-                min = each.getTimestamp();
-                recent = each;
-            }
-        }
-
-        return recent;
     }
 
     private static List<SharedTab> readSharedTabs(JsonResponse jsonResponse) throws Exception {

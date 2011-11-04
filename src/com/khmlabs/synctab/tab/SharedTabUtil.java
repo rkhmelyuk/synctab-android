@@ -5,7 +5,7 @@ import java.util.List;
 public class SharedTabUtil {
 
     public static SharedTab getRecentSharedTab(List<SharedTab> sharedTabs) {
-        long max = 0;
+        long max = Long.MIN_VALUE;
         SharedTab recent = null;
 
         for (SharedTab each : sharedTabs) {
@@ -19,7 +19,7 @@ public class SharedTabUtil {
     }
 
     public static SharedTab getOldestSharedTab(List<SharedTab> sharedTabs) {
-        long min = System.currentTimeMillis();
+        long min = Long.MAX_VALUE;
         SharedTab recent = null;
 
         for (SharedTab each : sharedTabs) {
