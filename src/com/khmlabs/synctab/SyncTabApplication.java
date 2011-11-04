@@ -8,6 +8,8 @@ import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.khmlabs.synctab.queue.TaskQueueManager;
+
 import java.net.URL;
 
 public class SyncTabApplication extends Application {
@@ -17,7 +19,7 @@ public class SyncTabApplication extends Application {
     private volatile boolean onLine = false;
 
     private SharedPreferences preferences;
-    private SyncTabRemoteService syncTabRemoteService;
+    private SyncTabService syncTabService;
     private CacheManager cacheManager;
     private TaskQueueManager taskQueueManager;
 
@@ -57,7 +59,7 @@ public class SyncTabApplication extends Application {
     private synchronized void initSyncTabRemoteService() {
         try {
             final URL url = new URL(AppConstants.SERVICE_URL);
-            syncTabRemoteService = new SyncTabRemoteService(
+            syncTabService = new SyncTabService(
                     this, url.getProtocol(),
                     url.getHost(), getPort(url, 80));
         }
@@ -71,8 +73,8 @@ public class SyncTabApplication extends Application {
         return (port != -1 ? port : defaultPort);
     }
 
-    public SyncTabRemoteService getSyncTabRemoteService() {
-        return syncTabRemoteService;
+    public SyncTabService getSyncTabService() {
+        return syncTabService;
     }
 
     public CacheManager getCacheManager() {
@@ -116,10 +118,10 @@ public class SyncTabApplication extends Application {
         setLastSharedTabId(null);
 
         cacheManager.clean();
-        syncTabRemoteService.removeUserData();
+        syncTabService.removeUserData();
 
         if (onLine) {
-            syncTabRemoteService.logout(token);
+            syncTabService.logout(token);
         }
 
         Log.i(TAG, "Logout");

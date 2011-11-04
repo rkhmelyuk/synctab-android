@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.RemoteOpState;
 import com.khmlabs.synctab.SyncTabApplication;
-import com.khmlabs.synctab.SyncTabRemoteService;
+import com.khmlabs.synctab.SyncTabService;
 import com.khmlabs.synctab.util.UrlUtil;
 
 public class ShareTabActivity extends BaseActivity {
@@ -96,7 +96,7 @@ public class ShareTabActivity extends BaseActivity {
             Log.i(TAG, "Sharing link " + link);
 
             SyncTabApplication application = (SyncTabApplication) getApplication();
-            SyncTabRemoteService service = application.getSyncTabRemoteService();
+            SyncTabService service = application.getSyncTabService();
             return service.enqueueSync(link);
         }
 

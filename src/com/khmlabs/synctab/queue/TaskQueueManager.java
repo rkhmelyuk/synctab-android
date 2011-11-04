@@ -1,10 +1,10 @@
-package com.khmlabs.synctab;
+package com.khmlabs.synctab.queue;
 
 import android.util.Log;
 
+import com.khmlabs.synctab.RemoteOpState;
+import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.db.SyncTabDatabase;
-import com.khmlabs.synctab.queue.QueueTask;
-import com.khmlabs.synctab.queue.TaskType;
 
 public class TaskQueueManager {
 

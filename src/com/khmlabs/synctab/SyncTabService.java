@@ -29,9 +29,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SyncTabRemoteService {
+public class SyncTabService {
 
-    private static final String TAG = "SyncTabRemoteService";
+    private static final String TAG = "SyncTabService";
 
     private static final String API_AUTHORIZE = "/api/authorize";
     private static final String API_REGISTER = "/api/register";
@@ -54,7 +54,7 @@ public class SyncTabRemoteService {
     private final HttpHost host;
     private final SyncTabApplication application;
 
-    public SyncTabRemoteService(SyncTabApplication app, String scheme, String hostname, int port) {
+    public SyncTabService(SyncTabApplication app, String scheme, String hostname, int port) {
         this.application = app;
         this.host = new HttpHost(hostname, port, scheme);
     }

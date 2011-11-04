@@ -284,7 +284,7 @@ public class MainActivity extends BaseActivity {
         protected Boolean doInBackground(String... strings) {
             try {
                 SyncTabApplication application = getSyncTabApplication();
-                SyncTabRemoteService service = application.getSyncTabRemoteService();
+                SyncTabService service = application.getSyncTabService();
                 return service.refreshSharedTabs();
             }
             catch (Exception e) {
@@ -317,7 +317,7 @@ public class MainActivity extends BaseActivity {
         @Override
         protected RemoteOpState doInBackground(Integer... params) {
             final int tabId = params[0];
-            final SyncTabRemoteService service = getSyncTabApplication().getSyncTabRemoteService();
+            final SyncTabService service = getSyncTabApplication().getSyncTabService();
 
             return service.removeSharedTab(tabId);
         }
@@ -343,7 +343,7 @@ public class MainActivity extends BaseActivity {
         @Override
         protected RemoteOpState doInBackground(Integer... params) {
             final int tabId = params[0];
-            final SyncTabRemoteService service = getSyncTabApplication().getSyncTabRemoteService();
+            final SyncTabService service = getSyncTabApplication().getSyncTabService();
             return service.reshareTab(tabId);
         }
 
@@ -397,7 +397,7 @@ public class MainActivity extends BaseActivity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             try {
-                SyncTabRemoteService service = getSyncTabApplication().getSyncTabRemoteService();
+                SyncTabService service = getSyncTabApplication().getSyncTabService();
                 return !service.getOlderSharedTabs();
             }
             catch (Exception e) {
