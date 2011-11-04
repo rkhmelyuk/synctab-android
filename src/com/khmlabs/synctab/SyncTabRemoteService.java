@@ -1,11 +1,6 @@
 package com.khmlabs.synctab;
 
 import android.util.Log;
-import com.khmlabs.synctab.db.DbHelper;
-import com.khmlabs.synctab.queue.QueueTask;
-import com.khmlabs.synctab.queue.TaskType;
-import com.khmlabs.synctab.tab.SharedTab;
-import com.khmlabs.synctab.util.IOUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -21,6 +16,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+import com.khmlabs.synctab.db.SyncTabDatabase;
+import com.khmlabs.synctab.queue.QueueTask;
+import com.khmlabs.synctab.queue.TaskType;
+import com.khmlabs.synctab.tab.SharedTab;
+import com.khmlabs.synctab.util.IOUtil;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -342,14 +343,14 @@ public class SyncTabRemoteService {
 
     private void insertSharedTabs(List<SharedTab> sharedTabs) {
         if (sharedTabs.size() > 0) {
-            DbHelper dbHelper = null;
+            SyncTabDatabase database = null;
             try {
-                dbHelper = new DbHelper(application);
-                dbHelper.replaceSharedTabs(sharedTabs);
+                database = new SyncTabDatabase(application);
+                database.replaceSharedTabs(sharedTabs);
             }
             finally {
-                if (dbHelper != null) {
-                    dbHelper.close();
+                if (database != null) {
+                    database.close();
                 }
             }
         }
@@ -390,28 +391,28 @@ public class SyncTabRemoteService {
     }
 
     public void removeUserData() {
-        DbHelper dbHelper = null;
+        SyncTabDatabase database = null;
         try {
-            dbHelper = new DbHelper(application);
-            dbHelper.removeUserData();
+            database = new SyncTabDatabase(application);
+            database.removeUserData();
         }
         catch (Exception e) {
             Log.e(TAG, "Error to remove user data", e);
         }
         finally {
-            if (dbHelper != null) {
-                dbHelper.close();
+            if (database != null) {
+                database.close();
             }
         }
     }
 
     public RemoteOpState removeSharedTab(int tabId) {
-        DbHelper dbHelper = null;
+        SyncTabDatabase database = null;
         try {
-            dbHelper = new DbHelper(application);
-            SharedTab sharedTab = dbHelper.getSharedTabById(tabId);
+            database = new SyncTabDatabase(application);
+            SharedTab sharedTab = database.getSharedTabById(tabId);
             if (sharedTab != null) {
-                dbHelper.removeSharedTab(tabId);
+                database.removeSharedTab(tabId);
 
                 if (application.isOnLine()) {
                     if (removeSharedTabOnServer(sharedTab.getId())) {
@@ -427,8 +428,8 @@ public class SyncTabRemoteService {
             return RemoteOpState.Failed;
         }
         finally {
-            if (dbHelper != null) {
-                dbHelper.close();
+            if (database != null) {
+                database.close();
             }
         }
 
@@ -460,13 +461,13 @@ public class SyncTabRemoteService {
     }
 
     public RemoteOpState reshareTab(int tabId) {
-        DbHelper dbHelper = null;
+        SyncTabDatabase database = null;
         try {
-            dbHelper = new DbHelper(application);
-            SharedTab sharedTab = dbHelper.getSharedTabById(tabId);
+            database = new SyncTabDatabase(application);
+            SharedTab sharedTab = database.getSharedTabById(tabId);
             if (sharedTab != null) {
                 sharedTab.setTimestamp(System.currentTimeMillis());
-                dbHelper.replaceSharedTab(sharedTab);
+                database.replaceSharedTab(sharedTab);
 
                 if (application.isOnLine()) {
                     if (reshareTabOnServer(sharedTab.getId())) {
@@ -482,8 +483,8 @@ public class SyncTabRemoteService {
             return RemoteOpState.Failed;
         }
         finally {
-            if (dbHelper != null) {
-                dbHelper.close();
+            if (database != null) {
+                database.close();
             }
         }
 

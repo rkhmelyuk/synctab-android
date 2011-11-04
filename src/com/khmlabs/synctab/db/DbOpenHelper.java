@@ -26,26 +26,19 @@ class DbOpenHelper extends SQLiteOpenHelper {
             db.execSQL(dropSharedTabsTable());
             db.execSQL(createSharedTabsTable());
         }
-        else if (oldVersion == 3) {
-            db.execSQL(addFaviconColumn());
-        }
-    }
-
-    private String addFaviconColumn() {
-        return "alter table " + DbMetadata.SHARED_TABS_TABLE + " add column " + DbMetadata.FAVICON + " text";
     }
 
     private String createSharedTabsTable() {
         final StringBuilder builder = new StringBuilder(150);
         builder
-                .append("create table ").append(DbMetadata.SHARED_TABS_TABLE).append("(")
+                .append("create table ").append(DbMetadata.Table.SHARED_TABS).append("(")
                 .append(DbMetadata.ID).append(" integer primary key,")
-                .append(DbMetadata.TAB_ID).append(" text unique,")
-                .append(DbMetadata.LINK).append(" text,")
-                .append(DbMetadata.TITLE).append(" text,")
-                .append(DbMetadata.DEVICE).append(" text,")
-                .append(DbMetadata.FAVICON).append(" text,")
-                .append(DbMetadata.TIMESTAMP).append(" long);");
+                .append(DbMetadata.SharedTabsColumn.TAB_ID).append(" text unique,")
+                .append(DbMetadata.SharedTabsColumn.LINK).append(" text,")
+                .append(DbMetadata.SharedTabsColumn.TITLE).append(" text,")
+                .append(DbMetadata.SharedTabsColumn.DEVICE).append(" text,")
+                .append(DbMetadata.SharedTabsColumn.FAVICON).append(" text,")
+                .append(DbMetadata.SharedTabsColumn.TIMESTAMP).append(" long);");
 
         return builder.toString();
     }
@@ -53,23 +46,23 @@ class DbOpenHelper extends SQLiteOpenHelper {
     private String createQueueTasksTable() {
         final StringBuilder builder = new StringBuilder(150);
         builder
-                .append("create table ").append(DbMetadata.QUEUE_TASK_TABLE).append("(")
+                .append("create table ").append(DbMetadata.Table.QUEUE_TASKS).append("(")
                 .append(DbMetadata.ID).append(" integer primary key,")
-                .append(DbMetadata.TYPE).append(" integer,")
-                .append(DbMetadata.PARAM).append(" text);");
+                .append(DbMetadata.QueueTasksColumns.TYPE).append(" integer,")
+                .append(DbMetadata.QueueTasksColumns.PARAM).append(" text);");
 
         return builder.toString();
     }
 
     private String dropSharedTabsTable() {
         final StringBuilder builder = new StringBuilder(40);
-        builder.append("drop table ").append(DbMetadata.SHARED_TABS_TABLE).append(";");
+        builder.append("drop table ").append(DbMetadata.Table.SHARED_TABS).append(";");
         return builder.toString();
     }
 
     private String dropQueueTasksTable() {
         final StringBuilder builder = new StringBuilder(40);
-        builder.append("drop table ").append(DbMetadata.QUEUE_TASK_TABLE).append(";");
+        builder.append("drop table ").append(DbMetadata.Table.QUEUE_TASKS).append(";");
         return builder.toString();
     }
 }

@@ -4,6 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.khmlabs.synctab.db.DbMetadata.QueueTasksColumns;
+import com.khmlabs.synctab.db.DbMetadata.SharedTabsColumn;
+import com.khmlabs.synctab.db.DbMetadata.Table;
 import com.khmlabs.synctab.queue.QueueTask;
 import com.khmlabs.synctab.queue.TaskType;
 import com.khmlabs.synctab.tab.SharedTab;
@@ -11,13 +15,13 @@ import com.khmlabs.synctab.tab.SharedTab;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbHelper {
+public class SyncTabDatabase {
 
     private DbOpenHelper dbOpenHelper;
 
     private SQLiteDatabase readableDb;
 
-    public DbHelper(Context context) {
+    public SyncTabDatabase(Context context) {
         dbOpenHelper = new DbOpenHelper(context);
         dbOpenHelper.getWritableDatabase().close();
     }
@@ -39,9 +43,9 @@ public class DbHelper {
 
     public Cursor findSharedTabs() {
         return getReadableDatabase().query(
-                DbMetadata.SHARED_TABS_TABLE,
+                DbMetadata.Table.SHARED_TABS,
                 null, null, null, null, null,
-                DbMetadata.TIMESTAMP + " DESC");
+                SharedTabsColumn.TIMESTAMP + " DESC");
     }
 
     public void insertQueueTask(QueueTask task) {
@@ -51,13 +55,11 @@ public class DbHelper {
                 db = dbOpenHelper.getWritableDatabase();
                 db.beginTransaction();
 
-                ContentValues values = new ContentValues();
+                final ContentValues values = new ContentValues();
+                values.put(QueueTasksColumns.TYPE, task.getType().getId());
+                values.put(QueueTasksColumns.PARAM, task.getParam());
 
-                values.put(DbMetadata.TYPE, task.getType().getId());
-                values.put(DbMetadata.PARAM, task.getParam());
-
-                db.insertOrThrow(DbMetadata.QUEUE_TASK_TABLE, null, values);
-
+                db.insertOrThrow(Table.QUEUE_TASKS, null, values);
                 db.setTransactionSuccessful();
             }
             finally {
@@ -78,16 +80,16 @@ public class DbHelper {
                 db = dbOpenHelper.getWritableDatabase();
                 db.beginTransaction();
 
-                ContentValues values = new ContentValues();
+                final ContentValues values = new ContentValues();
                 for (SharedTab each : tabs) {
-                    values.put(DbMetadata.TAB_ID, each.getId());
-                    values.put(DbMetadata.LINK, each.getLink());
-                    values.put(DbMetadata.TIMESTAMP, each.getTimestamp());
-                    values.put(DbMetadata.TITLE, each.getTitle());
-                    values.put(DbMetadata.DEVICE, each.getDevice());
-                    values.put(DbMetadata.FAVICON, each.getFavicon());
+                    values.put(SharedTabsColumn.TAB_ID, each.getId());
+                    values.put(SharedTabsColumn.LINK, each.getLink());
+                    values.put(SharedTabsColumn.TIMESTAMP, each.getTimestamp());
+                    values.put(SharedTabsColumn.TITLE, each.getTitle());
+                    values.put(SharedTabsColumn.DEVICE, each.getDevice());
+                    values.put(SharedTabsColumn.FAVICON, each.getFavicon());
 
-                    db.replaceOrThrow(DbMetadata.SHARED_TABS_TABLE, null, values);
+                    db.replaceOrThrow(Table.SHARED_TABS, null, values);
 
                     values.clear();
                 }
@@ -112,19 +114,16 @@ public class DbHelper {
                 db = dbOpenHelper.getWritableDatabase();
                 db.beginTransaction();
 
-                ContentValues values = new ContentValues();
+                final ContentValues values = new ContentValues();
 
-                values.put(DbMetadata.TAB_ID, tab.getId());
-                values.put(DbMetadata.LINK, tab.getLink());
-                values.put(DbMetadata.TIMESTAMP, tab.getTimestamp());
-                values.put(DbMetadata.TITLE, tab.getTitle());
-                values.put(DbMetadata.DEVICE, tab.getDevice());
-                values.put(DbMetadata.FAVICON, tab.getFavicon());
+                values.put(SharedTabsColumn.TAB_ID, tab.getId());
+                values.put(SharedTabsColumn.LINK, tab.getLink());
+                values.put(SharedTabsColumn.TIMESTAMP, tab.getTimestamp());
+                values.put(SharedTabsColumn.TITLE, tab.getTitle());
+                values.put(SharedTabsColumn.DEVICE, tab.getDevice());
+                values.put(SharedTabsColumn.FAVICON, tab.getFavicon());
 
-                db.replaceOrThrow(DbMetadata.SHARED_TABS_TABLE, null, values);
-
-                values.clear();
-
+                db.replaceOrThrow(Table.SHARED_TABS, null, values);
                 db.setTransactionSuccessful();
             }
             finally {
@@ -141,12 +140,12 @@ public class DbHelper {
     public List<QueueTask> getQueuedTasks() {
         final List<QueueTask> result = new ArrayList<QueueTask>();
         final SQLiteDatabase db = getReadableDatabase();
-
-        Cursor cursor = db.query(DbMetadata.QUEUE_TASK_TABLE, null, null, null, null, null, null);
+        final Cursor cursor = db.query(Table.QUEUE_TASKS,
+                null, null, null, null, null, null);
 
         try {
             while (cursor.moveToNext()) {
-                QueueTask task = new QueueTask();
+                final QueueTask task = new QueueTask();
                 task.setId(cursor.getInt(0));
                 task.setType(TaskType.findById(cursor.getInt(1)));
                 task.setParam(cursor.getString(2));
@@ -162,7 +161,7 @@ public class DbHelper {
     }
 
     public void removeQueueTask(QueueTask task) {
-        removeById(DbMetadata.QUEUE_TASK_TABLE, task.getId());
+        removeById(Table.QUEUE_TASKS, task.getId());
     }
 
     public void removeUserData() {
@@ -171,8 +170,8 @@ public class DbHelper {
             db = dbOpenHelper.getWritableDatabase();
             db.beginTransaction();
 
-            db.delete(DbMetadata.QUEUE_TASK_TABLE, null, null);
-            db.delete(DbMetadata.SHARED_TABS_TABLE, null, null);
+            db.delete(Table.QUEUE_TASKS, null, null);
+            db.delete(Table.SHARED_TABS, null, null);
 
             db.setTransactionSuccessful();
         }
@@ -189,7 +188,7 @@ public class DbHelper {
     public SharedTab getSharedTabById(int id) {
         final SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursor = db.query(DbMetadata.SHARED_TABS_TABLE, null,
+        Cursor cursor = db.query(Table.SHARED_TABS, null,
                 DbMetadata.ID + "=" + id, null, null, null, null);
 
         try {
@@ -197,12 +196,12 @@ public class DbHelper {
                 final SharedTab tab = new SharedTab();
 
                 tab.setRowId(cursor.getInt(0));
-                tab.setId(cursor.getString(cursor.getColumnIndex(DbMetadata.TAB_ID)));
-                tab.setLink(cursor.getString(cursor.getColumnIndex(DbMetadata.LINK)));
-                tab.setTitle(cursor.getString(cursor.getColumnIndex(DbMetadata.TITLE)));
-                tab.setDevice(cursor.getString(cursor.getColumnIndex(DbMetadata.DEVICE)));
-                tab.setTimestamp(cursor.getLong(cursor.getColumnIndex(DbMetadata.TIMESTAMP)));
-                tab.setFavicon(cursor.getString(cursor.getColumnIndex(DbMetadata.FAVICON)));
+                tab.setId(cursor.getString(cursor.getColumnIndex(SharedTabsColumn.TAB_ID)));
+                tab.setLink(cursor.getString(cursor.getColumnIndex(SharedTabsColumn.LINK)));
+                tab.setTitle(cursor.getString(cursor.getColumnIndex(SharedTabsColumn.TITLE)));
+                tab.setDevice(cursor.getString(cursor.getColumnIndex(SharedTabsColumn.DEVICE)));
+                tab.setTimestamp(cursor.getLong(cursor.getColumnIndex(SharedTabsColumn.TIMESTAMP)));
+                tab.setFavicon(cursor.getString(cursor.getColumnIndex(SharedTabsColumn.FAVICON)));
 
                 return tab;
             }
@@ -215,7 +214,7 @@ public class DbHelper {
     }
 
     public void removeSharedTab(int id) {
-        removeById(DbMetadata.SHARED_TABS_TABLE, id);
+        removeById(Table.SHARED_TABS, id);
     }
 
     private void removeById(String table, int id) {

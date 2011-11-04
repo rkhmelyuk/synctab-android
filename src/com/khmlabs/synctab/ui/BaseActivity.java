@@ -50,7 +50,7 @@ abstract class BaseActivity extends Activity {
     /**
      * Here we handle a base menu items selection.
      * Activity implementation should extend with own menu items.
-     *
+     * <p/>
      * Method returns true if menu item selection was handled, and false if not.
      * Activity implementation should check for other options only when this method returns false.
      *
@@ -60,13 +60,15 @@ abstract class BaseActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.logout:
+            case R.id.logout: {
                 new LogoutTask().execute();
                 return true;
-            case R.id.help:
+            }
+            case R.id.help: {
                 // just opens a documentation page
                 IntentHelper.browseDocumentation(this);
                 return true;
+            }
         }
         return false;
     }

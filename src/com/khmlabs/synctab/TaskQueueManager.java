@@ -1,7 +1,8 @@
 package com.khmlabs.synctab;
 
 import android.util.Log;
-import com.khmlabs.synctab.db.DbHelper;
+
+import com.khmlabs.synctab.db.SyncTabDatabase;
 import com.khmlabs.synctab.queue.QueueTask;
 import com.khmlabs.synctab.queue.TaskType;
 
@@ -36,10 +37,10 @@ public class TaskQueueManager {
     }
 
     private RemoteOpState addTask(QueueTask task) {
-        DbHelper dbHelper = null;
+        SyncTabDatabase database = null;
         try {
-            dbHelper = new DbHelper(application);
-            dbHelper.insertQueueTask(task);
+            database = new SyncTabDatabase(application);
+            database.insertQueueTask(task);
 
             Log.i(TAG, "Added task to QUEUE: " + task.getType() + " -> " + task.getParam());
 
@@ -49,8 +50,8 @@ public class TaskQueueManager {
             Log.e(TAG, "Error to add sync tab task to queue", e);
         }
         finally {
-            if (dbHelper != null) {
-                dbHelper.close();
+            if (database != null) {
+                database.close();
             }
         }
 

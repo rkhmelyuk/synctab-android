@@ -3,9 +3,10 @@ package com.khmlabs.synctab.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.SyncTabRemoteService;
-import com.khmlabs.synctab.db.DbHelper;
+import com.khmlabs.synctab.db.SyncTabDatabase;
 import com.khmlabs.synctab.queue.QueueTask;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class SyncTabService extends Service {
 
     private boolean running;
     private Synchronizer synchronizer;
-    private DbHelper dbHelper;
+    private SyncTabDatabase database;
 
     public IBinder onBind(Intent intent) {
         return null;
@@ -25,8 +26,8 @@ public class SyncTabService extends Service {
         super.onCreate();
 
         running = false;
-        dbHelper = new DbHelper(this);
-        synchronizer = new Synchronizer(dbHelper);
+        database = new SyncTabDatabase(this);
+        synchronizer = new Synchronizer(database);
     }
 
     @Override
@@ -42,8 +43,8 @@ public class SyncTabService extends Service {
         }
         synchronizer = null;
 
-        dbHelper.close();
-        dbHelper = null;
+        database.close();
+        database = null;
 
         running = false;
     }
@@ -64,19 +65,19 @@ public class SyncTabService extends Service {
 
     class Synchronizer extends Thread {
 
-        private DbHelper dbHelper;
+        private SyncTabDatabase database;
 
-        Synchronizer(DbHelper dbHelper) {
+        Synchronizer(SyncTabDatabase database) {
             super("SynchronizerThread");
 
-            this.dbHelper = dbHelper;
+            this.database = database;
         }
 
         public void run() {
             try {
                 final SyncTabApplication app = (SyncTabApplication) getApplication();
                 final SyncTabRemoteService service = app.getSyncTabRemoteService();
-                final List<QueueTask> tasks = dbHelper.getQueuedTasks();
+                final List<QueueTask> tasks = database.getQueuedTasks();
 
                 if (isInterrupted()) {
                     return;
@@ -88,12 +89,12 @@ public class SyncTabService extends Service {
                     }
 
                     if (service.syncTask(task)) {
-                        dbHelper.removeQueueTask(task);
+                        database.removeQueueTask(task);
                     }
                 }
             }
             finally {
-                dbHelper.close();
+                database.close();
                 SyncTabService.this.stopSelf();
             }
 

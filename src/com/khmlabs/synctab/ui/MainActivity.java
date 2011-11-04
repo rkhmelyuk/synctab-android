@@ -16,8 +16,9 @@ import android.view.*;
 import android.widget.*;
 
 import com.khmlabs.synctab.*;
-import com.khmlabs.synctab.db.DbHelper;
 import com.khmlabs.synctab.db.DbMetadata;
+import com.khmlabs.synctab.db.DbMetadata.SharedTabsColumn;
+import com.khmlabs.synctab.db.SyncTabDatabase;
 import com.khmlabs.synctab.util.UrlUtil;
 
 import java.io.InputStream;
@@ -32,7 +33,12 @@ public class MainActivity extends BaseActivity {
     private static final int TAB_CONTEXT_MENU_SEND = 2;
     private static final int TAB_CONTEXT_MENU_COPY = 3;
 
-    static final String[] ADAPTER_FROM = {DbMetadata.FAVICON, DbMetadata.TITLE, DbMetadata.LINK, DbMetadata.TIMESTAMP, DbMetadata.DEVICE};
+    static final String[] ADAPTER_FROM = {
+            SharedTabsColumn.FAVICON, SharedTabsColumn.TITLE,
+            SharedTabsColumn.LINK, SharedTabsColumn.TIMESTAMP,
+            SharedTabsColumn.DEVICE
+    };
+
     static final int[] ADAPTER_TO = {R.id.tab_icon, R.id.tab_title, R.id.tab_link, R.id.tab_date, R.id.device};
 
     private final SimpleCursorAdapter.ViewBinder ROW_BINDER = new SharedTabsBinder(this);
@@ -40,14 +46,14 @@ public class MainActivity extends BaseActivity {
     ListView sharedTabs;
     SimpleCursorAdapter sharedTabsAdapter;
 
-    private DbHelper dbHelper;
+    private SyncTabDatabase database;
     private boolean refreshing = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbHelper = new DbHelper(this);
+        database = new SyncTabDatabase(this);
 
         sharedTabs = (ListView) findViewById(R.id.tabs);
         sharedTabs.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -72,7 +78,7 @@ public class MainActivity extends BaseActivity {
         sharedTabs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 final Cursor cursor = (Cursor) adapterView.getAdapter().getItem(position);
-                final int linkColumn = cursor.getColumnIndex(DbMetadata.LINK);
+                final int linkColumn = cursor.getColumnIndex(DbMetadata.SharedTabsColumn.LINK);
                 final String link = cursor.getString(linkColumn);
 
                 IntentHelper.browseLink(MainActivity.this, link);
@@ -99,11 +105,11 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onStop();
 
-        dbHelper.close();
+        database.close();
     }
 
     private boolean refreshAdapter() {
-        final Cursor cursor = dbHelper.findSharedTabs();
+        final Cursor cursor = database.findSharedTabs();
         startManagingCursor(cursor);
 
         if (sharedTabsAdapter == null) {
@@ -151,14 +157,14 @@ public class MainActivity extends BaseActivity {
 
         final Cursor cursor = (Cursor) listView.getAdapter().getItem(ctxMenuInfo.position);
 
-        final int titleColumn = cursor.getColumnIndex(DbMetadata.TITLE);
+        final int titleColumn = cursor.getColumnIndex(DbMetadata.SharedTabsColumn.TITLE);
         final String title = cursor.getString(titleColumn);
 
         if (title != null && title.length() != 0) {
             menu.setHeaderTitle(Html.fromHtml(title).toString());
         }
         else {
-            final int linkColumn = cursor.getColumnIndex(DbMetadata.LINK);
+            final int linkColumn = cursor.getColumnIndex(DbMetadata.SharedTabsColumn.LINK);
             String link = cursor.getString(linkColumn);
             menu.setHeaderTitle(link);
         }
@@ -192,8 +198,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private void sendLink(Cursor cursor) {
-        final int linkColumn = cursor.getColumnIndex(DbMetadata.LINK);
-        final int titleColumn = cursor.getColumnIndex(DbMetadata.TITLE);
+        final int linkColumn = cursor.getColumnIndex(DbMetadata.SharedTabsColumn.LINK);
+        final int titleColumn = cursor.getColumnIndex(DbMetadata.SharedTabsColumn.TITLE);
 
         final String link = cursor.getString(linkColumn);
         final String title = cursor.getString(titleColumn);
@@ -202,7 +208,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void copyLink(Cursor cursor) {
-        final int linkColumn = cursor.getColumnIndex(DbMetadata.LINK);
+        final int linkColumn = cursor.getColumnIndex(DbMetadata.SharedTabsColumn.LINK);
         final String link = cursor.getString(linkColumn);
 
         final ClipboardManager manager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
@@ -221,9 +227,10 @@ public class MainActivity extends BaseActivity {
         boolean result = super.onOptionsItemSelected(item);
         if (!result) {
             switch (item.getItemId()) {
-                case R.id.refresh:
+                case R.id.refresh: {
                     refreshSharedTabs();
                     return true;
+                }
             }
         }
         return result;
