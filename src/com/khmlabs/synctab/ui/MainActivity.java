@@ -407,8 +407,17 @@ public class MainActivity extends BaseActivity {
         }
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            setRefreshing(true);
+        }
+
+        @Override
         protected void onPostExecute(Boolean empty) {
             super.onPostExecute(empty);
+
+            setRefreshing(false);
             if (!empty) {
                 refreshAdapter();
             }
