@@ -15,6 +15,7 @@ abstract class BaseActivity extends Activity {
 
     private static final int REQUEST_LOGIN = 1;
 
+    /** The activity titlebar helper. */
     TitleBarHelper titlebarHelper;
 
     public void onCreate(Bundle savedInstanceState) {

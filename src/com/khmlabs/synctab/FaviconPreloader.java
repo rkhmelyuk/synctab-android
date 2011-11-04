@@ -15,7 +15,7 @@ public class FaviconPreloader {
 
     private static final String TAG = "FaviconPreloader";
 
-    private final CacheManager cacheManager;
+    private final FileCacheManager cacheManager;
     private final SyncTabApplication application;
 
     public FaviconPreloader(SyncTabApplication application) {
@@ -23,10 +23,21 @@ public class FaviconPreloader {
         this.cacheManager = application.getCacheManager();
     }
 
+    /**
+     * Preload and cache icons for each tab in the a list.
+     *
+     * @param tabs the list of tabs to preload icons for.
+     */
     public void preloadForTabs(List<SharedTab> tabs) {
         new Thread(new Preloader(tabs)).start();
     }
 
+    /**
+     * Preload the icon by url.
+     *
+     * @param url the icon url.
+     * @return true if icon was preloaded and cached.
+     */
     public boolean preloadFavicon(String url) {
         return downloadAndCacheFavicon(url);
     }
@@ -35,9 +46,10 @@ public class FaviconPreloader {
         try {
             final HttpClient client = new DefaultHttpClient();
             final HttpResponse response = client.execute(new HttpGet(url));
+
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                cacheManager.store(url, response.getEntity().getContent());
-                return true;
+                // cache the icon if response code was success
+                return cacheManager.store(url, response.getEntity().getContent());
             }
         }
         catch (Exception e) {
@@ -59,10 +71,18 @@ public class FaviconPreloader {
             for (final SharedTab each : tabs) {
                 final String favicon = each.getFavicon();
                 if (favicon != null && favicon.length() > 0) {
+
+                    // avoid preloading the same icon a few times
+                    if (cacheManager.containsKey(favicon)) {
+                        continue;
+                    }
+
                     if (application.isOnLine()) {
+                        // download and cache the favicon
                         downloadAndCacheFavicon(favicon);
                     }
                     else {
+                        // if not online, than add to the task queue
                         application.getTaskQueueManager().addLoadFaviconTask(favicon);
                     }
                 }

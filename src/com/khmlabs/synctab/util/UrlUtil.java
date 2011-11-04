@@ -34,6 +34,12 @@ public class UrlUtil {
         return url;
     }
 
+    /**
+     * Colorize the url: emphasize the domain, but minor the path.
+     *
+     * @param url the url to colorize.
+     * @return the colorized url if link has both domain and path.
+     */
     public static CharSequence colorizeUrl(String url) {
         final Matcher matcher = LINK_SPLIT.matcher(url);
         if (matcher.find()) {
@@ -51,6 +57,12 @@ public class UrlUtil {
         return url;
     }
 
+    /**
+     * Decode the url, that makes a readable version of url.
+     *
+     * @param url the url to decode.
+     * @return the decoded url.
+     */
     public static String decodeUrl(String url) {
         try {
             url = URLDecoder.decode(url, "utf-8");

@@ -284,7 +284,7 @@ public class MainActivity extends BaseActivity {
         protected Boolean doInBackground(String... strings) {
             try {
                 SyncTabApplication application = getSyncTabApplication();
-                SyncTabRemoteService service = application.getSyncTabRemoteService();
+                SyncTabService service = application.getSyncTabService();
                 return service.refreshSharedTabs();
             }
             catch (Exception e) {
@@ -313,19 +313,19 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private class RemoveTabTask extends AsyncTask<Integer, Integer, RemoteOpState> {
+    private class RemoveTabTask extends AsyncTask<Integer, Integer, RemoteOpStatus> {
         @Override
-        protected RemoteOpState doInBackground(Integer... params) {
+        protected RemoteOpStatus doInBackground(Integer... params) {
             final int tabId = params[0];
-            final SyncTabRemoteService service = getSyncTabApplication().getSyncTabRemoteService();
+            final SyncTabService service = getSyncTabApplication().getSyncTabService();
 
             return service.removeSharedTab(tabId);
         }
 
         @Override
-        protected void onPostExecute(RemoteOpState state) {
+        protected void onPostExecute(RemoteOpStatus status) {
             final int messageId;
-            if (state == RemoteOpState.Failed) {
+            if (status == RemoteOpStatus.Failed) {
                 messageId = R.string.msg_failed_to_remove_tab;
             }
             else {
@@ -338,19 +338,19 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private class ReshareTabTask extends AsyncTask<Integer, Integer, RemoteOpState> {
+    private class ReshareTabTask extends AsyncTask<Integer, Integer, RemoteOpStatus> {
 
         @Override
-        protected RemoteOpState doInBackground(Integer... params) {
+        protected RemoteOpStatus doInBackground(Integer... params) {
             final int tabId = params[0];
-            final SyncTabRemoteService service = getSyncTabApplication().getSyncTabRemoteService();
+            final SyncTabService service = getSyncTabApplication().getSyncTabService();
             return service.reshareTab(tabId);
         }
 
         @Override
-        protected void onPostExecute(RemoteOpState state) {
+        protected void onPostExecute(RemoteOpStatus status) {
             final int messageId;
-            if (state == RemoteOpState.Failed) {
+            if (status == RemoteOpStatus.Failed) {
                 messageId = R.string.msg_failed_to_reshared_tab;
             }
             else {
@@ -397,7 +397,7 @@ public class MainActivity extends BaseActivity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             try {
-                SyncTabRemoteService service = getSyncTabApplication().getSyncTabRemoteService();
+                SyncTabService service = getSyncTabApplication().getSyncTabService();
                 return !service.getOlderSharedTabs();
             }
             catch (Exception e) {
@@ -427,11 +427,11 @@ public class MainActivity extends BaseActivity {
     private static class SharedTabsBinder implements SimpleCursorAdapter.ViewBinder {
 
         private final Context context;
-        private final CacheManager cacheManager;
+        private final FileCacheManager cacheManager;
 
         private SharedTabsBinder(Context context) {
             this.context = context;
-            this.cacheManager = new CacheManager(context);
+            this.cacheManager = new FileCacheManager(context);
         }
 
         public boolean setViewValue(View element, Cursor cursor, int columnIndex) {

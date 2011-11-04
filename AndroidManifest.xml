@@ -42,7 +42,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".service.SyncTabService" android:label="@string/synctab_service"/>
+        <service android:name=".service.SyncService" android:label="@string/synctab_service"/>
     </application>
 
     <uses-sdk android:minSdkVersion="7"/>

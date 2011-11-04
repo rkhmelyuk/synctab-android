@@ -1,11 +1,20 @@
 package com.khmlabs.synctab;
 
+/**
+ * The status of the registration.
+ */
 public class RegistrationStatus {
 
+    /** Used email. */
     private final String email;
+
+    /** Used password. */
     private final String password;
 
+    /** The result status of registration. */
     private Status status;
+
+    /** The description message, if failed to register. */
     private String message;
 
     public RegistrationStatus(String email, String password) {
