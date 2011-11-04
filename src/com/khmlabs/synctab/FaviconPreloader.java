@@ -1,14 +1,14 @@
 package com.khmlabs.synctab;
 
 import android.util.Log;
-import com.khmlabs.synctab.tab.SharedTab;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.IOException;
+import com.khmlabs.synctab.tab.SharedTab;
+
 import java.util.List;
 
 public class FaviconPreloader {
@@ -40,7 +40,7 @@ public class FaviconPreloader {
                 return true;
             }
         }
-        catch (IOException e) {
+        catch (Exception e) {
             Log.w(TAG, "Error to download favicon " + url);
         }
 
