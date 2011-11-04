@@ -8,23 +8,17 @@ import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.khmlabs.synctab.queue.TaskQueueManager;
-
 import java.net.URL;
 
 public class SyncTabApplication extends Application {
 
     private static final String TAG = "SyncTabApplication";
 
-    /**
-     * The flag used to check if application is online.
-     * TODO - maybe need to use information from ConnectivityManager each time.
-     */
     private volatile boolean onLine = false;
 
     private SharedPreferences preferences;
-    private SyncTabService syncTabService;
-    private FileCacheManager cacheManager;
+    private SyncTabRemoteService syncTabRemoteService;
+    private CacheManager cacheManager;
     private TaskQueueManager taskQueueManager;
 
     @Override
@@ -35,7 +29,7 @@ public class SyncTabApplication extends Application {
 
         setOnlineStatus();
 
-        cacheManager = new FileCacheManager(this);
+        cacheManager = new CacheManager(this);
         taskQueueManager = new TaskQueueManager(this);
 
         initSyncTabRemoteService();
@@ -63,7 +57,7 @@ public class SyncTabApplication extends Application {
     private synchronized void initSyncTabRemoteService() {
         try {
             final URL url = new URL(AppConstants.SERVICE_URL);
-            syncTabService = new SyncTabService(
+            syncTabRemoteService = new SyncTabRemoteService(
                     this, url.getProtocol(),
                     url.getHost(), getPort(url, 80));
         }
@@ -77,11 +71,11 @@ public class SyncTabApplication extends Application {
         return (port != -1 ? port : defaultPort);
     }
 
-    public SyncTabService getSyncTabService() {
-        return syncTabService;
+    public SyncTabRemoteService getSyncTabRemoteService() {
+        return syncTabRemoteService;
     }
 
-    public FileCacheManager getCacheManager() {
+    public CacheManager getCacheManager() {
         return cacheManager;
     }
 
@@ -113,7 +107,6 @@ public class SyncTabApplication extends Application {
         preferences.edit().putString(AppConstants.AUTH_TOKEN, token).commit();
     }
 
-    // TODO - do something with this, not the best place for it
     public void logout() {
         final String token = getAuthToken();
 
@@ -123,13 +116,13 @@ public class SyncTabApplication extends Application {
         setLastSharedTabId(null);
 
         cacheManager.clean();
-        syncTabService.removeUserData();
+        syncTabRemoteService.removeUserData();
 
         if (onLine) {
-            syncTabService.logout(token);
+            syncTabRemoteService.logout(token);
         }
 
-        if (AppConstants.LOG) Log.i(TAG, "Logout");
+        Log.i(TAG, "Logout");
     }
 
     public boolean isAuthenticated() {

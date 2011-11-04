@@ -29,9 +29,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SyncTabService {
+public class SyncTabRemoteService {
 
-    private static final String TAG = "SyncTabService";
+    private static final String TAG = "SyncTabRemoteService";
 
     private static final String API_AUTHORIZE = "/api/authorize";
     private static final String API_REGISTER = "/api/register";
@@ -54,7 +54,7 @@ public class SyncTabService {
     private final HttpHost host;
     private final SyncTabApplication application;
 
-    public SyncTabService(SyncTabApplication app, String scheme, String hostname, int port) {
+    public SyncTabRemoteService(SyncTabApplication app, String scheme, String hostname, int port) {
         this.application = app;
         this.host = new HttpHost(hostname, port, scheme);
     }
@@ -133,17 +133,17 @@ public class SyncTabService {
         return result;
     }
 
-    public RemoteOpStatus logout(String token) {
+    public RemoteOpState logout(String token) {
         if (token != null) {
             if (application.isOnLine()) {
                 if (logoutOnServer(token)) {
-                    return RemoteOpStatus.Success;
+                    return RemoteOpState.Success;
                 }
             }
 
             return application.getTaskQueueManager().addLogoutTask(token);
         }
-        return RemoteOpStatus.Success;
+        return RemoteOpState.Success;
     }
 
     private boolean logoutOnServer(String token) {
@@ -168,9 +168,9 @@ public class SyncTabService {
         }
     }
 
-    public RemoteOpStatus enqueueSync(String link) {
+    public RemoteOpState enqueueSync(String link) {
         if (application.isOnLine() && shareTab(link)) {
-            return RemoteOpStatus.Success;
+            return RemoteOpState.Success;
         }
 
         return application.getTaskQueueManager().addShareTabTask(link);
@@ -406,7 +406,7 @@ public class SyncTabService {
         }
     }
 
-    public RemoteOpStatus removeSharedTab(int tabId) {
+    public RemoteOpState removeSharedTab(int tabId) {
         SyncTabDatabase database = null;
         try {
             database = new SyncTabDatabase(application);
@@ -416,7 +416,7 @@ public class SyncTabService {
 
                 if (application.isOnLine()) {
                     if (removeSharedTabOnServer(sharedTab.getId())) {
-                        return RemoteOpStatus.Success;
+                        return RemoteOpState.Success;
                     }
                 }
 
@@ -425,7 +425,7 @@ public class SyncTabService {
         }
         catch (Exception e) {
             Log.e(TAG, "Error to remove shared tab.");
-            return RemoteOpStatus.Failed;
+            return RemoteOpState.Failed;
         }
         finally {
             if (database != null) {
@@ -433,7 +433,7 @@ public class SyncTabService {
             }
         }
 
-        return RemoteOpStatus.Success;
+        return RemoteOpState.Success;
     }
 
     private boolean removeSharedTabOnServer(String tabId) {
@@ -460,7 +460,7 @@ public class SyncTabService {
         }
     }
 
-    public RemoteOpStatus reshareTab(int tabId) {
+    public RemoteOpState reshareTab(int tabId) {
         SyncTabDatabase database = null;
         try {
             database = new SyncTabDatabase(application);
@@ -471,7 +471,7 @@ public class SyncTabService {
 
                 if (application.isOnLine()) {
                     if (reshareTabOnServer(sharedTab.getId())) {
-                        return RemoteOpStatus.Success;
+                        return RemoteOpState.Success;
                     }
                 }
 
@@ -480,7 +480,7 @@ public class SyncTabService {
         }
         catch (Exception e) {
             Log.e(TAG, "Error to reshare tab.");
-            return RemoteOpStatus.Failed;
+            return RemoteOpState.Failed;
         }
         finally {
             if (database != null) {
@@ -488,7 +488,7 @@ public class SyncTabService {
             }
         }
 
-        return RemoteOpStatus.Failed;
+        return RemoteOpState.Failed;
     }
 
     private boolean reshareTabOnServer(String tabId) {
@@ -518,6 +518,8 @@ public class SyncTabService {
     private static JsonResponse readResponse(HttpResponse response) throws Exception {
         InputStream contentStream = response.getEntity().getContent();
         String content = IOUtil.toString(contentStream, 200);
+
+        Log.i(TAG, content);
 
         JSONObject object = (JSONObject) new JSONTokener(content).nextValue();
         boolean success = object.getBoolean("status");

@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.RegistrationStatus;
 import com.khmlabs.synctab.SyncTabApplication;
-import com.khmlabs.synctab.SyncTabService;
+import com.khmlabs.synctab.SyncTabRemoteService;
 
 public class RegistrationActivity extends GuestActivity {
 
@@ -76,7 +76,7 @@ public class RegistrationActivity extends GuestActivity {
         protected RegistrationStatus doInBackground(String... strings) {
             try {
                 final SyncTabApplication app = (SyncTabApplication) getApplication();
-                final SyncTabService service = app.getSyncTabService();
+                final SyncTabRemoteService service = app.getSyncTabRemoteService();
                 return service.register(strings[0], strings[1]);
             }
             catch (Exception e) {
@@ -112,7 +112,7 @@ public class RegistrationActivity extends GuestActivity {
 
         private void authenticate(RegistrationStatus status) {
             SyncTabApplication app = (SyncTabApplication) getApplication();
-            SyncTabService service = app.getSyncTabService();
+            SyncTabRemoteService service = app.getSyncTabRemoteService();
 
             if (service.authenticate(status.getEmail(), status.getPassword())) {
                 startActivity(new Intent(RegistrationActivity.this, MainActivity.class));

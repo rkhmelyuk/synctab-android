@@ -7,6 +7,7 @@ import java.io.File;
  */
 public class FileUtil {
 
+
     /**
      * Delete the directory with it's content.
      *

@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.khmlabs.synctab.SyncTabApplication;
-import com.khmlabs.synctab.SyncTabService;
+import com.khmlabs.synctab.SyncTabRemoteService;
 import com.khmlabs.synctab.db.SyncTabDatabase;
 import com.khmlabs.synctab.queue.QueueTask;
 
 import java.util.List;
 
-public class SyncService extends Service {
+public class SyncTabService extends Service {
 
     private boolean running;
     private Synchronizer synchronizer;
@@ -76,7 +76,7 @@ public class SyncService extends Service {
         public void run() {
             try {
                 final SyncTabApplication app = (SyncTabApplication) getApplication();
-                final SyncTabService service = app.getSyncTabService();
+                final SyncTabRemoteService service = app.getSyncTabRemoteService();
                 final List<QueueTask> tasks = database.getQueuedTasks();
 
                 if (isInterrupted()) {
@@ -95,7 +95,7 @@ public class SyncService extends Service {
             }
             finally {
                 database.close();
-                SyncService.this.stopSelf();
+                SyncTabService.this.stopSelf();
             }
 
         }

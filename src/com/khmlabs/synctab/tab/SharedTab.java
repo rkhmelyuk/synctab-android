@@ -1,27 +1,16 @@
 package com.khmlabs.synctab.tab;
 
-/**
- * The shared tab, also called a shared link.
- */
 public class SharedTab {
 
-    /**
-     * The local id of the shared tab.
-     * Is also an id of the shared tabs table row.
-     */
     private int rowId;
 
-    /**
-     * The remote id of the shared tab.
-     * Used to remove, re-sync the remote entry too.
-     */
     private String id;
     private String title;
     private String link;
     private String device;
-    private String favicon;
-
     private long timestamp;
+
+    private String favicon;
 
     public int getRowId() {
         return rowId;
@@ -55,6 +44,14 @@ public class SharedTab {
         this.link = link;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
     public String getDevice() {
         return device;
     }
@@ -69,13 +66,5 @@ public class SharedTab {
 
     public void setFavicon(String favicon) {
         this.favicon = favicon;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
     }
 }

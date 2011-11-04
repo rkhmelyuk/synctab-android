@@ -1,11 +1,10 @@
-package com.khmlabs.synctab.queue;
+package com.khmlabs.synctab;
 
 import android.util.Log;
 
-import com.khmlabs.synctab.AppConstants;
-import com.khmlabs.synctab.RemoteOpStatus;
-import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.db.SyncTabDatabase;
+import com.khmlabs.synctab.queue.QueueTask;
+import com.khmlabs.synctab.queue.TaskType;
 
 public class TaskQueueManager {
 
@@ -17,38 +16,35 @@ public class TaskQueueManager {
         this.application = application;
     }
 
-    public RemoteOpStatus addShareTabTask(String link) {
+    public RemoteOpState addShareTabTask(String link) {
         return addTask(new QueueTask(TaskType.SyncTab, link));
     }
 
-    public RemoteOpStatus addLogoutTask(String token) {
+    public RemoteOpState addLogoutTask(String token) {
         return addTask(new QueueTask(TaskType.Logout, token));
     }
 
-    public RemoteOpStatus addRemoveTabTask(String sharedTabId) {
+    public RemoteOpState addRemoveTabTask(String sharedTabId) {
         return addTask(new QueueTask(TaskType.RemoveSharedTab, sharedTabId));
     }
 
-    public RemoteOpStatus addReshareTabTask(String sharedTabId) {
+    public RemoteOpState addReshareTabTask(String sharedTabId) {
         return addTask(new QueueTask(TaskType.ReshareTab, sharedTabId));
     }
 
-    public RemoteOpStatus addLoadFaviconTask(String favicon) {
+    public RemoteOpState addLoadFaviconTask(String favicon) {
         return addTask(new QueueTask(TaskType.LoadFavicon, favicon));
     }
 
-    private RemoteOpStatus addTask(QueueTask task) {
+    private RemoteOpState addTask(QueueTask task) {
         SyncTabDatabase database = null;
         try {
             database = new SyncTabDatabase(application);
             database.insertQueueTask(task);
 
-            if (AppConstants.LOG) {
-                Log.i(TAG, "Added task to QUEUE: " +
-                        task.getType() + " -> " + task.getParam());
-            }
+            Log.i(TAG, "Added task to QUEUE: " + task.getType() + " -> " + task.getParam());
 
-            return RemoteOpStatus.Queued;
+            return RemoteOpState.Queued;
         }
         catch (Exception e) {
             Log.e(TAG, "Error to add sync tab task to queue", e);
@@ -59,6 +55,6 @@ public class TaskQueueManager {
             }
         }
 
-        return RemoteOpStatus.Failed;
+        return RemoteOpState.Failed;
     }
 }
