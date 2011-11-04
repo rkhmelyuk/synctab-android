@@ -11,12 +11,12 @@ import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.khmlabs.synctab.R;
-import com.khmlabs.synctab.RemoteOpState;
-import com.khmlabs.synctab.SyncTabApplication;
-import com.khmlabs.synctab.SyncTabService;
+import com.khmlabs.synctab.*;
 import com.khmlabs.synctab.util.UrlUtil;
 
+/**
+ * Activity to share a tab.
+ */
 public class ShareTabActivity extends BaseActivity {
 
     private static final String TAG = "ShareTabActivity";
@@ -89,11 +89,11 @@ public class ShareTabActivity extends BaseActivity {
         return result;
     }
 
-    class SyncTabTask extends AsyncTask<String, String, RemoteOpState> {
+    class SyncTabTask extends AsyncTask<String, String, RemoteOpStatus> {
 
-        protected RemoteOpState doInBackground(String... strings) {
+        protected RemoteOpStatus doInBackground(String... strings) {
             final String link = strings[0];
-            Log.i(TAG, "Sharing link " + link);
+            if (AppConstants.LOG) Log.i(TAG, "Sharing link " + link);
 
             SyncTabApplication application = (SyncTabApplication) getApplication();
             SyncTabService service = application.getSyncTabService();
@@ -101,18 +101,18 @@ public class ShareTabActivity extends BaseActivity {
         }
 
         @Override
-        protected void onPostExecute(RemoteOpState result) {
+        protected void onPostExecute(RemoteOpStatus result) {
             super.onPostExecute(result);
 
-            if (result == RemoteOpState.Success) {
+            if (result == RemoteOpStatus.Success) {
                 statusImage.setImageResource(R.drawable.yes);
                 statusText.setText(R.string.success_sync);
             }
-            else if (result == RemoteOpState.Queued) {
+            else if (result == RemoteOpStatus.Queued) {
                 statusImage.setImageResource(R.drawable.yes);
                 statusText.setText(R.string.enqueue_sync);
             }
-            else if (result == RemoteOpState.Failed) {
+            else if (result == RemoteOpStatus.Failed) {
                 statusImage.setImageResource(R.drawable.fail);
                 statusText.setText(R.string.failed_sync);
             }

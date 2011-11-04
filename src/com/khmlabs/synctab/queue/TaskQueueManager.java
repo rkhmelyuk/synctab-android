@@ -2,7 +2,7 @@ package com.khmlabs.synctab.queue;
 
 import android.util.Log;
 
-import com.khmlabs.synctab.RemoteOpState;
+import com.khmlabs.synctab.RemoteOpStatus;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.db.SyncTabDatabase;
 
@@ -16,27 +16,27 @@ public class TaskQueueManager {
         this.application = application;
     }
 
-    public RemoteOpState addShareTabTask(String link) {
+    public RemoteOpStatus addShareTabTask(String link) {
         return addTask(new QueueTask(TaskType.SyncTab, link));
     }
 
-    public RemoteOpState addLogoutTask(String token) {
+    public RemoteOpStatus addLogoutTask(String token) {
         return addTask(new QueueTask(TaskType.Logout, token));
     }
 
-    public RemoteOpState addRemoveTabTask(String sharedTabId) {
+    public RemoteOpStatus addRemoveTabTask(String sharedTabId) {
         return addTask(new QueueTask(TaskType.RemoveSharedTab, sharedTabId));
     }
 
-    public RemoteOpState addReshareTabTask(String sharedTabId) {
+    public RemoteOpStatus addReshareTabTask(String sharedTabId) {
         return addTask(new QueueTask(TaskType.ReshareTab, sharedTabId));
     }
 
-    public RemoteOpState addLoadFaviconTask(String favicon) {
+    public RemoteOpStatus addLoadFaviconTask(String favicon) {
         return addTask(new QueueTask(TaskType.LoadFavicon, favicon));
     }
 
-    private RemoteOpState addTask(QueueTask task) {
+    private RemoteOpStatus addTask(QueueTask task) {
         SyncTabDatabase database = null;
         try {
             database = new SyncTabDatabase(application);
@@ -44,7 +44,7 @@ public class TaskQueueManager {
 
             Log.i(TAG, "Added task to QUEUE: " + task.getType() + " -> " + task.getParam());
 
-            return RemoteOpState.Queued;
+            return RemoteOpStatus.Queued;
         }
         catch (Exception e) {
             Log.e(TAG, "Error to add sync tab task to queue", e);
@@ -55,6 +55,6 @@ public class TaskQueueManager {
             }
         }
 
-        return RemoteOpState.Failed;
+        return RemoteOpStatus.Failed;
     }
 }

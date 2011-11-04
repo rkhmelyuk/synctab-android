@@ -16,11 +16,15 @@ public class SyncTabApplication extends Application {
 
     private static final String TAG = "SyncTabApplication";
 
+    /**
+     * The flag used to check if application is online.
+     * TODO - maybe need to use information from ConnectivityManager each time.
+     */
     private volatile boolean onLine = false;
 
     private SharedPreferences preferences;
     private SyncTabService syncTabService;
-    private CacheManager cacheManager;
+    private FileCacheManager cacheManager;
     private TaskQueueManager taskQueueManager;
 
     @Override
@@ -31,7 +35,7 @@ public class SyncTabApplication extends Application {
 
         setOnlineStatus();
 
-        cacheManager = new CacheManager(this);
+        cacheManager = new FileCacheManager(this);
         taskQueueManager = new TaskQueueManager(this);
 
         initSyncTabRemoteService();
@@ -77,7 +81,7 @@ public class SyncTabApplication extends Application {
         return syncTabService;
     }
 
-    public CacheManager getCacheManager() {
+    public FileCacheManager getCacheManager() {
         return cacheManager;
     }
 
@@ -109,6 +113,7 @@ public class SyncTabApplication extends Application {
         preferences.edit().putString(AppConstants.AUTH_TOKEN, token).commit();
     }
 
+    // TODO - do something with this, not the best place for it
     public void logout() {
         final String token = getAuthToken();
 
@@ -124,7 +129,7 @@ public class SyncTabApplication extends Application {
             syncTabService.logout(token);
         }
 
-        Log.i(TAG, "Logout");
+        if (AppConstants.LOG) Log.i(TAG, "Logout");
     }
 
     public boolean isAuthenticated() {
