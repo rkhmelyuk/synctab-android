@@ -15,3 +15,4 @@ bin/
 target/
 out/
 key/
+gen/R.java.d
