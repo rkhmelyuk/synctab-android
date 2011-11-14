@@ -26,6 +26,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.AboutActivity"
+                  android:label="@string/about_activity"/>
+
         <activity android:name=".ui.LoginActivity"
                   android:label="@string/login_activity"
                   android:theme="@style/ActivityWithBackground"

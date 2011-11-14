@@ -1,5 +1,7 @@
 <resources>
     <string name="help_url">http://synctab.khmelyuk.com/m/help/</string>
+    <string name="website_url">http://synctab.khmelyuk.com/m/</string>
+    <string name="chrome_extension_url">https://chrome.google.com/webstore/detail/hjjpbgkpgdfnjkgbghajpgcnaolcfcgf</string>
 
     <string name="application_label">SyncTab</string>
 
@@ -8,6 +10,7 @@
     <string name="synctab_activity">SyncTab</string>
     <string name="login_activity">SyncTab: Login</string>
     <string name="registration_activity">SyncTab: Registration</string>
+    <string name="about_activity">About</string>
 
     <string name="sync_in_progress">Syncing Tab...</string>
     <string name="success_sync">Tab is shared.\n\nHave fun!</string>
@@ -56,5 +59,11 @@
     <string name="msg_tab_is_reshared">Tab is re-shared</string>
     <string name="msg_failed_to_reshared_tab">Failed to re-share a tab</string>
     <string name="msg_failed_to_remove_tab">Failed to remove a tab</string>
+    <string name="about">About</string>
+    <string name="username">Username</string>
+    <string name="version">Version</string>
+    <string name="website">Website</string>
+    <string name="documentation">Documentation</string>
+    <string name="chrome_extension">Chrome Extension</string>
 
 </resources>

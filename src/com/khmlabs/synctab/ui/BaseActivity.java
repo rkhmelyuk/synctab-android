@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
+import com.khmlabs.synctab.util.IntentHelper;
 
 abstract class BaseActivity extends Activity {
 
@@ -61,6 +62,10 @@ abstract class BaseActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.about: {
+                IntentHelper.showAboutActivity(this);
+                return true;
+            }
             case R.id.logout: {
                 new LogoutTask().execute();
                 return true;

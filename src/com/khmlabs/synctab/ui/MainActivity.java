@@ -19,6 +19,7 @@ import com.khmlabs.synctab.*;
 import com.khmlabs.synctab.db.DbMetadata;
 import com.khmlabs.synctab.db.DbMetadata.SharedTabsColumn;
 import com.khmlabs.synctab.db.SyncTabDatabase;
+import com.khmlabs.synctab.util.IntentHelper;
 import com.khmlabs.synctab.util.UrlUtil;
 
 import java.io.InputStream;

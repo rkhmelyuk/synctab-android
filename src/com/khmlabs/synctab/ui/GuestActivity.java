@@ -6,6 +6,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.khmlabs.synctab.R;
+import com.khmlabs.synctab.util.IntentHelper;
 
 /**
  * The base activity for guest activities.

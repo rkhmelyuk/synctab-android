@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_height="fill_parent"
+              android:layout_width="fill_parent">
+
+    <include layout="@layout/titlebar"/>
+
+    <ScrollView android:fillViewport="true"
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent">
+
+        <LinearLayout android:orientation="vertical"
+                      android:layout_height="fill_parent"
+                      android:layout_width="fill_parent"
+                      android:paddingLeft="@dimen/simple_window_side_padding"
+                      android:paddingRight="@dimen/simple_window_side_padding"
+                      android:paddingTop="@dimen/simple_window_top_padding"
+                      android:paddingBottom="@dimen/simple_window_bottom_padding">
+
+            <LinearLayout android:id="@+id/user_info"
+                          android:orientation="vertical"
+                          android:layout_height="wrap_content"
+                          android:layout_width="fill_parent">
+                <TextView style="@style/AboutLabel" android:text="@string/username"/>
+                <TextView style="@style/AboutValue" android:id="@+id/username"/>
+            </LinearLayout>
+
+            <TextView style="@style/AboutLabel" android:text="@string/version"/>
+            <TextView style="@style/AboutValue" android:id="@+id/version"/>
+
+            <TextView style="@style/AboutLabel" android:text="@string/chrome_extension"/>
+            <TextView style="@style/AboutValue" android:autoLink="web"
+                      android:text="@string/chrome_extension_url"/>
+
+            <TextView style="@style/AboutLabel" android:text="@string/website"/>
+            <TextView style="@style/AboutValue"
+                      android:text="@string/website_url"
+                      android:autoLink="web"/>
+
+            <TextView style="@style/AboutLabel" android:text="@string/documentation"/>
+            <TextView style="@style/AboutValue"
+                      android:text="@string/help_url"
+                      android:autoLink="web"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
