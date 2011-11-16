@@ -25,7 +25,7 @@ import com.khmlabs.synctab.util.UrlUtil;
 import java.io.InputStream;
 import java.util.Date;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseUserActivity {
 
     private static final String TAG = "MainActivity";
 

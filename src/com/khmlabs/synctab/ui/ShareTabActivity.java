@@ -17,7 +17,7 @@ import com.khmlabs.synctab.util.UrlUtil;
 /**
  * Activity to share a tab.
  */
-public class ShareTabActivity extends BaseActivity {
+public class ShareTabActivity extends BaseUserActivity {
 
     private static final String TAG = "ShareTabActivity";
 

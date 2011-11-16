@@ -16,7 +16,7 @@ import com.khmlabs.synctab.RegistrationStatus;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.SyncTabService;
 
-public class RegistrationActivity extends GuestActivity {
+public class RegistrationActivity extends BaseGuestActivity {
 
     private static final String TAG = "RegistrationActivity";
 

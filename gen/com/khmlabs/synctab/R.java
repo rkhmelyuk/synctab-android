@@ -88,17 +88,17 @@ public final class R {
         public static final int yes=0x7f020017;
     }
     public static final class id {
-        public static final int about=0x7f0b0017;
+        public static final int about=0x7f0b0015;
         public static final int device=0x7f0b0012;
         public static final int email=0x7f0b0005;
         public static final int email_label=0x7f0b0004;
-        public static final int help=0x7f0b0015;
+        public static final int help=0x7f0b0016;
         public static final int login=0x7f0b0008;
         public static final int login_label=0x7f0b0003;
         public static final int logout=0x7f0b0018;
         public static final int password=0x7f0b0007;
         public static final int password_label=0x7f0b0006;
-        public static final int refresh=0x7f0b0016;
+        public static final int refresh=0x7f0b0017;
         public static final int register=0x7f0b0009;
         public static final int registration_label=0x7f0b000b;
         public static final int share_tab_status_img=0x7f0b000c;
