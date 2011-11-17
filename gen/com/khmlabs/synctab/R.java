@@ -36,12 +36,12 @@ public final class R {
         public static final int titlebar_title_shadow=0x7f050001;
     }
     public static final class dimen {
-        public static final int main_button_bottom_margin=0x7f060017;
-        public static final int main_button_side_margin=0x7f060015;
-        public static final int main_button_top_margin=0x7f060016;
-        public static final int register_button_bottom_margin=0x7f060014;
-        public static final int register_button_side_margin=0x7f060012;
-        public static final int register_button_top_margin=0x7f060013;
+        public static final int main_button_bottom_margin=0x7f060018;
+        public static final int main_button_side_margin=0x7f060016;
+        public static final int main_button_top_margin=0x7f060017;
+        public static final int register_button_bottom_margin=0x7f060015;
+        public static final int register_button_side_margin=0x7f060013;
+        public static final int register_button_top_margin=0x7f060014;
         public static final int shared_tab_details_text_size=0x7f060010;
         public static final int shared_tab_link_text_size=0x7f06000f;
         public static final int shared_tab_row_icon_size=0x7f060011;
@@ -51,6 +51,7 @@ public final class R {
         public static final int simple_window_bottom_padding=0x7f060001;
         public static final int simple_window_side_padding=0x7f060000;
         public static final int simple_window_top_padding=0x7f060002;
+        public static final int start_help_notice_font_size=0x7f060012;
         public static final int titlebar_button_height=0x7f060004;
         public static final int titlebar_button_padding_bottom=0x7f060009;
         public static final int titlebar_button_padding_left=0x7f06000a;
@@ -88,32 +89,33 @@ public final class R {
         public static final int yes=0x7f020017;
     }
     public static final class id {
-        public static final int about=0x7f0b0015;
-        public static final int device=0x7f0b0012;
+        public static final int about=0x7f0b0016;
+        public static final int device=0x7f0b0013;
         public static final int email=0x7f0b0005;
         public static final int email_label=0x7f0b0004;
-        public static final int help=0x7f0b0016;
+        public static final int help=0x7f0b0017;
         public static final int login=0x7f0b0008;
         public static final int login_label=0x7f0b0003;
-        public static final int logout=0x7f0b0018;
+        public static final int logout=0x7f0b0019;
         public static final int password=0x7f0b0007;
         public static final int password_label=0x7f0b0006;
-        public static final int refresh=0x7f0b0017;
+        public static final int refresh=0x7f0b0018;
         public static final int register=0x7f0b0009;
-        public static final int registration_label=0x7f0b000b;
-        public static final int share_tab_status_img=0x7f0b000c;
-        public static final int sync_tab_status=0x7f0b000d;
-        public static final int tab_date=0x7f0b0011;
-        public static final int tab_icon=0x7f0b000f;
-        public static final int tab_link=0x7f0b0010;
-        public static final int tab_title=0x7f0b000e;
+        public static final int registration_label=0x7f0b000c;
+        public static final int share_tab_status_img=0x7f0b000d;
+        public static final int start_help_notice=0x7f0b000b;
+        public static final int sync_tab_status=0x7f0b000e;
+        public static final int tab_date=0x7f0b0012;
+        public static final int tab_icon=0x7f0b0010;
+        public static final int tab_link=0x7f0b0011;
+        public static final int tab_title=0x7f0b000f;
         public static final int tabs=0x7f0b000a;
-        public static final int titlebar=0x7f0b0013;
-        public static final int titlebar_icon=0x7f0b0014;
+        public static final int titlebar=0x7f0b0014;
+        public static final int titlebar_icon=0x7f0b0015;
         public static final int user_info=0x7f0b0000;
         public static final int username=0x7f0b0001;
         public static final int version=0x7f0b0002;
-        public static final int view_shared_tabs=0x7f0b0019;
+        public static final int view_shared_tabs=0x7f0b001a;
     }
     public static final class integer {
         public static final int link_max_size=0x7f070000;
@@ -184,6 +186,7 @@ public final class R {
         public static final int remove=0x7f080030;
         public static final int reshare=0x7f08002f;
         public static final int send_to=0x7f080031;
+        public static final int start_help_notice=0x7f08003f;
         public static final int submit_issue=0x7f08003d;
         public static final int submit_issue_url=0x7f080002;
         public static final int success_sync=0x7f08000c;

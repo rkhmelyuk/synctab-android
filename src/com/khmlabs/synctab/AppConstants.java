@@ -2,7 +2,7 @@ package com.khmlabs.synctab;
 
 public interface AppConstants {
 
-    String SERVICE_URL = "http://192.168.0.194:8080";
+    String SERVICE_URL = "http://192.168.0.199:8080";
     //String SERVICE_URL = "http://192.168.1.102:8080";
     //String SERVICE_URL = "http://synctabapp.khmelyuk.com";
 

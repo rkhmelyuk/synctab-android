@@ -20,6 +20,8 @@
     <dimen name="shared_tab_details_text_size">11sp</dimen>
     <dimen name="shared_tab_row_icon_size">24dp</dimen>
 
+    <dimen name="start_help_notice_font_size">22sp</dimen>
+
     <dimen name="register_button_side_margin">5dp</dimen>
     <dimen name="register_button_top_margin">4dp</dimen>
     <dimen name="register_button_bottom_margin">4dp</dimen>

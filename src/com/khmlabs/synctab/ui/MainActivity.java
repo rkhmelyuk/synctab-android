@@ -25,6 +25,9 @@ import com.khmlabs.synctab.util.UrlUtil;
 import java.io.InputStream;
 import java.util.Date;
 
+/**
+ * This activity used to show and manipulate the list of shared tabs.
+ */
 public class MainActivity extends BaseUserActivity {
 
     private static final String TAG = "MainActivity";
@@ -126,7 +129,24 @@ public class MainActivity extends BaseUserActivity {
             sharedTabsAdapter.notifyDataSetChanged();
         }
 
-        return (cursor.getCount() != 0);
+        //
+        // check if empty, hide list if so and return a result.
+
+        boolean empty = (cursor.getCount() == 0);
+        hideListIfEmpty(empty);
+
+        return !empty;
+    }
+
+    private void hideListIfEmpty(boolean empty) {
+        if (empty) {
+            sharedTabs.setVisibility(View.GONE);
+            findViewById(R.id.start_help_notice).setVisibility(View.VISIBLE);
+        }
+        else {
+            sharedTabs.setVisibility(View.VISIBLE);
+            findViewById(R.id.start_help_notice).setVisibility(View.GONE);
+        }
     }
 
     @Override

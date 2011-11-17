@@ -69,6 +69,7 @@
     <string name="chrome_extension">Chrome Extension</string>
     <string name="submit_issue">Submit Issue</string>
     <string name="contact">Contact</string>
+    <string name="start_help_notice">Download and install a \n <b>SyncTab Chrome Extension</b> \n from your desktop browser\n\n Read more at\n <a href="http://synctab.khmelyuk.com">synctab.khmelyuk.com</a></string>
 
 
 </resources>
