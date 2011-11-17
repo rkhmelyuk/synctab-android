@@ -44,6 +44,16 @@
                       android:text="@string/help_url"
                       android:autoLink="web"/>
 
+            <TextView style="@style/AboutLabel" android:text="@string/submit_issue"/>
+            <TextView style="@style/AboutValue"
+                      android:text="@string/submit_issue_url"
+                      android:autoLink="web"/>
+
+            <TextView style="@style/AboutLabel" android:text="@string/contact"/>
+            <TextView style="@style/AboutValue"
+                      android:text="@string/contact_url"
+                      android:autoLink="web"/>
+
         </LinearLayout>
 
     </ScrollView>
