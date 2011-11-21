@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.RegistrationStatus;
 import com.khmlabs.synctab.SyncTabApplication;
-import com.khmlabs.synctab.SyncTabService;
+import com.khmlabs.synctab.SyncTabFacade;
 
 public class RegistrationActivity extends BaseGuestActivity {
 
@@ -76,8 +76,8 @@ public class RegistrationActivity extends BaseGuestActivity {
         protected RegistrationStatus doInBackground(String... strings) {
             try {
                 final SyncTabApplication app = (SyncTabApplication) getApplication();
-                final SyncTabService service = app.getSyncTabService();
-                return service.register(strings[0], strings[1]);
+                final SyncTabFacade facade = app.getSyncTabFacade();
+                return facade.register(strings[0], strings[1]);
             }
             catch (Exception e) {
                 Log.e(TAG, "Failed to register");
@@ -112,9 +112,9 @@ public class RegistrationActivity extends BaseGuestActivity {
 
         private void authenticate(RegistrationStatus status) {
             SyncTabApplication app = (SyncTabApplication) getApplication();
-            SyncTabService service = app.getSyncTabService();
+            SyncTabFacade facade = app.getSyncTabFacade();
 
-            if (service.authenticate(status.getEmail(), status.getPassword())) {
+            if (facade.authenticate(status.getEmail(), status.getPassword())) {
                 startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                 finish();
             }

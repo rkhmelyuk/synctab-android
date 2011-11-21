@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.khmlabs.synctab.db.DbMetadata.QueueTasksColumns;
-import com.khmlabs.synctab.db.DbMetadata.SharedTabsColumn;
+import com.khmlabs.synctab.db.DbMetadata.SharedTabsColumns;
 import com.khmlabs.synctab.db.DbMetadata.Table;
 import com.khmlabs.synctab.queue.QueueTask;
 import com.khmlabs.synctab.queue.TaskType;
@@ -45,7 +45,7 @@ public class SyncTabDatabase {
         return getReadableDatabase().query(
                 DbMetadata.Table.SHARED_TABS,
                 null, null, null, null, null,
-                SharedTabsColumn.TIMESTAMP + " DESC");
+                SharedTabsColumns.TIMESTAMP + " DESC");
     }
 
     public void insertQueueTask(QueueTask task) {
@@ -82,12 +82,12 @@ public class SyncTabDatabase {
 
                 final ContentValues values = new ContentValues();
                 for (SharedTab each : tabs) {
-                    values.put(SharedTabsColumn.TAB_ID, each.getId());
-                    values.put(SharedTabsColumn.LINK, each.getLink());
-                    values.put(SharedTabsColumn.TIMESTAMP, each.getTimestamp());
-                    values.put(SharedTabsColumn.TITLE, each.getTitle());
-                    values.put(SharedTabsColumn.DEVICE, each.getDevice());
-                    values.put(SharedTabsColumn.FAVICON, each.getFavicon());
+                    values.put(SharedTabsColumns.TAB_ID, each.getId());
+                    values.put(DbMetadata.SharedTabsColumns.LINK, each.getLink());
+                    values.put(SharedTabsColumns.TIMESTAMP, each.getTimestamp());
+                    values.put(SharedTabsColumns.TITLE, each.getTitle());
+                    values.put(SharedTabsColumns.TAG, each.getTagId());
+                    values.put(SharedTabsColumns.FAVICON, each.getFavicon());
 
                     db.replaceOrThrow(Table.SHARED_TABS, null, values);
 
@@ -116,12 +116,12 @@ public class SyncTabDatabase {
 
                 final ContentValues values = new ContentValues();
 
-                values.put(SharedTabsColumn.TAB_ID, tab.getId());
-                values.put(SharedTabsColumn.LINK, tab.getLink());
-                values.put(SharedTabsColumn.TIMESTAMP, tab.getTimestamp());
-                values.put(SharedTabsColumn.TITLE, tab.getTitle());
-                values.put(SharedTabsColumn.DEVICE, tab.getDevice());
-                values.put(SharedTabsColumn.FAVICON, tab.getFavicon());
+                values.put(DbMetadata.SharedTabsColumns.TAB_ID, tab.getId());
+                values.put(SharedTabsColumns.LINK, tab.getLink());
+                values.put(SharedTabsColumns.TIMESTAMP, tab.getTimestamp());
+                values.put(SharedTabsColumns.TITLE, tab.getTitle());
+                values.put(SharedTabsColumns.TAG, tab.getTagId());
+                values.put(SharedTabsColumns.FAVICON, tab.getFavicon());
 
                 db.replaceOrThrow(Table.SHARED_TABS, null, values);
                 db.setTransactionSuccessful();
@@ -164,6 +164,10 @@ public class SyncTabDatabase {
         removeById(Table.QUEUE_TASKS, task.getId());
     }
 
+    /**
+     * Remove all user data.
+     * Used to cleanup current user data on cleanup.
+     */
     public void removeUserData() {
         SQLiteDatabase db = null;
         try {
@@ -172,6 +176,7 @@ public class SyncTabDatabase {
 
             db.delete(Table.QUEUE_TASKS, null, null);
             db.delete(Table.SHARED_TABS, null, null);
+            db.delete(Table.TAGS, null, null);
 
             db.setTransactionSuccessful();
         }
@@ -196,12 +201,12 @@ public class SyncTabDatabase {
                 final SharedTab tab = new SharedTab();
 
                 tab.setRowId(cursor.getInt(0));
-                tab.setId(cursor.getString(cursor.getColumnIndex(SharedTabsColumn.TAB_ID)));
-                tab.setLink(cursor.getString(cursor.getColumnIndex(SharedTabsColumn.LINK)));
-                tab.setTitle(cursor.getString(cursor.getColumnIndex(SharedTabsColumn.TITLE)));
-                tab.setDevice(cursor.getString(cursor.getColumnIndex(SharedTabsColumn.DEVICE)));
-                tab.setTimestamp(cursor.getLong(cursor.getColumnIndex(SharedTabsColumn.TIMESTAMP)));
-                tab.setFavicon(cursor.getString(cursor.getColumnIndex(SharedTabsColumn.FAVICON)));
+                tab.setId(cursor.getString(cursor.getColumnIndex(SharedTabsColumns.TAB_ID)));
+                tab.setLink(cursor.getString(cursor.getColumnIndex(SharedTabsColumns.LINK)));
+                tab.setTitle(cursor.getString(cursor.getColumnIndex(SharedTabsColumns.TITLE)));
+                tab.setTagId(cursor.getString(cursor.getColumnIndex(SharedTabsColumns.TAG)));
+                tab.setTimestamp(cursor.getLong(cursor.getColumnIndex(SharedTabsColumns.TIMESTAMP)));
+                tab.setFavicon(cursor.getString(cursor.getColumnIndex(DbMetadata.SharedTabsColumns.FAVICON)));
 
                 return tab;
             }

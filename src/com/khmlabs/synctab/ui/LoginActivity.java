@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
-import com.khmlabs.synctab.SyncTabService;
+import com.khmlabs.synctab.SyncTabFacade;
 
 public class LoginActivity extends BaseGuestActivity {
 
@@ -103,8 +103,8 @@ public class LoginActivity extends BaseGuestActivity {
             try {
                 final SyncTabApplication app = (SyncTabApplication) getApplication();
                 if (app.isOnLine()) {
-                    final SyncTabService service = app.getSyncTabService();
-                    final boolean result = service.authenticate(strings[0], strings[1]);
+                    final SyncTabFacade facade = app.getSyncTabFacade();
+                    final boolean result = facade.authenticate(strings[0], strings[1]);
 
                     return result ? RESULT_SUCCESS : RESULT_FAILED;
                 }

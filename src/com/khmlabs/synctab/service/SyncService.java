@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.khmlabs.synctab.SyncTabApplication;
-import com.khmlabs.synctab.SyncTabService;
+import com.khmlabs.synctab.SyncTabFacade;
 import com.khmlabs.synctab.db.SyncTabDatabase;
 import com.khmlabs.synctab.queue.QueueTask;
 
@@ -76,7 +76,7 @@ public class SyncService extends Service {
         public void run() {
             try {
                 final SyncTabApplication app = (SyncTabApplication) getApplication();
-                final SyncTabService service = app.getSyncTabService();
+                final SyncTabFacade facade = app.getSyncTabFacade();
                 final List<QueueTask> tasks = database.getQueuedTasks();
 
                 if (isInterrupted()) {
@@ -88,7 +88,7 @@ public class SyncService extends Service {
                         return;
                     }
 
-                    if (service.syncTask(task)) {
+                    if (facade.syncTask(task)) {
                         database.removeQueueTask(task);
                     }
                 }

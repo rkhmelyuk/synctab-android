@@ -2,6 +2,8 @@ package com.khmlabs.synctab.tab;
 
 /**
  * The shared tab, also called a shared link.
+ *
+ * @author Ruslan Khmelyuk
  */
 public class SharedTab {
 
@@ -18,8 +20,8 @@ public class SharedTab {
     private String id;
     private String title;
     private String link;
-    private String device;
     private String favicon;
+    private String tagId;
 
     private long timestamp;
 
@@ -55,14 +57,6 @@ public class SharedTab {
         this.link = link;
     }
 
-    public String getDevice() {
-        return device;
-    }
-
-    public void setDevice(String device) {
-        this.device = device;
-    }
-
     public String getFavicon() {
         return favicon;
     }
@@ -77,5 +71,13 @@ public class SharedTab {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(String tagId) {
+        this.tagId = tagId;
     }
 }

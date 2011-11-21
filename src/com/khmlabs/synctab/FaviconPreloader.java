@@ -11,6 +11,11 @@ import com.khmlabs.synctab.tab.SharedTab;
 
 import java.util.List;
 
+/**
+ * Preloader of favicons.
+ *
+ * @author Ruslan Khmelyuk
+ */
 public class FaviconPreloader {
 
     private static final String TAG = "FaviconPreloader";

@@ -30,8 +30,8 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="please_login">Login</string>
-    <string name="registration">Registration</string>
+    <string name="please_login">SyncTab: Login</string>
+    <string name="registration">SyncTab: Registration</string>
     <string name="register">Register</string>
     <string name="register_now">Register Now</string>
     <string name="please_wait">Please wait...</string>

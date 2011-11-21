@@ -17,7 +17,7 @@ import android.widget.*;
 
 import com.khmlabs.synctab.*;
 import com.khmlabs.synctab.db.DbMetadata;
-import com.khmlabs.synctab.db.DbMetadata.SharedTabsColumn;
+import com.khmlabs.synctab.db.DbMetadata.SharedTabsColumns;
 import com.khmlabs.synctab.db.SyncTabDatabase;
 import com.khmlabs.synctab.util.IntentHelper;
 import com.khmlabs.synctab.util.UrlUtil;
@@ -38,12 +38,16 @@ public class MainActivity extends BaseUserActivity {
     private static final int TAB_CONTEXT_MENU_COPY = 3;
 
     static final String[] ADAPTER_FROM = {
-            SharedTabsColumn.FAVICON, SharedTabsColumn.TITLE,
-            SharedTabsColumn.LINK, SharedTabsColumn.TIMESTAMP,
-            SharedTabsColumn.DEVICE
+            SharedTabsColumns.FAVICON, SharedTabsColumns.TITLE,
+            SharedTabsColumns.LINK, SharedTabsColumns.TIMESTAMP,
+            SharedTabsColumns.TAG
     };
 
-    static final int[] ADAPTER_TO = {R.id.tab_icon, R.id.tab_title, R.id.tab_link, R.id.tab_date, R.id.device};
+    static final int[] ADAPTER_TO = {
+            R.id.tab_icon, R.id.tab_title,
+            R.id.tab_link, R.id.tab_date,
+            R.id.device
+    };
 
     private final SimpleCursorAdapter.ViewBinder ROW_BINDER = new SharedTabsBinder(this);
 
@@ -82,7 +86,7 @@ public class MainActivity extends BaseUserActivity {
         sharedTabs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 final Cursor cursor = (Cursor) adapterView.getAdapter().getItem(position);
-                final int linkColumn = cursor.getColumnIndex(DbMetadata.SharedTabsColumn.LINK);
+                final int linkColumn = cursor.getColumnIndex(SharedTabsColumns.LINK);
                 final String link = cursor.getString(linkColumn);
 
                 IntentHelper.browseLink(MainActivity.this, link);
@@ -178,14 +182,14 @@ public class MainActivity extends BaseUserActivity {
 
         final Cursor cursor = (Cursor) listView.getAdapter().getItem(ctxMenuInfo.position);
 
-        final int titleColumn = cursor.getColumnIndex(DbMetadata.SharedTabsColumn.TITLE);
+        final int titleColumn = cursor.getColumnIndex(SharedTabsColumns.TITLE);
         final String title = cursor.getString(titleColumn);
 
         if (title != null && title.length() != 0) {
             menu.setHeaderTitle(Html.fromHtml(title).toString());
         }
         else {
-            final int linkColumn = cursor.getColumnIndex(DbMetadata.SharedTabsColumn.LINK);
+            final int linkColumn = cursor.getColumnIndex(SharedTabsColumns.LINK);
             String link = cursor.getString(linkColumn);
             menu.setHeaderTitle(link);
         }
@@ -219,8 +223,8 @@ public class MainActivity extends BaseUserActivity {
     }
 
     private void sendLink(Cursor cursor) {
-        final int linkColumn = cursor.getColumnIndex(DbMetadata.SharedTabsColumn.LINK);
-        final int titleColumn = cursor.getColumnIndex(DbMetadata.SharedTabsColumn.TITLE);
+        final int linkColumn = cursor.getColumnIndex(SharedTabsColumns.LINK);
+        final int titleColumn = cursor.getColumnIndex(SharedTabsColumns.TITLE);
 
         final String link = cursor.getString(linkColumn);
         final String title = cursor.getString(titleColumn);
@@ -229,7 +233,7 @@ public class MainActivity extends BaseUserActivity {
     }
 
     private void copyLink(Cursor cursor) {
-        final int linkColumn = cursor.getColumnIndex(DbMetadata.SharedTabsColumn.LINK);
+        final int linkColumn = cursor.getColumnIndex(SharedTabsColumns.LINK);
         final String link = cursor.getString(linkColumn);
 
         final ClipboardManager manager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
@@ -305,8 +309,8 @@ public class MainActivity extends BaseUserActivity {
         protected Boolean doInBackground(String... strings) {
             try {
                 SyncTabApplication application = getSyncTabApplication();
-                SyncTabService service = application.getSyncTabService();
-                return service.refreshSharedTabs();
+                SyncTabFacade facade = application.getSyncTabFacade();
+                return facade.refreshSharedTabs();
             }
             catch (Exception e) {
                 Log.e(MainActivity.TAG, "error to refresh shared tabs", e);
@@ -338,9 +342,9 @@ public class MainActivity extends BaseUserActivity {
         @Override
         protected RemoteOpStatus doInBackground(Integer... params) {
             final int tabId = params[0];
-            final SyncTabService service = getSyncTabApplication().getSyncTabService();
+            final SyncTabFacade facade = getSyncTabApplication().getSyncTabFacade();
 
-            return service.removeSharedTab(tabId);
+            return facade.removeSharedTab(tabId);
         }
 
         @Override
@@ -364,8 +368,8 @@ public class MainActivity extends BaseUserActivity {
         @Override
         protected RemoteOpStatus doInBackground(Integer... params) {
             final int tabId = params[0];
-            final SyncTabService service = getSyncTabApplication().getSyncTabService();
-            return service.reshareTab(tabId);
+            final SyncTabFacade facade = getSyncTabApplication().getSyncTabFacade();
+            return facade.reshareTab(tabId);
         }
 
         @Override
@@ -418,8 +422,8 @@ public class MainActivity extends BaseUserActivity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             try {
-                SyncTabService service = getSyncTabApplication().getSyncTabService();
-                return !service.getOlderSharedTabs();
+                SyncTabFacade facade = getSyncTabApplication().getSyncTabFacade();
+                return !facade.loadOlderSharedTabs();
             }
             catch (Exception e) {
                 Log.e(MainActivity.TAG, "error to load older shared tabs", e);
@@ -484,15 +488,7 @@ public class MainActivity extends BaseUserActivity {
             }
             else if (element.getId() == R.id.device) {
                 String device = cursor.getString(columnIndex);
-
-                final String deviceName;
-                if (AppConstants.ANDROID_SYNCTAB_DEVICE.equals(device)) {
-                    deviceName = "Android";
-                }
-                else {
-                    deviceName = context.getResources().getString(R.string.unknown);
-                }
-                ((TextView) element).setText(deviceName);
+                ((TextView) element).setText(device);
 
                 return true;
             }

@@ -9,7 +9,7 @@ import com.khmlabs.synctab.util.IOUtil;
 import java.io.*;
 
 /**
- * This manager handle the work with file cache.
+ * This manager handles the work with file cache.
  */
 public class FileCacheManager {
 

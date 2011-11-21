@@ -96,8 +96,8 @@ public class ShareTabActivity extends BaseUserActivity {
             if (AppConstants.LOG) Log.i(TAG, "Sharing link " + link);
 
             SyncTabApplication application = (SyncTabApplication) getApplication();
-            SyncTabService service = application.getSyncTabService();
-            return service.enqueueSync(link);
+            SyncTabFacade facade = application.getSyncTabFacade();
+            return facade.enqueueSync(link);
         }
 
         @Override

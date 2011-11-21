@@ -2,13 +2,11 @@ package com.khmlabs.synctab;
 
 public interface AppConstants {
 
-    String SERVICE_URL = "http://192.168.0.199:8080";
+    String SERVICE_URL = "http://192.168.1.101:8080";
     //String SERVICE_URL = "http://192.168.1.102:8080";
     //String SERVICE_URL = "http://synctabapp.khmelyuk.com";
 
     boolean LOG = false;
-
-    String ANDROID_SYNCTAB_DEVICE = "synctab-android-app";
 
     String LAST_SYNC_TIME = "LAST_SYNC_TIME";
 

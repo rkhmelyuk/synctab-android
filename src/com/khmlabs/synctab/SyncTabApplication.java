@@ -23,7 +23,7 @@ public class SyncTabApplication extends Application {
     private volatile boolean onLine = false;
 
     private SharedPreferences preferences;
-    private SyncTabService syncTabService;
+    private SyncTabFacade syncTabFacade;
     private FileCacheManager cacheManager;
     private TaskQueueManager taskQueueManager;
 
@@ -63,7 +63,7 @@ public class SyncTabApplication extends Application {
     private synchronized void initSyncTabRemoteService() {
         try {
             final URL url = new URL(AppConstants.SERVICE_URL);
-            syncTabService = new SyncTabService(
+            syncTabFacade = new SyncTabFacade(
                     this, url.getProtocol(),
                     url.getHost(), getPort(url, 80));
         }
@@ -77,8 +77,8 @@ public class SyncTabApplication extends Application {
         return (port != -1 ? port : defaultPort);
     }
 
-    public SyncTabService getSyncTabService() {
-        return syncTabService;
+    public SyncTabFacade getSyncTabFacade() {
+        return syncTabFacade;
     }
 
     public FileCacheManager getCacheManager() {
@@ -123,11 +123,7 @@ public class SyncTabApplication extends Application {
         setLastSharedTabId(null);
 
         cacheManager.clean();
-        syncTabService.removeUserData();
-
-        if (onLine) {
-            syncTabService.logout(token);
-        }
+        syncTabFacade.logout(token);
 
         if (AppConstants.LOG) Log.i(TAG, "Logout");
     }
