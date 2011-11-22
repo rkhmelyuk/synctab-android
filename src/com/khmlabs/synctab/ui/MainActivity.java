@@ -39,7 +39,7 @@ public class MainActivity extends BaseUserActivity {
     static final String[] ADAPTER_FROM = {
             SharedTabsColumns.FAVICON, SharedTabsColumns.TITLE,
             SharedTabsColumns.LINK, SharedTabsColumns.TIMESTAMP,
-            SharedTabsColumns.TAG
+            SharedTabsColumns.DEVICE
     };
 
     static final int[] ADAPTER_TO = {
@@ -495,13 +495,11 @@ public class MainActivity extends BaseUserActivity {
                 return true;
             }
             else if (element.getId() == R.id.device) {
-                String tagId = cursor.getString(columnIndex);
-                String name = app.getFacade().getTagName(tagId);
-                if (name == null) {
-                    name = app.getResources().getString(R.string.unknown);
+                String device = cursor.getString(columnIndex);
+                if (device == null) {
+                    device = app.getResources().getString(R.string.unknown);
                 }
-
-                ((TextView) element).setText(name);
+                ((TextView) element).setText(device);
 
                 return true;
             }

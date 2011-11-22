@@ -1,5 +1,7 @@
 package com.khmlabs.synctab.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,7 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.khmlabs.synctab.*;
+import com.khmlabs.synctab.tag.Tag;
 import com.khmlabs.synctab.util.UrlUtil;
+
+import java.util.List;
 
 /**
  * Activity to share a tab.
@@ -43,25 +48,61 @@ public class ShareTabActivity extends BaseUserActivity {
     }
 
     private void shareLinkIfAuthenticated() {
-        if (getSyncTabApplication().isAuthenticated()) {
-            // get the shared link
-            final Intent intent = getIntent();
-            String link = intent.getStringExtra(Intent.EXTRA_TEXT);
+        final SyncTabApplication app = getSyncTabApplication();
 
-            if (link != null && link.length() > 0) {
-                link = UrlUtil.decodeUrl(link);
-                if (URLUtil.isValidUrl(link)) {
-                    new SyncTabTask().execute(link);
+        if (app.isAuthenticated()) {
+            final SyncTabFacade facade = app.getFacade();
+            final List<Tag> tags = facade.getShareTags();
+            final String[] tagsArray = tagsListToNameArray(tags);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Share with...");
+            builder.setItems(tagsArray, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogInterface, int position) {
+                    final Tag tag = tags.get(position);
+                    shareLink(tag);
                 }
-                else {
-                    statusImage.setImageResource(R.drawable.fail);
-                    statusText.setText(R.string.incorrect_url);
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+    }
+
+    private String[] tagsListToNameArray(List<Tag> tags) {
+        String[] result = new String[tags.size()];
+
+        int i = 0;
+        for (Tag each : tags) {
+            result[i++] = each.getName();
+        }
+
+        return result;
+    }
+
+    private void shareLink(Tag tag) {
+        // get the shared link
+        final Intent intent = getIntent();
+        String link = intent.getStringExtra(Intent.EXTRA_TEXT);
+
+        if (link != null && link.length() > 0) {
+            link = UrlUtil.decodeUrl(link);
+            if (URLUtil.isValidUrl(link)) {
+                String tagId = null;
+                if (tag != null) {
+                    tagId = tag.getTagId();
                 }
+
+                new SyncTabTask().execute(link, tagId);
             }
             else {
                 statusImage.setImageResource(R.drawable.fail);
-                statusText.setText(R.string.nothing_to_share);
+                statusText.setText(R.string.incorrect_url);
             }
+        }
+        else {
+            statusImage.setImageResource(R.drawable.fail);
+            statusText.setText(R.string.nothing_to_share);
         }
     }
 
@@ -93,11 +134,12 @@ public class ShareTabActivity extends BaseUserActivity {
 
         protected RemoteOpStatus doInBackground(String... strings) {
             final String link = strings[0];
+            final String tagId = strings[1];
             if (AppConstants.LOG) Log.i(TAG, "Sharing link " + link);
 
             SyncTabApplication application = (SyncTabApplication) getApplication();
             SyncTabFacade facade = application.getFacade();
-            return facade.enqueueSync(link);
+            return facade.enqueueSync(link, tagId);
         }
 
         @Override

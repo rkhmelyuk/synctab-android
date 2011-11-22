@@ -21,6 +21,7 @@ public class SharedTab {
     private String title;
     private String link;
     private String favicon;
+    private String device;
     private String tagId;
 
     private long timestamp;
@@ -79,5 +80,13 @@ public class SharedTab {
 
     public void setTagId(String tagId) {
         this.tagId = tagId;
+    }
+
+    public String getDevice() {
+        return device;
+    }
+
+    public void setDevice(String device) {
+        this.device = device;
     }
 }

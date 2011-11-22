@@ -12,6 +12,8 @@ import com.khmlabs.synctab.tag.RemoteTagManager;
 import com.khmlabs.synctab.tag.Tag;
 import com.khmlabs.synctab.tag.TagManager;
 
+import java.util.List;
+
 public class SyncTabFacade {
 
     private final TagManager tagManager;
@@ -67,8 +69,8 @@ public class SyncTabFacade {
         return tabManager.loadOlderSharedTabs();
     }
 
-    public RemoteOpStatus enqueueSync(String link) {
-        return tabManager.enqueueSync(link);
+    public RemoteOpStatus enqueueSync(String link, String tagId) {
+        return tabManager.enqueueSync(link, tagId);
     }
 
     public void refreshTags() {
@@ -78,20 +80,20 @@ public class SyncTabFacade {
     public boolean syncTask(QueueTask task) {
         if (task != null) {
             if (task.getType() == TaskType.SyncTab) {
-                return tabManager.shareLink(task.getParam());
+                return remoteTabManager.shareTab(task.getParam1(), task.getParam2());
             }
             else if (task.getType() == TaskType.Logout) {
-                return remoteAuthManager.logout(task.getParam());
+                return remoteAuthManager.logout(task.getParam1());
             }
             else if (task.getType() == TaskType.RemoveSharedTab) {
-                return remoteTabManager.removeSharedTab(task.getParam());
+                return remoteTabManager.removeSharedTab(task.getParam1());
             }
             else if (task.getType() == TaskType.ReshareTab) {
-                return remoteTabManager.reshareTab(task.getParam());
+                return remoteTabManager.reshareTab(task.getParam1());
             }
             else if (task.getType() == TaskType.LoadFavicon) {
                 FaviconPreloader loader = new FaviconPreloader(application);
-                return loader.preloadFavicon(task.getParam());
+                return loader.preloadFavicon(task.getParam1());
             }
         }
 
@@ -104,5 +106,9 @@ public class SyncTabFacade {
             return tag.getName();
         }
         return null;
+    }
+
+    public List<Tag> getShareTags() {
+        return tagManager.getTags();
     }
 }

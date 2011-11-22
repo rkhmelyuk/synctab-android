@@ -25,6 +25,7 @@ public abstract class RemoteManager {
     protected static final String ID = "id";
     protected static final String TOKEN = "token";
     protected static final String TAG_ID = "tagId";
+    protected static final String DEVICE = "device";
 
     protected static final int PAGE_SIZE = 15;
 

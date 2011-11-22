@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.khmlabs.synctab.AppConstants;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.remote.JsonResponse;
 import com.khmlabs.synctab.remote.RemoteManager;
@@ -49,6 +50,7 @@ public class RemoteTabManager extends RemoteManager {
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
             nameValuePairs.add(new BasicNameValuePair("link", link));
             nameValuePairs.add(new BasicNameValuePair(TAG_ID, tagId));
+            nameValuePairs.add(new BasicNameValuePair(DEVICE, AppConstants.DEVICE_NAME));
             nameValuePairs.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -249,6 +251,9 @@ public class RemoteTabManager extends RemoteManager {
         }
         if (!row.isNull("tag")) {
             result.setTagId(row.getString("tag"));
+        }
+        if (!row.isNull("device")) {
+            result.setDevice(row.getString("device"));
         }
         if (!row.isNull("title")) {
             result.setTitle(row.getString("title"));

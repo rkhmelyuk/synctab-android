@@ -27,6 +27,9 @@ public interface AppConstants {
     /** The default tag for android device */
     String ANDROID_TAG_NAME = "Android";
 
+    /** The device name for this app.*/
+    String DEVICE_NAME = "Android";
+
     // 30 days
     long CACHE_CLEANUP_PERIOD = 1000L * 3600L * 24L * 30L;
 }
