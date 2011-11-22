@@ -8,9 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import com.khmlabs.synctab.db.DbMetadata.QueueTasksColumns;
 import com.khmlabs.synctab.db.DbMetadata.SharedTabsColumns;
 import com.khmlabs.synctab.db.DbMetadata.Table;
+import com.khmlabs.synctab.db.DbMetadata.TagsColumns;
 import com.khmlabs.synctab.queue.QueueTask;
 import com.khmlabs.synctab.queue.TaskType;
 import com.khmlabs.synctab.tab.SharedTab;
+import com.khmlabs.synctab.tag.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +85,7 @@ public class SyncTabDatabase {
                 final ContentValues values = new ContentValues();
                 for (SharedTab each : tabs) {
                     values.put(SharedTabsColumns.TAB_ID, each.getId());
-                    values.put(DbMetadata.SharedTabsColumns.LINK, each.getLink());
+                    values.put(SharedTabsColumns.LINK, each.getLink());
                     values.put(SharedTabsColumns.TIMESTAMP, each.getTimestamp());
                     values.put(SharedTabsColumns.TITLE, each.getTitle());
                     values.put(SharedTabsColumns.TAG, each.getTagId());
@@ -139,11 +141,14 @@ public class SyncTabDatabase {
 
     public List<QueueTask> getQueuedTasks() {
         final List<QueueTask> result = new ArrayList<QueueTask>();
-        final SQLiteDatabase db = getReadableDatabase();
-        final Cursor cursor = db.query(Table.QUEUE_TASKS,
-                null, null, null, null, null, null);
+
+        Cursor cursor = null;
 
         try {
+            final SQLiteDatabase db = getReadableDatabase();
+            cursor = db.query(Table.QUEUE_TASKS,
+                    null, null, null, null, null, null);
+
             while (cursor.moveToNext()) {
                 final QueueTask task = new QueueTask();
                 task.setId(cursor.getInt(0));
@@ -154,7 +159,9 @@ public class SyncTabDatabase {
             }
         }
         finally {
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
         return result;
@@ -240,5 +247,60 @@ public class SyncTabDatabase {
                 db.close();
             }
         }
+    }
+
+    public void replaceTags(List<Tag> tags) {
+        if (tags != null && tags.size() > 0) {
+            SQLiteDatabase db = null;
+            try {
+                db = dbOpenHelper.getWritableDatabase();
+                db.beginTransaction();
+
+                final ContentValues values = new ContentValues();
+                for (Tag each : tags) {
+                    values.put(TagsColumns.ID, each.getId());
+                    values.put(TagsColumns.NAME, each.getName());
+
+                    db.replaceOrThrow(Table.TAGS, null, values);
+
+                    values.clear();
+                }
+
+                db.setTransactionSuccessful();
+            }
+            finally {
+                if (db != null && db.isOpen()) {
+                    if (db.inTransaction()) {
+                        db.endTransaction();
+                    }
+                    db.close();
+                }
+            }
+        }
+    }
+
+    public List<Tag> getTags() {
+        final List<Tag> result = new ArrayList<Tag>();
+
+        Cursor cursor = null;
+        try {
+            final SQLiteDatabase db = getReadableDatabase();
+            cursor = db.query(Table.TAGS, null, null, null, null, null, null);
+
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(cursor.getColumnIndex(DbMetadata.ID));
+                String tagId = cursor.getString(cursor.getColumnIndex(TagsColumns.ID));
+                String name = cursor.getString(cursor.getColumnIndex(TagsColumns.NAME));
+
+                result.add(new Tag(id, tagId, name));
+            }
+        }
+        finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return result;
     }
 }

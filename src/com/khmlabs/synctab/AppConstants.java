@@ -18,6 +18,9 @@ public interface AppConstants {
     String AUTH_TOKEN = "AUTH_TOKEN";
     String AUTH_USER = "AUTH_USER";
 
+    /** The property to check whether tags were loaded already. */
+    String TAGS_LOADED = "TAGS_LOADED";
+
     // 30 days
     long CACHE_CLEANUP_PERIOD = 1000L * 3600L * 24L * 30L;
 

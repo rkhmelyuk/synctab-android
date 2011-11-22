@@ -76,7 +76,7 @@ public class RegistrationActivity extends BaseGuestActivity {
         protected RegistrationStatus doInBackground(String... strings) {
             try {
                 final SyncTabApplication app = (SyncTabApplication) getApplication();
-                final SyncTabFacade facade = app.getSyncTabFacade();
+                final SyncTabFacade facade = app.getFacade();
                 return facade.register(strings[0], strings[1]);
             }
             catch (Exception e) {
@@ -112,7 +112,7 @@ public class RegistrationActivity extends BaseGuestActivity {
 
         private void authenticate(RegistrationStatus status) {
             SyncTabApplication app = (SyncTabApplication) getApplication();
-            SyncTabFacade facade = app.getSyncTabFacade();
+            SyncTabFacade facade = app.getFacade();
 
             if (facade.authenticate(status.getEmail(), status.getPassword())) {
                 startActivity(new Intent(RegistrationActivity.this, MainActivity.class));

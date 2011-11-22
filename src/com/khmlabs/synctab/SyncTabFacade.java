@@ -70,6 +70,10 @@ public class SyncTabFacade {
         return tabManager.enqueueSync(link);
     }
 
+    public void refreshTags() {
+        tagManager.refreshTags();
+    }
+
     public boolean syncTask(QueueTask task) {
         if (task != null) {
             if (task.getType() == TaskType.SyncTab) {

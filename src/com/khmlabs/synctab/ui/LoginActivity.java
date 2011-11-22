@@ -103,7 +103,7 @@ public class LoginActivity extends BaseGuestActivity {
             try {
                 final SyncTabApplication app = (SyncTabApplication) getApplication();
                 if (app.isOnLine()) {
-                    final SyncTabFacade facade = app.getSyncTabFacade();
+                    final SyncTabFacade facade = app.getFacade();
                     final boolean result = facade.authenticate(strings[0], strings[1]);
 
                     return result ? RESULT_SUCCESS : RESULT_FAILED;

@@ -9,6 +9,19 @@ public class Tag {
     private String tagId;
     private String name;
 
+    public Tag() {
+    }
+
+    public Tag(Integer id, String tagId, String name) {
+        this.id = id;
+        this.tagId = tagId;
+        this.name = name;
+    }
+
+    public Tag(String tagId, String name) {
+        this(null, tagId, name);
+    }
+
     public Integer getId() {
         return id;
     }

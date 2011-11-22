@@ -309,7 +309,14 @@ public class MainActivity extends BaseUserActivity {
         protected Boolean doInBackground(String... strings) {
             try {
                 SyncTabApplication application = getSyncTabApplication();
-                SyncTabFacade facade = application.getSyncTabFacade();
+                SyncTabFacade facade = application.getFacade();
+
+                // if there is no tags yet, load first them
+                // as they will be needed to show the loaded tabs
+                if (!application.isTagsLoaded()) {
+                    facade.refreshTags();
+                }
+
                 return facade.refreshSharedTabs();
             }
             catch (Exception e) {
@@ -342,7 +349,7 @@ public class MainActivity extends BaseUserActivity {
         @Override
         protected RemoteOpStatus doInBackground(Integer... params) {
             final int tabId = params[0];
-            final SyncTabFacade facade = getSyncTabApplication().getSyncTabFacade();
+            final SyncTabFacade facade = getSyncTabApplication().getFacade();
 
             return facade.removeSharedTab(tabId);
         }
@@ -368,7 +375,7 @@ public class MainActivity extends BaseUserActivity {
         @Override
         protected RemoteOpStatus doInBackground(Integer... params) {
             final int tabId = params[0];
-            final SyncTabFacade facade = getSyncTabApplication().getSyncTabFacade();
+            final SyncTabFacade facade = getSyncTabApplication().getFacade();
             return facade.reshareTab(tabId);
         }
 
@@ -422,7 +429,7 @@ public class MainActivity extends BaseUserActivity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             try {
-                SyncTabFacade facade = getSyncTabApplication().getSyncTabFacade();
+                SyncTabFacade facade = getSyncTabApplication().getFacade();
                 return !facade.loadOlderSharedTabs();
             }
             catch (Exception e) {

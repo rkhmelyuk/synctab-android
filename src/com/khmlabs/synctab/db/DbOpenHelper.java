@@ -13,7 +13,6 @@ class DbOpenHelper extends SQLiteOpenHelper {
 
     private static int DB_VERSION = 2;
 
-    private static int VER_LAUNCH = 1;
     private static int VER_TAGS = 2;
 
     private static String DB_NAME = "synctab.db";
@@ -26,13 +25,14 @@ class DbOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createSharedTabsTable());
         db.execSQL(createQueueTasksTable());
+        db.execSQL(createTagsTable());
 
         db.execSQL(createSharedTabsIndex());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion == VER_LAUNCH && newVersion == VER_TAGS) {
+        if (newVersion == VER_TAGS) {
             // if upgrade to version 2 then add tag column to the SharedTabs table
             db.execSQL(sharedTabsAddTagColumn());
             db.execSQL(createTagsTable());
@@ -83,7 +83,7 @@ class DbOpenHelper extends SQLiteOpenHelper {
                 .append("create table ").append(DbMetadata.Table.TAGS).append("(")
                 .append(DbMetadata.ID).append(" integer primary key,")
                 .append(TagsColumns.ID).append(" text unique,")
-                .append(TagsColumns.NAME).append(" text;");
+                .append(TagsColumns.NAME).append(" text);");
 
         return builder.toString();
     }

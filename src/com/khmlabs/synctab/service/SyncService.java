@@ -76,12 +76,15 @@ public class SyncService extends Service {
         public void run() {
             try {
                 final SyncTabApplication app = (SyncTabApplication) getApplication();
-                final SyncTabFacade facade = app.getSyncTabFacade();
+                final SyncTabFacade facade = app.getFacade();
+
+                // Refresh the list of tags.
+                facade.refreshTags();
+                if (isInterrupted()) return;
+
                 final List<QueueTask> tasks = database.getQueuedTasks();
 
-                if (isInterrupted()) {
-                    return;
-                }
+                if (isInterrupted()) return;
 
                 for (QueueTask task : tasks) {
                     if (isInterrupted()) {

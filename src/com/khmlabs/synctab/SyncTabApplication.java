@@ -23,7 +23,7 @@ public class SyncTabApplication extends Application {
     private volatile boolean onLine = false;
 
     private SharedPreferences preferences;
-    private SyncTabFacade syncTabFacade;
+    private SyncTabFacade facade;
     private FileCacheManager cacheManager;
     private TaskQueueManager taskQueueManager;
 
@@ -63,7 +63,7 @@ public class SyncTabApplication extends Application {
     private synchronized void initSyncTabRemoteService() {
         try {
             final URL url = new URL(AppConstants.SERVICE_URL);
-            syncTabFacade = new SyncTabFacade(
+            facade = new SyncTabFacade(
                     this, url.getProtocol(),
                     url.getHost(), getPort(url, 80));
         }
@@ -77,8 +77,8 @@ public class SyncTabApplication extends Application {
         return (port != -1 ? port : defaultPort);
     }
 
-    public SyncTabFacade getSyncTabFacade() {
-        return syncTabFacade;
+    public SyncTabFacade getFacade() {
+        return facade;
     }
 
     public FileCacheManager getCacheManager() {
@@ -113,7 +113,9 @@ public class SyncTabApplication extends Application {
         preferences.edit().putString(AppConstants.AUTH_TOKEN, token).commit();
     }
 
-    // TODO - do something with this, not the best place for it
+    /**
+     * Logout user from application.
+     */
     public void logout() {
         final String token = getAuthToken();
 
@@ -123,7 +125,7 @@ public class SyncTabApplication extends Application {
         setLastSharedTabId(null);
 
         cacheManager.clean();
-        syncTabFacade.logout(token);
+        facade.logout(token);
 
         if (AppConstants.LOG) Log.i(TAG, "Logout");
     }
@@ -162,5 +164,21 @@ public class SyncTabApplication extends Application {
 
     public void setOldestSharedTabId(String id) {
         preferences.edit().putString(AppConstants.OLDEST_SHARED_TAB_ID, id).commit();
+    }
+
+    /**
+     * Check whether tags were loaded already.
+     * @return true if tags were loaded.
+     */
+    public boolean isTagsLoaded() {
+        return preferences.getBoolean(AppConstants.TAGS_LOADED, false);
+    }
+
+    /**
+     * Set whether tags where loaded.
+     * @param value true if tags where loaded.
+     */
+    public void setTagsLoaded(boolean value) {
+        preferences.edit().putBoolean(AppConstants.TAGS_LOADED, value).commit();
     }
 }
