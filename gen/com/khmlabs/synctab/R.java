@@ -186,6 +186,7 @@ public final class R {
         public static final int remove=0x7f080030;
         public static final int reshare=0x7f08002f;
         public static final int send_to=0x7f080031;
+        public static final int share_with=0x7f080040;
         public static final int start_help_notice=0x7f08003f;
         public static final int submit_issue=0x7f08003d;
         public static final int submit_issue_url=0x7f080002;
