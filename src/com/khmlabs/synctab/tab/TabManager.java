@@ -25,11 +25,26 @@ public class TabManager {
     }
 
     public RemoteOpStatus enqueueSync(String link) {
-        if (application.isOnLine() && remote.shareTab(link)) {
+        if (application.isOnLine() && shareLink(link)) {
             return RemoteOpStatus.Success;
         }
 
         return application.getTaskQueueManager().addShareTabTask(link);
+    }
+
+    /**
+     * Shares a specified link.
+     *
+     * This method doesn't check for online status and doesn't
+     * add to queue. Prefer to use {@code enqueueSync()} method
+     * to share a link from activity.
+     *
+     * @param link the link to share.
+     * @return true if was shared.
+     */
+    public boolean shareLink(String link) {
+        String tagId = application.getCurrentTag();
+        return remote.shareTab(link, tagId);
     }
 
     public boolean refreshSharedTabs() {

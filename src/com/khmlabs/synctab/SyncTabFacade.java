@@ -78,7 +78,7 @@ public class SyncTabFacade {
     public boolean syncTask(QueueTask task) {
         if (task != null) {
             if (task.getType() == TaskType.SyncTab) {
-                return remoteTabManager.shareTab(task.getParam());
+                return tabManager.shareLink(task.getParam());
             }
             else if (task.getType() == TaskType.Logout) {
                 return remoteAuthManager.logout(task.getParam());

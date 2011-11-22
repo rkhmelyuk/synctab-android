@@ -2,6 +2,7 @@ package com.khmlabs.synctab.tag;
 
 import android.util.Log;
 
+import com.khmlabs.synctab.AppConstants;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.db.SyncTabDatabase;
 
@@ -62,7 +63,14 @@ public class TagManager {
             if (tags.size() > 0) {
                 storeTags(tags);
 
+                // tags loaded flag is set
                 application.setTagsLoaded(true);
+
+                // Find and set the current tag
+                Tag currentTag = findCurrentTag(tags);
+                if (currentTag != null) {
+                    application.setCurrentTag(currentTag.getTagId());
+                }
             }
         }
         catch (Exception e) {
@@ -70,6 +78,25 @@ public class TagManager {
         }
 
         return true;
+    }
+
+    private Tag findCurrentTag(List<Tag> tags) {
+        String tagId = application.getCurrentTag();
+        if (tagId != null) {
+            for (Tag each : tags) {
+                if (tagId.equals(each.getTagId())) {
+                    return each;
+                }
+            }
+        }
+
+        for (Tag each : tags) {
+            if (AppConstants.ANDROID_TAG_NAME.equals(each.getName())) {
+                return each;
+            }
+        }
+
+        return null;
     }
 
     /**

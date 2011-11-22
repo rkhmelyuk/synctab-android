@@ -74,7 +74,7 @@ public class RemoteTagManager extends RemoteManager {
     }
 
     private List<Tag> readTags(JsonResponse jsonResponse) throws JSONException {
-        JSONArray array = jsonResponse.getJson().getJSONArray("tabs");
+        JSONArray array = jsonResponse.getJson().getJSONArray("tags");
         if (array.length() == 0) {
             return Collections.emptyList();
         }

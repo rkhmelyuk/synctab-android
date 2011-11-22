@@ -123,6 +123,8 @@ public class SyncTabApplication extends Application {
         setAuthEmail(null);
         setLastSyncTime(0);
         setLastSharedTabId(null);
+        setTagsLoaded(false);
+        setCurrentTag(null);
 
         cacheManager.clean();
         facade.logout(token);
@@ -180,5 +182,21 @@ public class SyncTabApplication extends Application {
      */
     public void setTagsLoaded(boolean value) {
         preferences.edit().putBoolean(AppConstants.TAGS_LOADED, value).commit();
+    }
+
+    /**
+     * Gets the current tag.
+     * @return the current tag or null if none.
+     */
+    public String getCurrentTag() {
+        return preferences.getString(AppConstants.CURRENT_TAG, null);
+    }
+
+    /**
+     * Sets the current tag.
+     * @param tag the current tag.
+     */
+    public void setCurrentTag(String tag) {
+        preferences.edit().putString(AppConstants.CURRENT_TAG, tag).commit();
     }
 }

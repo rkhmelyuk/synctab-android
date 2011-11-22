@@ -42,13 +42,13 @@ public class RemoteTabManager extends RemoteManager {
         super(application, host);
     }
 
-    public boolean shareTab(String link) {
+    public boolean shareTab(String link, String tagId) {
         try {
             final HttpPost post = new HttpPost(API_SHARE_TAB);
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
             nameValuePairs.add(new BasicNameValuePair("link", link));
-            nameValuePairs.add(new BasicNameValuePair(TAG_ID, null));
+            nameValuePairs.add(new BasicNameValuePair(TAG_ID, tagId));
             nameValuePairs.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
             post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

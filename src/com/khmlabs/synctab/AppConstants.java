@@ -6,7 +6,7 @@ public interface AppConstants {
     //String SERVICE_URL = "http://192.168.1.102:8080";
     //String SERVICE_URL = "http://synctabapp.khmelyuk.com";
 
-    boolean LOG = false;
+    boolean LOG = true;
 
     String LAST_SYNC_TIME = "LAST_SYNC_TIME";
 
@@ -21,7 +21,12 @@ public interface AppConstants {
     /** The property to check whether tags were loaded already. */
     String TAGS_LOADED = "TAGS_LOADED";
 
+    /** The tag of this device. */
+    String CURRENT_TAG = "CURRENT_TAG";
+
+    /** The default tag for android device */
+    String ANDROID_TAG_NAME = "Android";
+
     // 30 days
     long CACHE_CLEANUP_PERIOD = 1000L * 3600L * 24L * 30L;
-
 }
