@@ -19,9 +19,8 @@ abstract class BaseActivity extends Activity {
         titlebarHelper = new TitleBarHelper(this);
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+    protected void onResume() {
+        super.onResume();
 
         // add any buttons to title bar
         titlebarHelper.setup();
