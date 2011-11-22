@@ -72,6 +72,6 @@
     <string name="contact">Contact</string>
     <string name="start_help_notice">Download and install a \n <b>SyncTab Chrome Extension</b> \n from your desktop browser\n\n Read more at\n <a href="http://synctab.khmelyuk.com">synctab.khmelyuk.com</a></string>
 
-    <string name="share_with">Share with...</string>
+    <string name="send_tab_to">Send to...</string>
 
 </resources>

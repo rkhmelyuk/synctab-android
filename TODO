@@ -1,6 +1,7 @@
 
+    . checkPeriod to be configurable
+
     . problems navigating the login screen
     . problems share a link and need to login
 
     . NonConnectionException
-    . checkPeriod to be configurable

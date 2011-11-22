@@ -56,7 +56,7 @@ public class ShareTabActivity extends BaseUserActivity {
             final String[] tagsArray = tagsListToNameArray(tags);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(getResources().getString(R.string.share_with));
+            builder.setTitle(getResources().getString(R.string.send_tab_to));
             builder.setItems(tagsArray, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialogInterface, int position) {
                     final Tag tag = tags.get(position);

@@ -26,6 +26,27 @@ public class TagManager {
         this.remote = remote;
     }
 
+    public List<Tag> getShareTags() {
+        final List<Tag> tags = getTags();
+
+        if (tags.size() > 0) {
+            // Remove current application tag
+            // from the list of available to send to
+
+            String tagId = application.getCurrentTag();
+            if (tagId != null) {
+                for (Tag each : tags) {
+                    if (tagId.equals(each.getTagId())) {
+                        tags.remove(each);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return tags;
+    }
+
     /**
      * Gets the list of available tags.
      *

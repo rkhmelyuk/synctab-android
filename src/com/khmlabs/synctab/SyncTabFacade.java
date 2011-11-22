@@ -80,7 +80,7 @@ public class SyncTabFacade {
      * @return the list of tags to show to user.
      */
     public List<Tag> getShareTags() {
-        return tagManager.getTags();
+        return tagManager.getShareTags();
     }
 
     public boolean syncTask(QueueTask task) {
