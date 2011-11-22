@@ -2,6 +2,7 @@ package com.khmlabs.synctab.queue;
 
 import android.util.Log;
 
+import com.khmlabs.synctab.AppConstants;
 import com.khmlabs.synctab.RemoteOpStatus;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.db.SyncTabDatabase;
@@ -16,8 +17,8 @@ public class TaskQueueManager {
         this.application = application;
     }
 
-    public RemoteOpStatus addShareTabTask(String link) {
-        return addTask(new QueueTask(TaskType.SyncTab, link));
+    public RemoteOpStatus addShareTabTask(String link, String tagId) {
+        return addTask(new QueueTask(TaskType.SyncTab, link, tagId));
     }
 
     public RemoteOpStatus addLogoutTask(String token) {
@@ -42,7 +43,9 @@ public class TaskQueueManager {
             database = new SyncTabDatabase(application);
             database.insertQueueTask(task);
 
-            Log.i(TAG, "Added task to QUEUE: " + task.getType() + " -> " + task.getParam());
+            if (AppConstants.LOG) {
+                Log.i(TAG, "Added task to QUEUE: " + task.getType() + " -> " + task.getParam1());
+            }
 
             return RemoteOpStatus.Queued;
         }

@@ -18,12 +18,14 @@ public interface DbMetadata {
         String LINK = "link";
         String TIMESTAMP = "timestamp";
         String TAG = "tag";
+        String DEVICE = "device";
         String FAVICON = "favicon";
     }
 
     public interface QueueTasksColumns {
         String TYPE = "type";
         String PARAM = "param";
+        String PARAM_2 = "param_2";
     }
 
     public interface TagsColumns {

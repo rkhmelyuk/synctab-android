@@ -12,14 +12,21 @@ public class QueueTask {
 
     private Integer id;
     private TaskType type;
-    private String param;
+    private String param1;
+    private String param2;
 
     public QueueTask() {
     }
 
     public QueueTask(TaskType type, String param) {
         this.type = type;
-        this.param = param;
+        this.param1 = param;
+    }
+
+    public QueueTask(TaskType type, String param1, String param2) {
+        this.type = type;
+        this.param1 = param1;
+        this.param2 = param2;
     }
 
     public Integer getId() {
@@ -38,11 +45,19 @@ public class QueueTask {
         this.type = type;
     }
 
-    public String getParam() {
-        return param;
+    public String getParam1() {
+        return param1;
     }
 
-    public void setParam(String param) {
-        this.param = param;
+    public void setParam1(String param) {
+        this.param1 = param;
+    }
+
+    public String getParam2() {
+        return param2;
+    }
+
+    public void setParam2(String param2) {
+        this.param2 = param2;
     }
 }

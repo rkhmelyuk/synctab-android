@@ -59,7 +59,8 @@ public class SyncTabDatabase {
 
                 final ContentValues values = new ContentValues();
                 values.put(QueueTasksColumns.TYPE, task.getType().getId());
-                values.put(QueueTasksColumns.PARAM, task.getParam());
+                values.put(QueueTasksColumns.PARAM, task.getParam1());
+                values.put(QueueTasksColumns.PARAM_2, task.getParam2());
 
                 db.insertOrThrow(Table.QUEUE_TASKS, null, values);
                 db.setTransactionSuccessful();
@@ -89,6 +90,7 @@ public class SyncTabDatabase {
                     values.put(SharedTabsColumns.TIMESTAMP, each.getTimestamp());
                     values.put(SharedTabsColumns.TITLE, each.getTitle());
                     values.put(SharedTabsColumns.TAG, each.getTagId());
+                    values.put(SharedTabsColumns.DEVICE, each.getDevice());
                     values.put(SharedTabsColumns.FAVICON, each.getFavicon());
 
                     db.replaceOrThrow(Table.SHARED_TABS, null, values);
@@ -123,6 +125,7 @@ public class SyncTabDatabase {
                 values.put(SharedTabsColumns.TIMESTAMP, tab.getTimestamp());
                 values.put(SharedTabsColumns.TITLE, tab.getTitle());
                 values.put(SharedTabsColumns.TAG, tab.getTagId());
+                values.put(SharedTabsColumns.DEVICE, tab.getDevice());
                 values.put(SharedTabsColumns.FAVICON, tab.getFavicon());
 
                 db.replaceOrThrow(Table.SHARED_TABS, null, values);
@@ -153,7 +156,8 @@ public class SyncTabDatabase {
                 final QueueTask task = new QueueTask();
                 task.setId(cursor.getInt(0));
                 task.setType(TaskType.findById(cursor.getInt(1)));
-                task.setParam(cursor.getString(2));
+                task.setParam1(cursor.getString(2));
+                task.setParam2(cursor.getString(3));
 
                 result.add(task);
             }
