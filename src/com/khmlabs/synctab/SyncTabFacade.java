@@ -5,7 +5,6 @@ import org.apache.http.HttpHost;
 import com.khmlabs.synctab.auth.AuthManager;
 import com.khmlabs.synctab.auth.RemoteAuthManager;
 import com.khmlabs.synctab.queue.QueueTask;
-import com.khmlabs.synctab.queue.TaskType;
 import com.khmlabs.synctab.tab.RemoteTabManager;
 import com.khmlabs.synctab.tab.TabManager;
 import com.khmlabs.synctab.tag.RemoteTagManager;
@@ -20,25 +19,13 @@ public class SyncTabFacade {
     private final TabManager tabManager;
     private final AuthManager authManager;
 
-    private final RemoteTagManager remoteTagManager;
-    private final RemoteTabManager remoteTabManager;
-    private final RemoteAuthManager remoteAuthManager;
-
-    private final SyncTabApplication application;
-
     public SyncTabFacade(SyncTabApplication app, String scheme, String hostname, int port) {
-        this.application = app;
 
         final HttpHost host = new HttpHost(hostname, port, scheme);
 
-        remoteTabManager = new RemoteTabManager(app, host);
-        tabManager = new TabManager(app, remoteTabManager);
-
-        remoteTagManager = new RemoteTagManager(app, host);
-        tagManager = new TagManager(app, remoteTagManager);
-
-        remoteAuthManager = new RemoteAuthManager(app, host);
-        authManager = new AuthManager(app, remoteAuthManager);
+        tabManager = new TabManager(app, new RemoteTabManager(app, host));
+        tagManager = new TagManager(app, new RemoteTagManager(app, host));
+        authManager = new AuthManager(app, new RemoteAuthManager(app, host));
     }
 
     public RegistrationStatus register(String email, String password) {
@@ -79,35 +66,23 @@ public class SyncTabFacade {
 
     public boolean syncTask(QueueTask task) {
         if (task != null) {
-            if (task.getType() == TaskType.SyncTab) {
-                return remoteTabManager.shareTab(task.getParam1(), task.getParam2());
+            if (tabManager.executeTask(task)) {
+                return true;
             }
-            else if (task.getType() == TaskType.Logout) {
-                return remoteAuthManager.logout(task.getParam1());
-            }
-            else if (task.getType() == TaskType.RemoveSharedTab) {
-                return remoteTabManager.removeSharedTab(task.getParam1());
-            }
-            else if (task.getType() == TaskType.ReshareTab) {
-                return remoteTabManager.reshareTab(task.getParam1());
-            }
-            else if (task.getType() == TaskType.LoadFavicon) {
-                FaviconPreloader loader = new FaviconPreloader(application);
-                return loader.preloadFavicon(task.getParam1());
+            if (authManager.executeTask(task)) {
+                return true;
             }
         }
 
         return false;
     }
 
-    public String getTagName(String tagId) {
-        Tag tag = tagManager.getTag(tagId);
-        if (tag != null) {
-            return tag.getName();
-        }
-        return null;
-    }
-
+    /**
+     * Gets the list of tags to show to user, when he/she shares a tab.
+     * This is a place to filter not needed tags, sort them in correct order etc.
+     *
+     * @return the list of tags to show to user.
+     */
     public List<Tag> getShareTags() {
         return tagManager.getTags();
     }

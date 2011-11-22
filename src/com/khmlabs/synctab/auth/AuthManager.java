@@ -6,6 +6,8 @@ import com.khmlabs.synctab.RegistrationStatus;
 import com.khmlabs.synctab.RemoteOpStatus;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.db.SyncTabDatabase;
+import com.khmlabs.synctab.queue.QueueTask;
+import com.khmlabs.synctab.queue.TaskType;
 
 /**
  * @author Ruslan Khmelyuk
@@ -107,5 +109,19 @@ public class AuthManager {
                 database.close();
             }
         }
+    }
+
+    /**
+     * Executes a queued sync task.
+     *
+     * @param task the task to execute.
+     * @return true if was executed.
+     */
+    public boolean executeTask(QueueTask task) {
+        if (task.getType() == TaskType.Logout) {
+            return remote.logout(task.getParam1());
+        }
+
+        return false;
     }
 }
