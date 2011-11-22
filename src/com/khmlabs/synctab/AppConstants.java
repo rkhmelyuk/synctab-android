@@ -9,10 +9,13 @@ public interface AppConstants {
     boolean LOG = true;
 
     String LAST_SYNC_TIME = "LAST_SYNC_TIME";
+    String LAST_SHARED_TAB_ID = "LAST_SHARED_TAB_ID";
+
+    String LAST_RECEIVED_TIME = "LAST_RECEIVED_TIME";
+    String LAST_RECEIVED_TAB_ID = "LAST_RECEIVED_TAB_ID";
 
     String LAST_CACHE_CLEANUP_TIME = "LAST_CACHE_CLEANUP_TIME";
 
-    String LAST_SHARED_TAB_ID = "LAST_SHARED_TAB_ID";
     String OLDEST_SHARED_TAB_ID = "OLDEST_SHARED_TAB_ID";
 
     String AUTH_TOKEN = "AUTH_TOKEN";
@@ -32,4 +35,5 @@ public interface AppConstants {
 
     // 30 days
     long CACHE_CLEANUP_PERIOD = 1000L * 3600L * 24L * 30L;
+
 }

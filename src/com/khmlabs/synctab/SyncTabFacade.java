@@ -6,6 +6,7 @@ import com.khmlabs.synctab.auth.AuthManager;
 import com.khmlabs.synctab.auth.RemoteAuthManager;
 import com.khmlabs.synctab.queue.QueueTask;
 import com.khmlabs.synctab.tab.RemoteTabManager;
+import com.khmlabs.synctab.tab.SharedTab;
 import com.khmlabs.synctab.tab.TabManager;
 import com.khmlabs.synctab.tag.RemoteTagManager;
 import com.khmlabs.synctab.tag.Tag;
@@ -64,6 +65,24 @@ public class SyncTabFacade {
         tagManager.refreshTags();
     }
 
+    /**
+     * Gets the list of shared tabs.
+     * @return the list of shared tabs.
+     */
+    public List<SharedTab> receiveSharedTabs() {
+        return tabManager.receiveSharedTabs();
+    }
+
+    /**
+     * Gets the list of tags to show to user, when he/she shares a tab.
+     * This is a place to filter not needed tags, sort them in correct order etc.
+     *
+     * @return the list of tags to show to user.
+     */
+    public List<Tag> getShareTags() {
+        return tagManager.getTags();
+    }
+
     public boolean syncTask(QueueTask task) {
         if (task != null) {
             if (tabManager.executeTask(task)) {
@@ -75,15 +94,5 @@ public class SyncTabFacade {
         }
 
         return false;
-    }
-
-    /**
-     * Gets the list of tags to show to user, when he/she shares a tab.
-     * This is a place to filter not needed tags, sort them in correct order etc.
-     *
-     * @return the list of tags to show to user.
-     */
-    public List<Tag> getShareTags() {
-        return tagManager.getTags();
     }
 }

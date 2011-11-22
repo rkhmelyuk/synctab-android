@@ -3,3 +3,4 @@
     . problems share a link and need to login
 
     . NonConnectionException
+    . checkPeriod to be configurable

@@ -7,27 +7,33 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.khmlabs.synctab.SyncTabApplication;
+import com.khmlabs.synctab.service.RefreshService;
 import com.khmlabs.synctab.service.SyncService;
 
 /**
- * Starts the {@link SyncService} when online and stop when offline.
+ * Starts the {@link SyncService} and {@link RefreshService} when online and stop when offline.
+ *
+ * @author Ruslan Khmelyuk
  */
 public class NetworkReceiver extends BroadcastReceiver {
 
-    public void onReceive(Context context, Intent intent) {
-        final ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        final SyncTabApplication app = (SyncTabApplication) context.getApplicationContext();
+    public void onReceive(Context ctx, Intent intent) {
+        final SyncTabApplication app = (SyncTabApplication) ctx.getApplicationContext();
+        final ConnectivityManager manager = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         final NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-        final Intent serviceIntent = new Intent(context, SyncService.class);
+        final Intent syncIntent = new Intent(ctx, SyncService.class);
+        final Intent refreshIntent = new Intent(ctx, RefreshService.class);
 
         if (networkInfo != null && networkInfo.isConnected()) {
             app.setOnLine(true);
-            context.startService(serviceIntent);
+            ctx.startService(syncIntent);
+            ctx.startService(refreshIntent);
         }
         else {
             app.setOnLine(false);
-            context.stopService(serviceIntent);
+            ctx.stopService(syncIntent);
+            ctx.stopService(refreshIntent);
         }
     }
 }

@@ -25,7 +25,9 @@ public class IntentHelper {
      * @param link the link to open in the browser.
      */
     public static void browseLink(Context ctx, String link) {
-        ctx.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        ctx.startActivity(intent);
     }
 
     /**

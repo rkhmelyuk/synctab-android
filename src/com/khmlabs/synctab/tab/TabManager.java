@@ -9,6 +9,7 @@ import com.khmlabs.synctab.db.SyncTabDatabase;
 import com.khmlabs.synctab.queue.QueueTask;
 import com.khmlabs.synctab.queue.TaskType;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -47,6 +48,30 @@ public class TabManager {
         }
 
         return false;
+    }
+
+    /**
+     * Returns the list of shared tabs received by specified tag.
+     *
+     * If there is no  current tag, than nothing returns.
+     *
+     * @return the list of received tabs.
+     */
+    public List<SharedTab> receiveSharedTabs() {
+        try {
+            String tagId = application.getCurrentTag();
+            if (tagId != null) {
+                List<SharedTab> tabs = remote.receiveSharedTabs(tagId);
+                if (tabs != null) {
+                    return tabs;
+                }
+            }
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Failed to receive shared tabs.", e);
+        }
+
+        return Collections.emptyList();
     }
 
     public boolean loadOlderSharedTabs() {

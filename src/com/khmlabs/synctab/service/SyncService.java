@@ -100,8 +100,6 @@ public class SyncService extends Service {
                 database.close();
                 SyncService.this.stopSelf();
             }
-
         }
-
     }
 }

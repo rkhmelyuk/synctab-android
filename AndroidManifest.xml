@@ -39,7 +39,6 @@
                   android:theme="@style/ActivityWithBackground"
                   android:noHistory="true"/>
 
-
         <receiver android:name=".broadcast.NetworkReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
@@ -47,6 +46,7 @@
         </receiver>
 
         <service android:name=".service.SyncService" android:label="@string/synctab_service"/>
+        <service android:name=".service.RefreshService" android:label="@string/refresh_service"/>
     </application>
 
     <uses-sdk android:minSdkVersion="7"/>

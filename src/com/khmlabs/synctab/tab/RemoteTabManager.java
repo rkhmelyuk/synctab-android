@@ -127,7 +127,8 @@ public class RemoteTabManager extends RemoteManager {
 
             final boolean firstRequest = (lastSharedTabId == null && lastSyncTime == 0);
             final String operation = firstRequest ? API_GET_LAST_TABS : API_GET_TABS_AFTER;
-            final String paramString = "?" + buildGetSharedTabsParamsString(lastSharedTabId, lastSyncTime);
+            final String paramString = "?" + buildGetSharedTabsParamsString(
+                    null, lastSharedTabId, lastSyncTime);
 
             final long syncTime = System.currentTimeMillis();
             final HttpGet get = new HttpGet(operation + paramString);
@@ -135,6 +136,44 @@ public class RemoteTabManager extends RemoteManager {
             List<SharedTab> tabs = getRecentSharedTabs(get);
             if (tabs.size() > 0) {
                 application.setLastSyncTime(syncTime);
+
+                final SharedTab recent = SharedTabUtil.getRecentSharedTab(tabs);
+                if (recent != null) {
+                    application.setLastReceivedTabId(recent.getId());
+                }
+                else {
+                    application.setLastReceivedTabId(null);
+                }
+
+                return tabs;
+            }
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to refresh a shared tabs.", e);
+        }
+        return null;
+    }
+
+    public List<SharedTab> receiveSharedTabs(String tagId) {
+        if (!application.isOnLine()) {
+            return null;
+        }
+
+        try {
+            final String lastReceivedTabId = application.getLastReceivedTabId();
+            final long lastReceivedTime = application.getLastReceivedTime();
+
+            final boolean firstRequest = (lastReceivedTabId == null && lastReceivedTime == 0);
+            final String operation = firstRequest ? API_GET_LAST_TABS : API_GET_TABS_AFTER;
+            final String paramString = "?" + buildGetSharedTabsParamsString(
+                    tagId, lastReceivedTabId, lastReceivedTime);
+
+            final long syncTime = System.currentTimeMillis();
+            final HttpGet get = new HttpGet(operation + paramString);
+
+            List<SharedTab> tabs = getRecentSharedTabs(get);
+            if (tabs.size() > 0) {
+                application.setLastReceivedTime(syncTime);
                 return tabs;
             }
         }
@@ -199,7 +238,7 @@ public class RemoteTabManager extends RemoteManager {
         return null;
     }
 
-    private String buildGetSharedTabsParamsString(String lastSharedTabId, long lastSyncTime) {
+    private String buildGetSharedTabsParamsString(String tagId, String lastSharedTabId, long lastSyncTime) {
         final List<NameValuePair> params = new LinkedList<NameValuePair>();
         if (lastSharedTabId != null) {
             params.add(new BasicNameValuePair(ID, lastSharedTabId));
@@ -208,6 +247,7 @@ public class RemoteTabManager extends RemoteManager {
             params.add(new BasicNameValuePair("ts", Long.toString(lastSyncTime)));
         }
         params.add(new BasicNameValuePair(TOKEN, application.getAuthToken()));
+        params.add(new BasicNameValuePair(TAG_ID, tagId));
 
         return URLEncodedUtils.format(params, "utf-8");
     }

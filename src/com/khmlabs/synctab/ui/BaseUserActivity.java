@@ -3,11 +3,13 @@ package com.khmlabs.synctab.ui;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
+import com.khmlabs.synctab.service.RefreshService;
 
 /**
  * Base activity, for activities to be shown to authorized users.
@@ -15,6 +17,13 @@ import com.khmlabs.synctab.SyncTabApplication;
 abstract class BaseUserActivity extends BaseActivity {
 
     private static final int REQUEST_LOGIN = 1;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // start refresh service activity if it's not started yet
+        startService(new Intent(this, RefreshService.class));
+    }
 
     protected void onResume() {
         super.onResume();

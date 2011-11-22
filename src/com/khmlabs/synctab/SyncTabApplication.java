@@ -144,20 +144,36 @@ public class SyncTabApplication extends Application {
         preferences.edit().putLong(AppConstants.LAST_SYNC_TIME, timestamp).commit();
     }
 
-    public long getLastCacheCleanupTime() {
-        return preferences.getLong(AppConstants.LAST_CACHE_CLEANUP_TIME, 0);
-    }
-
-    public void setLastCacheCleanupTime(long timestamp) {
-        preferences.edit().putLong(AppConstants.LAST_CACHE_CLEANUP_TIME, timestamp).commit();
-    }
-
     public String getLastSharedTabId() {
         return preferences.getString(AppConstants.LAST_SHARED_TAB_ID, null);
     }
 
     public void setLastSharedTabId(String id) {
         preferences.edit().putString(AppConstants.LAST_SHARED_TAB_ID, id).commit();
+    }
+
+    public long getLastReceivedTime() {
+        return preferences.getLong(AppConstants.LAST_RECEIVED_TIME, 0);
+    }
+
+    public void setLastReceivedTime(long timestamp) {
+        preferences.edit().putLong(AppConstants.LAST_RECEIVED_TIME, timestamp).commit();
+    }
+
+    public String getLastReceivedTabId() {
+        return preferences.getString(AppConstants.LAST_RECEIVED_TAB_ID, null);
+    }
+
+    public void setLastReceivedTabId(String id) {
+        preferences.edit().putString(AppConstants.LAST_RECEIVED_TAB_ID, id).commit();
+    }
+
+    public long getLastCacheCleanupTime() {
+        return preferences.getLong(AppConstants.LAST_CACHE_CLEANUP_TIME, 0);
+    }
+
+    public void setLastCacheCleanupTime(long timestamp) {
+        preferences.edit().putLong(AppConstants.LAST_CACHE_CLEANUP_TIME, timestamp).commit();
     }
 
     public String getOldestSharedTabId() {
