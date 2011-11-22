@@ -29,6 +29,8 @@ public class TagManager {
      * Gets the list of available tags.
      *
      * @return the list of available tags.
+     *
+     * TODO - think to cache
      */
     public List<Tag> getTags() {
         SyncTabDatabase database = null;
@@ -96,7 +98,20 @@ public class TagManager {
      * @return the found tag by id.
      */
     public Tag getTag(String id) {
-        return null;
+        SyncTabDatabase database = null;
+        try {
+            database = new SyncTabDatabase(application);
+            return database.getTagById(id);
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to remote a tag by id", e);
+            return null;
+        }
+        finally {
+            if (database != null) {
+                database.close();
+            }
+        }
     }
 
 }

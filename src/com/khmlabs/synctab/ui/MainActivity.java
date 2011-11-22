@@ -1,7 +1,6 @@
 package com.khmlabs.synctab.ui;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -49,7 +48,7 @@ public class MainActivity extends BaseUserActivity {
             R.id.device
     };
 
-    private final SimpleCursorAdapter.ViewBinder ROW_BINDER = new SharedTabsBinder(this);
+    private SimpleCursorAdapter.ViewBinder ROW_BINDER;
 
     ListView sharedTabs;
     SimpleCursorAdapter sharedTabsAdapter;
@@ -60,6 +59,8 @@ public class MainActivity extends BaseUserActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ROW_BINDER = new SharedTabsBinder(getSyncTabApplication());
 
         database = new SyncTabDatabase(this);
 
@@ -458,12 +459,12 @@ public class MainActivity extends BaseUserActivity {
 
     private static class SharedTabsBinder implements SimpleCursorAdapter.ViewBinder {
 
-        private final Context context;
+        private final SyncTabApplication app;
         private final FileCacheManager cacheManager;
 
-        private SharedTabsBinder(Context context) {
-            this.context = context;
-            this.cacheManager = new FileCacheManager(context);
+        private SharedTabsBinder(SyncTabApplication app) {
+            this.app = app;
+            this.cacheManager = app.getCacheManager();
         }
 
         public boolean setViewValue(View element, Cursor cursor, int columnIndex) {
@@ -494,8 +495,13 @@ public class MainActivity extends BaseUserActivity {
                 return true;
             }
             else if (element.getId() == R.id.device) {
-                String device = cursor.getString(columnIndex);
-                ((TextView) element).setText(device);
+                String tagId = cursor.getString(columnIndex);
+                String name = app.getFacade().getTagName(tagId);
+                if (name == null) {
+                    name = app.getResources().getString(R.string.unknown);
+                }
+
+                ((TextView) element).setText(name);
 
                 return true;
             }
@@ -517,7 +523,7 @@ public class MainActivity extends BaseUserActivity {
                 String link = cursor.getString(columnIndex);
 
                 if (link != null && link.length() > 0) {
-                    int maxlength = context.getResources().getInteger(R.integer.link_max_size);
+                    int maxlength = app.getResources().getInteger(R.integer.link_max_size);
                     link = UrlUtil.prepareReadableUrl(link);
                     link = UrlUtil.shortenizeUrl(link, maxlength);
 

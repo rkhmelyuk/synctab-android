@@ -118,7 +118,7 @@ public class SyncTabDatabase {
 
                 final ContentValues values = new ContentValues();
 
-                values.put(DbMetadata.SharedTabsColumns.TAB_ID, tab.getId());
+                values.put(SharedTabsColumns.TAB_ID, tab.getId());
                 values.put(SharedTabsColumns.LINK, tab.getLink());
                 values.put(SharedTabsColumns.TIMESTAMP, tab.getTimestamp());
                 values.put(SharedTabsColumns.TITLE, tab.getTitle());
@@ -200,10 +200,12 @@ public class SyncTabDatabase {
     public SharedTab getSharedTabById(int id) {
         final SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursor = db.query(Table.SHARED_TABS, null,
-                DbMetadata.ID + "=" + id, null, null, null, null);
+        Cursor cursor = null;
 
         try {
+            cursor = db.query(Table.SHARED_TABS, null,
+                    DbMetadata.ID + "=" + id, null, null, null, null);
+
             if (cursor.moveToNext()) {
                 final SharedTab tab = new SharedTab();
 
@@ -219,7 +221,9 @@ public class SyncTabDatabase {
             }
         }
         finally {
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
         return null;
@@ -258,9 +262,10 @@ public class SyncTabDatabase {
 
                 final ContentValues values = new ContentValues();
                 for (Tag each : tags) {
-                    values.put(TagsColumns.ID, each.getId());
+                    values.put(TagsColumns.ID, each.getTagId());
                     values.put(TagsColumns.NAME, each.getName());
 
+                    // TODO - update if existing, insert if not
                     db.replaceOrThrow(Table.TAGS, null, values);
 
                     values.clear();
@@ -302,5 +307,33 @@ public class SyncTabDatabase {
         }
 
         return result;
+    }
+
+    public Tag getTagById(String id) {
+        final SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = null;
+
+        try {
+            cursor = db.query(Table.TAGS, null,
+                    TagsColumns.ID + "='" + id + "'", null, null, null, null);
+
+            if (cursor.moveToNext()) {
+                final Tag tag = new Tag();
+
+                tag.setId(cursor.getInt(0));
+                tag.setTagId(cursor.getString(cursor.getColumnIndex(TagsColumns.ID)));
+                tag.setName(cursor.getString(cursor.getColumnIndex(TagsColumns.NAME)));
+
+                return tag;
+            }
+        }
+        finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return null;
     }
 }

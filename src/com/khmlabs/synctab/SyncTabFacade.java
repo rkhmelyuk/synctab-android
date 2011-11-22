@@ -9,6 +9,7 @@ import com.khmlabs.synctab.queue.TaskType;
 import com.khmlabs.synctab.tab.RemoteTabManager;
 import com.khmlabs.synctab.tab.TabManager;
 import com.khmlabs.synctab.tag.RemoteTagManager;
+import com.khmlabs.synctab.tag.Tag;
 import com.khmlabs.synctab.tag.TagManager;
 
 public class SyncTabFacade {
@@ -95,5 +96,13 @@ public class SyncTabFacade {
         }
 
         return false;
+    }
+
+    public String getTagName(String tagId) {
+        Tag tag = tagManager.getTag(tagId);
+        if (tag != null) {
+            return tag.getName();
+        }
+        return null;
     }
 }
