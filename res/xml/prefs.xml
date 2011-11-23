@@ -2,5 +2,15 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <ListPreference android:key="CURRENT_TAG"
+                    android:title="@string/current_tag"
+                    android:summary="@string/current_tag_summary"/>
+
+    <ListPreference android:key="REFRESH_PERIOD"
+                    android:title="@string/refresh_interval"
+                    android:summary="@string/refresh_interval_summary"
+                    android:defaultValue="60000"
+                    android:entries="@array/refreshIntervals"
+                    android:entryValues="@array/refreshIntervalValues"/>
 
 </PreferenceScreen>

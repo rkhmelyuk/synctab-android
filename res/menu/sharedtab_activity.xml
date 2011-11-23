@@ -4,6 +4,10 @@
           android:title="@string/home"
           android:icon="@drawable/ic_menu_home"/>
 
+    <item android:id="@+id/settings"
+          android:title="@string/settings"
+          android:icon="@drawable/ic_menu_preferences"/>
+
     <item android:id="@+id/about"
           android:title="@string/about"
           android:icon="@drawable/ic_menu_about"/>

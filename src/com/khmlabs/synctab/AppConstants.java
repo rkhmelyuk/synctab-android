@@ -33,6 +33,8 @@ public interface AppConstants {
     /** The device name for this app.*/
     String DEVICE_NAME = "Android";
 
+    String REFRESH_PERIOD = "REFRESH_PERIOD";
+
     // 30 days
     long CACHE_CLEANUP_PERIOD = 1000L * 3600L * 24L * 30L;
 

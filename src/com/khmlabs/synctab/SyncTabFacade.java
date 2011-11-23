@@ -83,6 +83,15 @@ public class SyncTabFacade {
         return tagManager.getShareTags();
     }
 
+    /**
+     * Gets the list of all available tags.
+     *
+     * @return the list of all tags.
+     */
+    public List<Tag> getTags() {
+        return tagManager.getTags();
+    }
+
     public boolean syncTask(QueueTask task) {
         if (task != null) {
             if (tabManager.executeTask(task)) {
@@ -94,5 +103,9 @@ public class SyncTabFacade {
         }
 
         return false;
+    }
+
+    public Tag getTag(String tagId) {
+        return tagManager.getTag(tagId);
     }
 }

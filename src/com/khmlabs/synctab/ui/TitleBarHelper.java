@@ -1,5 +1,6 @@
 package com.khmlabs.synctab.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.khmlabs.synctab.R;
+import com.khmlabs.synctab.SyncTabApplication;
 
 /**
  * Title bar is better known as ActionBar.
@@ -21,7 +23,7 @@ class TitleBarHelper {
     /**
      * The activity where to show a title bar.
      */
-    final BaseActivity activity;
+    final Activity activity;
 
     /**
      * The id of the home button.
@@ -32,7 +34,7 @@ class TitleBarHelper {
      */
     private static final int REFRESH_BUTTON_ID = 0x7f0b9998;
 
-    public TitleBarHelper(BaseActivity activity) {
+    public TitleBarHelper(Activity activity) {
         this.activity = activity;
     }
 
@@ -79,12 +81,10 @@ class TitleBarHelper {
             // not supported from guest activities
             return false;
         }
-        else if (!activity.getSyncTabApplication().isAuthenticated()) {
-            // not supported for guest users
-            return false;
-        }
 
-        return true;
+        // not supported for guest users
+        SyncTabApplication app = (SyncTabApplication) activity.getApplication();
+        return app.isAuthenticated();
     }
 
     private void refreshTabs() {

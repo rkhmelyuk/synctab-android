@@ -22,8 +22,6 @@ public class RefreshService extends Service {
 
     private static final String TAG = "RefreshService";
 
-    private static final long CHECK_PERIOD = 60000L;
-
     private boolean running;
     private Refresher refresher;
     private SyncTabDatabase database;
@@ -66,13 +64,8 @@ public class RefreshService extends Service {
         final SyncTabApplication app = (SyncTabApplication) getApplication();
 
         if (!running && app.isOnLine() && app.isAuthenticated()) {
-            System.out.println("STARTED REFRESH_SERVICE");
-
             running = true;
             refresher.start();
-        }
-        else {
-            System.out.println("no starting " + running + " " + app.isOnLine() + " " + app.isAuthenticated());
         }
 
         return START_STICKY;
@@ -99,7 +92,7 @@ public class RefreshService extends Service {
                         IntentHelper.browseLink(RefreshService.this, each.getLink());
                     }
 
-                    Thread.sleep(CHECK_PERIOD);
+                    Thread.sleep(app.getRefreshPeriod());
                 }
             }
             catch (Exception e) {

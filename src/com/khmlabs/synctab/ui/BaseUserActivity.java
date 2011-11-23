@@ -61,6 +61,9 @@ abstract class BaseUserActivity extends BaseActivity {
                     new LogoutTask().execute();
                     return true;
                 }
+                case R.id.settings: {
+                    startActivity(new Intent(this, SettingsActivity.class));
+                }
             }
         }
         return false;

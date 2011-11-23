@@ -215,4 +215,31 @@ public class SyncTabApplication extends Application {
     public void setCurrentTag(String tag) {
         preferences.edit().putString(AppConstants.CURRENT_TAG, tag).commit();
     }
+
+    /**
+     * Gets the refresh period.
+     * @return the refresh period.
+     */
+    public long getRefreshPeriod() {
+        String value = preferences.getString(AppConstants.REFRESH_PERIOD, null);
+
+        try {
+            if (value != null) {
+                return Long.parseLong(value);
+            }
+        }
+        catch (NumberFormatException e) {
+            // do nothing
+        }
+        return 0L;
+    }
+
+    /**
+     * Set refresh period.
+     * @param value the refresh period.
+     */
+    public void setRefreshPeriod(long value) {
+        String stringValue = Long.toString(value);
+        preferences.edit().putString(AppConstants.REFRESH_PERIOD, stringValue).commit();
+    }
 }

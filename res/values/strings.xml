@@ -13,6 +13,7 @@
     <string name="login_activity">SyncTab: Login</string>
     <string name="registration_activity">SyncTab: Registration</string>
     <string name="about_activity">About</string>
+    <string name="settings_activity">Settings</string>
 
     <string name="sync_in_progress">Syncing Tab...</string>
     <string name="success_sync">Tab is shared.\n\nHave fun!</string>
@@ -73,5 +74,16 @@
     <string name="start_help_notice">Download and install a \n <b>SyncTab Chrome Extension</b> \n from your desktop browser\n\n Read more at\n <a href="http://synctab.khmelyuk.com">synctab.khmelyuk.com</a></string>
 
     <string name="send_tab_to">Send to...</string>
+
+    <string name="settings">Settings</string>
+    <string name="refresh_interval">Refresh Interval</string>
+    <string name="refresh_interval_summary">How ofter to check for new links to open</string>
+    <string name="current_tag">Open Links with Tag</string>
+    <string name="current_tag_summary">Filter the tabs to open in this device by specified tags</string>
+
+    <plurals name="minutes">
+        <item quantity="one">Every %d minute</item>
+        <item quantity="other">Every %d minutes</item>
+    </plurals>
 
 </resources>

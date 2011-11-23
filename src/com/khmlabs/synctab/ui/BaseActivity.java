@@ -25,6 +25,7 @@ abstract class BaseActivity extends Activity {
         // add any buttons to title bar
         titlebarHelper.setup();
     }
+
     /**
      * Here we handle a base menu items selection.
      * Activity implementation should extend with own menu items.

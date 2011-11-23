@@ -144,6 +144,8 @@ public class TagManager {
      *
      * @param id the tag id.
      * @return the found tag by id.
+     *
+     * TODO - remove if not used
      */
     public Tag getTag(String id) {
         SyncTabDatabase database = null;
