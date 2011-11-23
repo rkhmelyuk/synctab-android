@@ -1,5 +1,6 @@
 
     . checkPeriod to be configurable
+    . open or not should be configurable
 
     . problems navigating the login screen
     . problems share a link and need to login
