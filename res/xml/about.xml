@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference android:title="@string/username"
+                android:selectable="false"
+                android:summary="@string/none"/>
+
+    <Preference android:title="@string/version"
+                android:selectable="false"/>
+
+    <PreferenceCategory android:title="@string/about_references">
+
+        <Preference android:title="@string/website"
+                    android:summary="@string/website_summary"/>
+
+        <Preference android:title="@string/chrome_extension"
+                    android:summary="@string/chrome_extension_summary"/>
+
+        <Preference android:title="@string/documentation"
+                    android:summary="@string/documentation_summary"/>
+
+        <Preference android:title="@string/submit_issue"
+                    android:summary="@string/submit_issue_summary"/>
+
+        <Preference android:title="@string/contact"
+                    android:summary="@string/contact_summary"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

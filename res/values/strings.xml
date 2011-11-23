@@ -58,6 +58,7 @@
     <string name="remove">Remove</string>
     <string name="send_to">Send To</string>
     <string name="copy_link">Copy Link</string>
+    <string name="touch_to_open">Press To Open</string>
 
     <string name="msg_tab_is_removed">Tab is removed</string>
     <string name="msg_tab_is_reshared">Tab is re-shared</string>
@@ -65,6 +66,7 @@
     <string name="msg_failed_to_remove_tab">Failed to remove a tab</string>
     <string name="about">About</string>
     <string name="username">Username</string>
+    <string name="none">None</string>
     <string name="version">Version</string>
     <string name="website">Website</string>
     <string name="documentation">Documentation</string>
@@ -80,6 +82,12 @@
     <string name="refresh_interval_summary">How ofter to check for new links to open</string>
     <string name="current_tag">Open Links with Tag</string>
     <string name="current_tag_summary">Filter the tabs to open in this device by specified tags</string>
+    <string name="website_summary">View SyncTab website online</string>
+    <string name="chrome_extension_summary">Read more about SyncTab Chrome Extension</string>
+    <string name="documentation_summary">Read documentation online</string>
+    <string name="submit_issue_summary">Submit issue via online form</string>
+    <string name="contact_summary">Contact us via online form</string>
+    <string name="about_references">References</string>
 
     <plurals name="minutes">
         <item quantity="one">Every %d minute</item>
