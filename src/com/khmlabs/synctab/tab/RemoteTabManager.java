@@ -172,7 +172,7 @@ public class RemoteTabManager extends RemoteManager {
             final HttpGet get = new HttpGet(operation + paramString);
 
             List<SharedTab> tabs = getRecentSharedTabs(get);
-            if (tabs.size() > 0) {
+            if (tabs != null && tabs.size() > 0) {
                 application.setLastReceivedTime(syncTime);
                 return tabs;
             }

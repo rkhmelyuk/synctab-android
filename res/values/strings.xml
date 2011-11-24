@@ -54,9 +54,9 @@
     <string name="home">Home</string>
     <string name="not_a_user">Do not have an account yet?</string>
     <string name="unknown">Unknown</string>
-    <string name="reshare">Re-share</string>
+    <string name="resend">Re-send</string>
     <string name="remove">Remove</string>
-    <string name="send_to">Send To</string>
+    <string name="share_via">Share Via</string>
     <string name="copy_link">Copy Link</string>
     <string name="touch_to_open">Press To Open</string>
 

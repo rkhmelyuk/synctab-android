@@ -202,11 +202,11 @@ public final class R {
         public static final int registration=0x7f09001d;
         public static final int registration_activity=0x7f090009;
         public static final int remove=0x7f090032;
-        public static final int reshare=0x7f090031;
+        public static final int resend=0x7f090031;
         public static final int send_tab_to=0x7f090044;
-        public static final int send_to=0x7f090033;
         public static final int settings=0x7f090045;
         public static final int settings_activity=0x7f09000b;
+        public static final int share_via=0x7f090033;
         public static final int start_help_notice=0x7f090043;
         public static final int submit_issue=0x7f090041;
         public static final int submit_issue_summary=0x7f09004d;

@@ -31,9 +31,9 @@ public class MainActivity extends BaseUserActivity {
 
     private static final String TAG = "MainActivity";
 
-    private static final int TAB_CONTEXT_MENU_RESHARE = 0;
+    private static final int TAB_CONTEXT_MENU_RESEND = 0;
     private static final int TAB_CONTEXT_MENU_REMOVE = 1;
-    private static final int TAB_CONTEXT_MENU_SEND = 2;
+    private static final int TAB_CONTEXT_MENU_SHARE = 2;
     private static final int TAB_CONTEXT_MENU_COPY = 3;
 
     static final String[] ADAPTER_FROM = {
@@ -164,14 +164,14 @@ public class MainActivity extends BaseUserActivity {
 
             setTabContextMenuHeader(listView, menu, ctxMenuInfo);
 
-            menu.add(Menu.NONE, TAB_CONTEXT_MENU_RESHARE, TAB_CONTEXT_MENU_RESHARE,
-                    getResources().getString(R.string.reshare));
+            menu.add(Menu.NONE, TAB_CONTEXT_MENU_RESEND, TAB_CONTEXT_MENU_RESEND,
+                    getResources().getString(R.string.resend));
 
             menu.add(Menu.NONE, TAB_CONTEXT_MENU_REMOVE, TAB_CONTEXT_MENU_REMOVE,
                     getResources().getString(R.string.remove));
 
-            menu.add(Menu.NONE, TAB_CONTEXT_MENU_SEND, TAB_CONTEXT_MENU_SEND,
-                    getResources().getString(R.string.send_to));
+            menu.add(Menu.NONE, TAB_CONTEXT_MENU_SHARE, TAB_CONTEXT_MENU_SHARE,
+                    getResources().getString(R.string.share_via));
 
             menu.add(Menu.NONE, TAB_CONTEXT_MENU_COPY, TAB_CONTEXT_MENU_COPY,
                     getResources().getString(R.string.copy_link));
@@ -206,13 +206,13 @@ public class MainActivity extends BaseUserActivity {
         final int tabId = cursor.getInt(idColumn);
 
         switch (item.getItemId()) {
-            case TAB_CONTEXT_MENU_RESHARE:
+            case TAB_CONTEXT_MENU_RESEND:
                 new ReshareTabTask().execute(tabId);
                 break;
             case TAB_CONTEXT_MENU_REMOVE:
                 new RemoveTabTask().execute(tabId);
                 break;
-            case TAB_CONTEXT_MENU_SEND:
+            case TAB_CONTEXT_MENU_SHARE:
                 sendLink(cursor);
                 break;
             case TAB_CONTEXT_MENU_COPY:
@@ -402,7 +402,7 @@ public class MainActivity extends BaseUserActivity {
             sendIntent.putExtra(Intent.EXTRA_TEXT, link);
             sendIntent.putExtra(Intent.EXTRA_SUBJECT, title);
 
-            String chooserTitle = getResources().getString(R.string.send_to);
+            String chooserTitle = getResources().getString(R.string.share_via);
             startActivity(Intent.createChooser(sendIntent, chooserTitle));
 
             return true;
