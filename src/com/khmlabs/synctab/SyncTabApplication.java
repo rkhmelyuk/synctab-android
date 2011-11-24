@@ -124,7 +124,6 @@ public class SyncTabApplication extends Application {
         setLastSyncTime(0);
         setLastSharedTabId(null);
         setTagsLoaded(false);
-        setCurrentTag(null);
 
         cacheManager.clean();
         facade.logout(token);
