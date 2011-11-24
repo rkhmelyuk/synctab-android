@@ -89,8 +89,6 @@ public class RegistrationActivity extends BaseGuestActivity {
         protected void onPostExecute(RegistrationStatus status) {
             super.onPostExecute(status);
 
-            progress.dismiss();
-
             if (status == null) {
                 Toast.makeText(RegistrationActivity.this, R.string.error_register, 5000).show();
             }
@@ -108,6 +106,8 @@ public class RegistrationActivity extends BaseGuestActivity {
             else if (status.getStatus() == RegistrationStatus.Status.Offline) {
                 Toast.makeText(RegistrationActivity.this, R.string.no_connection, 5000).show();
             }
+
+            progress.dismiss();
         }
 
         private void authenticate(RegistrationStatus status) {

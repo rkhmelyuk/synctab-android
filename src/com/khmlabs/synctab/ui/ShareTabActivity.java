@@ -43,7 +43,6 @@ public class ShareTabActivity extends BaseUserActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         shareLinkIfAuthenticated();
     }
 
@@ -51,21 +50,25 @@ public class ShareTabActivity extends BaseUserActivity {
         final SyncTabApplication app = getSyncTabApplication();
 
         if (app.isAuthenticated()) {
-            final SyncTabFacade facade = app.getFacade();
-            final List<Tag> tags = facade.getShareTags();
-            final String[] tagsArray = tagsListToNameArray(tags);
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(getResources().getString(R.string.send_tab_to));
-            builder.setItems(tagsArray, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialogInterface, int position) {
-                    final Tag tag = tags.get(position);
-                    shareLink(tag);
-                }
-            });
-
-            builder.create().show();
+            showShareTags(app);
         }
+    }
+
+    private void showShareTags(SyncTabApplication app) {
+        final SyncTabFacade facade = app.getFacade();
+        final List<Tag> tags = facade.getShareTags();
+        final String[] tagsArray = tagsListToNameArray(tags);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.send_tab_to));
+        builder.setItems(tagsArray, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogInterface, int position) {
+                final Tag tag = tags.get(position);
+                shareLink(tag);
+            }
+        });
+
+        builder.create().show();
     }
 
     private String[] tagsListToNameArray(List<Tag> tags) {

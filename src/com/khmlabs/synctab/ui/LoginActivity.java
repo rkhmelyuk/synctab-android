@@ -123,13 +123,8 @@ public class LoginActivity extends BaseGuestActivity {
             progress.dismiss();
 
             if (status == RESULT_SUCCESS) {
-                //if (getParent() != null) {
                 setResult(RESULT_OK);
                 finish();
-                //}
-                /*else {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }*/
             }
             else if (status == RESULT_FAILED) {
                 Toast.makeText(LoginActivity.this, R.string.failed_authenticate, 5000).show();

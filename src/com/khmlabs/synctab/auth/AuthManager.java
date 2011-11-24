@@ -42,6 +42,11 @@ public class AuthManager {
                 application.setAuthEmail(email);
                 application.setAuthToken(token);
 
+                // if there is no tags yet, load them
+                if (!application.isTagsLoaded()) {
+                    application.getFacade().refreshTags();
+                }
+
                 return true;
             }
             else {

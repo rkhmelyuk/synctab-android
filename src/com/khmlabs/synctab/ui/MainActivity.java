@@ -311,13 +311,6 @@ public class MainActivity extends BaseUserActivity {
             try {
                 SyncTabApplication application = getSyncTabApplication();
                 SyncTabFacade facade = application.getFacade();
-
-                // if there is no tags yet, load first them
-                // as they will be needed to show the loaded tabs
-                if (!application.isTagsLoaded()) {
-                    facade.refreshTags();
-                }
-
                 return facade.refreshSharedTabs();
             }
             catch (Exception e) {

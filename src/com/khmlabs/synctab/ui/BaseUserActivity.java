@@ -85,7 +85,7 @@ abstract class BaseUserActivity extends BaseActivity {
     protected void showLogin() {
         final Intent loginIntent = new Intent(this, LoginActivity.class);
         loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivityForResult(loginIntent, 1);
+        startActivityForResult(loginIntent, REQUEST_LOGIN);
     }
 
     /**
