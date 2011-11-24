@@ -2,6 +2,7 @@
     <dimen name="simple_window_side_padding">10dp</dimen>
     <dimen name="simple_window_bottom_padding">10dp</dimen>
     <dimen name="simple_window_top_padding">10dp</dimen>
+    <dimen name="simple_window_padding">10dp</dimen>
 
     <dimen name="titlebar_height">45dp</dimen>
     <dimen name="titlebar_button_height">45dp</dimen>
@@ -20,7 +21,7 @@
     <dimen name="shared_tab_details_text_size">11sp</dimen>
     <dimen name="shared_tab_row_icon_size">24dp</dimen>
 
-    <dimen name="start_help_notice_font_size">22sp</dimen>
+    <dimen name="start_help_notice_font_size">17sp</dimen>
 
     <dimen name="register_button_side_margin">5dp</dimen>
     <dimen name="register_button_top_margin">4dp</dimen>

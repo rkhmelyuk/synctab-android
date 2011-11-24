@@ -40,31 +40,32 @@ public final class R {
         public static final int titlebar_title_shadow=0x7f060001;
     }
     public static final class dimen {
-        public static final int main_button_bottom_margin=0x7f070018;
-        public static final int main_button_side_margin=0x7f070016;
-        public static final int main_button_top_margin=0x7f070017;
-        public static final int register_button_bottom_margin=0x7f070015;
-        public static final int register_button_side_margin=0x7f070013;
-        public static final int register_button_top_margin=0x7f070014;
-        public static final int shared_tab_details_text_size=0x7f070010;
-        public static final int shared_tab_link_text_size=0x7f07000f;
-        public static final int shared_tab_row_icon_size=0x7f070011;
-        public static final int shared_tab_row_padding=0x7f07000d;
-        public static final int shared_tab_row_side_padding=0x7f07000c;
-        public static final int shared_tab_title_text_size=0x7f07000e;
+        public static final int main_button_bottom_margin=0x7f070019;
+        public static final int main_button_side_margin=0x7f070017;
+        public static final int main_button_top_margin=0x7f070018;
+        public static final int register_button_bottom_margin=0x7f070016;
+        public static final int register_button_side_margin=0x7f070014;
+        public static final int register_button_top_margin=0x7f070015;
+        public static final int shared_tab_details_text_size=0x7f070011;
+        public static final int shared_tab_link_text_size=0x7f070010;
+        public static final int shared_tab_row_icon_size=0x7f070012;
+        public static final int shared_tab_row_padding=0x7f07000e;
+        public static final int shared_tab_row_side_padding=0x7f07000d;
+        public static final int shared_tab_title_text_size=0x7f07000f;
         public static final int simple_window_bottom_padding=0x7f070001;
+        public static final int simple_window_padding=0x7f070003;
         public static final int simple_window_side_padding=0x7f070000;
         public static final int simple_window_top_padding=0x7f070002;
-        public static final int start_help_notice_font_size=0x7f070012;
-        public static final int titlebar_button_height=0x7f070004;
-        public static final int titlebar_button_padding_bottom=0x7f070009;
-        public static final int titlebar_button_padding_left=0x7f07000a;
-        public static final int titlebar_button_padding_right=0x7f07000b;
-        public static final int titlebar_button_padding_top=0x7f070008;
-        public static final int titlebar_button_width=0x7f070005;
-        public static final int titlebar_height=0x7f070003;
-        public static final int titlebar_margin_left=0x7f070007;
-        public static final int titlebar_title_text_size=0x7f070006;
+        public static final int start_help_notice_font_size=0x7f070013;
+        public static final int titlebar_button_height=0x7f070005;
+        public static final int titlebar_button_padding_bottom=0x7f07000a;
+        public static final int titlebar_button_padding_left=0x7f07000b;
+        public static final int titlebar_button_padding_right=0x7f07000c;
+        public static final int titlebar_button_padding_top=0x7f070009;
+        public static final int titlebar_button_width=0x7f070006;
+        public static final int titlebar_height=0x7f070004;
+        public static final int titlebar_margin_left=0x7f070008;
+        public static final int titlebar_title_text_size=0x7f070007;
     }
     public static final class drawable {
         public static final int background=0x7f020000;

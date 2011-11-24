@@ -12,11 +12,12 @@
               android:id="@+id/tabs"
               android:fadeScrollbars="true"/>
 
+    <!--android:gravity="center"-->
     <TextView android:id="@+id/start_help_notice"
               android:layout_height="fill_parent"
               android:layout_width="fill_parent"
+              android:padding="@dimen/simple_window_padding"
               android:layout_weight="1"
-              android:gravity="center"
               android:textSize="@dimen/start_help_notice_font_size"
               android:text="@string/start_help_notice"/>
 
