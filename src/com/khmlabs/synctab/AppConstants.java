@@ -2,11 +2,11 @@ package com.khmlabs.synctab;
 
 public interface AppConstants {
 
-    String SERVICE_URL = "http://192.168.1.101:8080";
+    //String SERVICE_URL = "http://192.168.1.101:8080";
     //String SERVICE_URL = "http://192.168.1.102:8080";
-    //String SERVICE_URL = "http://synctabapp.khmelyuk.com";
+    String SERVICE_URL = "http://synctabapp.khmelyuk.com";
 
-    boolean LOG = true;
+    boolean LOG = false;
 
     String LAST_SYNC_TIME = "LAST_SYNC_TIME";
     String LAST_SHARED_TAB_ID = "LAST_SHARED_TAB_ID";
