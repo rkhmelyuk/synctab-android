@@ -59,6 +59,7 @@ public class ShareTabActivity extends BaseUserActivity {
         final List<Tag> tags = facade.getShareTags();
         final String[] tagsArray = tagsListToNameArray(tags);
 
+        // Build a dialog with a list of tags, user must select one
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getResources().getString(R.string.send_tab_to));
         builder.setItems(tagsArray, new DialogInterface.OnClickListener() {
