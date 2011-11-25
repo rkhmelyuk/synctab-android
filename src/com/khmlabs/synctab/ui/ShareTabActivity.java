@@ -68,7 +68,17 @@ public class ShareTabActivity extends BaseUserActivity {
             }
         });
 
-        builder.create().show();
+        AlertDialog tagsDialog = builder.create();
+
+        // close activity on cancel tags selecting,
+        // as it is required to select at least one tag
+        tagsDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialogInterface) {
+                ShareTabActivity.this.finish();
+            }
+        });
+
+        tagsDialog.show();
     }
 
     private String[] tagsListToNameArray(List<Tag> tags) {
