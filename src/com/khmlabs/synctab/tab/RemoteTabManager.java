@@ -138,12 +138,8 @@ public class RemoteTabManager extends RemoteManager {
                 application.setLastSyncTime(syncTime);
 
                 final SharedTab recent = SharedTabUtil.getRecentSharedTab(tabs);
-                if (recent != null) {
-                    application.setLastReceivedTabId(recent.getId());
-                }
-                else {
-                    application.setLastReceivedTabId(null);
-                }
+                final String tabId = recent != null ? recent.getId() : null;
+                application.setLastSharedTabId(tabId);
 
                 return tabs;
             }
@@ -174,6 +170,11 @@ public class RemoteTabManager extends RemoteManager {
             List<SharedTab> tabs = getRecentSharedTabs(get);
             if (tabs != null && tabs.size() > 0) {
                 application.setLastReceivedTime(syncTime);
+
+                final SharedTab recent = SharedTabUtil.getRecentSharedTab(tabs);
+                final String tabId = recent != null ? recent.getId() : null;
+                application.setLastReceivedTabId(tabId);
+
                 return tabs;
             }
         }

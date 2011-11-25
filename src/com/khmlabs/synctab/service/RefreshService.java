@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.SyncTabFacade;
-import com.khmlabs.synctab.db.SyncTabDatabase;
 import com.khmlabs.synctab.tab.SharedTab;
 import com.khmlabs.synctab.util.IntentHelper;
 
@@ -24,7 +23,6 @@ public class RefreshService extends Service {
 
     private boolean running;
     private Refresher refresher;
-    private SyncTabDatabase database;
 
     public IBinder onBind(Intent intent) {
         return null;
@@ -50,9 +48,6 @@ public class RefreshService extends Service {
             // ignore
         }
         refresher = null;
-
-        database.close();
-        database = null;
 
         running = false;
     }
@@ -94,6 +89,9 @@ public class RefreshService extends Service {
 
                     Thread.sleep(app.getRefreshPeriod());
                 }
+            }
+            catch (InterruptedException e) {
+                // nothing, it was just interrupted by stopping service
             }
             catch (Exception e) {
                 Log.e(TAG, "Error to refresh", e);
