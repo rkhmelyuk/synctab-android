@@ -1,5 +1,7 @@
 package com.khmlabs.synctab.tag;
 
+import com.khmlabs.synctab.util.StringUtil;
+
 /**
  * @author Ruslan Khmelyuk
  */
@@ -44,5 +46,9 @@ public class Tag {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isLocal() {
+        return StringUtil.isEmpty(tagId);
     }
 }

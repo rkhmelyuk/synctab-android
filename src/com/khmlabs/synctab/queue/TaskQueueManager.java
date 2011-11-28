@@ -33,6 +33,18 @@ public class TaskQueueManager {
         return addTask(new QueueTask(TaskType.ReshareTab, sharedTabId));
     }
 
+    public RemoteOpStatus addAddTagTask(int tagId) {
+        return addTask(new QueueTask(TaskType.AddTag, Integer.toString(tagId)));
+    }
+
+    public RemoteOpStatus addRenameTagTask(String tagId, String newName) {
+        return addTask(new QueueTask(TaskType.RenameTag, tagId, newName));
+    }
+
+    public RemoteOpStatus addRemoveTagTask(String tagId) {
+        return addTask(new QueueTask(TaskType.RemoveTag, tagId));
+    }
+
     public RemoteOpStatus addLoadFaviconTask(String favicon) {
         return addTask(new QueueTask(TaskType.LoadFavicon, favicon));
     }

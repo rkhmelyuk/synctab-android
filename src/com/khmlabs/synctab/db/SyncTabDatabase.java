@@ -13,6 +13,7 @@ import com.khmlabs.synctab.queue.QueueTask;
 import com.khmlabs.synctab.queue.TaskType;
 import com.khmlabs.synctab.tab.SharedTab;
 import com.khmlabs.synctab.tag.Tag;
+import com.khmlabs.synctab.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -268,8 +269,6 @@ public class SyncTabDatabase {
                 for (Tag each : tags) {
                     values.put(TagsColumns.ID, each.getTagId());
                     values.put(TagsColumns.NAME, each.getName());
-
-                    // TODO - update if existing, insert if not
                     db.replaceOrThrow(Table.TAGS, null, values);
 
                     values.clear();
@@ -313,14 +312,15 @@ public class SyncTabDatabase {
         return result;
     }
 
-    public Tag getTagById(String id) {
+    public Tag getTag(int id) {
         final SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = null;
 
         try {
             cursor = db.query(Table.TAGS, null,
-                    TagsColumns.ID + "='" + id + "'", null, null, null, null);
+                    DbMetadata.ID + "=" + Integer.toString(id),
+                    null, null, null, null);
 
             if (cursor.moveToNext()) {
                 final Tag tag = new Tag();
@@ -339,5 +339,114 @@ public class SyncTabDatabase {
         }
 
         return null;
+    }
+
+    public Tag getTagById(String id) {
+        final SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = null;
+
+        try {
+            cursor = db.query(Table.TAGS, null,
+                    TagsColumns.ID + "='" + id + "'",
+                    null, null, null, null);
+
+            if (cursor.moveToNext()) {
+                final Tag tag = new Tag();
+
+                tag.setId(cursor.getInt(0));
+                tag.setTagId(cursor.getString(cursor.getColumnIndex(TagsColumns.ID)));
+                tag.setName(cursor.getString(cursor.getColumnIndex(TagsColumns.NAME)));
+
+                return tag;
+            }
+        }
+        finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return null;
+    }
+
+    public Tag addTag(String tagId, String name) {
+        Tag tag = null;
+
+        if (StringUtil.isNotEmpty(name)) {
+            SQLiteDatabase db = null;
+            try {
+                db = dbOpenHelper.getWritableDatabase();
+                db.beginTransaction();
+
+                final ContentValues values = new ContentValues();
+                values.put(TagsColumns.ID, tagId);
+                values.put(TagsColumns.NAME, name);
+
+                long id = db.replaceOrThrow(Table.TAGS, null, values);
+                if (id != -1) {
+                    tag = new Tag((int) id, null, name);
+                }
+
+                db.setTransactionSuccessful();
+            }
+            finally {
+                if (db != null && db.isOpen()) {
+                    if (db.inTransaction()) {
+                        db.endTransaction();
+                    }
+                    db.close();
+                }
+            }
+
+        }
+
+        return tag;
+    }
+
+    public void updateTag(Tag tag) {
+        if (tag != null) {
+            SQLiteDatabase db = null;
+            try {
+                db = dbOpenHelper.getWritableDatabase();
+                db.beginTransaction();
+
+                final ContentValues values = new ContentValues();
+                values.put(TagsColumns.ID, tag.getId());
+                values.put(TagsColumns.NAME, tag.getName());
+
+                db.update(Table.TAGS, values, DbMetadata.ID + "=" + Integer.toString(tag.getId()), null);
+
+                db.setTransactionSuccessful();
+            }
+            finally {
+                if (db != null && db.isOpen()) {
+                    if (db.inTransaction()) {
+                        db.endTransaction();
+                    }
+                    db.close();
+                }
+            }
+        }
+    }
+
+    public void removeTag(int tagId) {
+        SQLiteDatabase db = null;
+        try {
+            db = dbOpenHelper.getWritableDatabase();
+            db.beginTransaction();
+
+            db.delete(Table.TAGS, DbMetadata.ID + "=" + Integer.toString(tagId), null);
+
+            db.setTransactionSuccessful();
+        }
+        finally {
+            if (db != null && db.isOpen()) {
+                if (db.inTransaction()) {
+                    db.endTransaction();
+                }
+                db.close();
+            }
+        }
     }
 }

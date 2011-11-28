@@ -100,6 +100,9 @@ public class SyncTabFacade {
             if (authManager.executeTask(task)) {
                 return true;
             }
+            if (tagManager.executeTask(task)) {
+                return true;
+            }
         }
 
         return false;

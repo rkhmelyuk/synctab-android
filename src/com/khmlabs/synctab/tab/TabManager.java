@@ -212,16 +212,18 @@ public class TabManager {
      * @return true if was executed.
      */
     public boolean executeTask(QueueTask task) {
-        if (task.getType() == TaskType.SyncTab) {
+        final TaskType type = task.getType();
+
+        if (type == TaskType.SyncTab) {
             return remote.shareTab(task.getParam1(), task.getParam2());
         }
-        else if (task.getType() == TaskType.RemoveSharedTab) {
+        if (type == TaskType.RemoveSharedTab) {
             return remote.removeSharedTab(task.getParam1());
         }
-        else if (task.getType() == TaskType.ReshareTab) {
+        if (type == TaskType.ReshareTab) {
             return remote.reshareTab(task.getParam1());
         }
-        else if (task.getType() == TaskType.LoadFavicon) {
+        if (type == TaskType.LoadFavicon) {
             FaviconPreloader loader = new FaviconPreloader(application);
             return loader.preloadFavicon(task.getParam1());
         }

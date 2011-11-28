@@ -3,8 +3,11 @@ package com.khmlabs.synctab.tag;
 import android.util.Log;
 
 import com.khmlabs.synctab.AppConstants;
+import com.khmlabs.synctab.RemoteOpStatus;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.db.SyncTabDatabase;
+import com.khmlabs.synctab.queue.QueueTask;
+import com.khmlabs.synctab.queue.TaskType;
 
 import java.util.Collections;
 import java.util.List;
@@ -51,8 +54,8 @@ public class TagManager {
      * Gets the list of available tags.
      *
      * @return the list of available tags.
-     *
-     * TODO - think to cache
+     *         <p/>
+     *         TODO - think to cache
      */
     public List<Tag> getTags() {
         SyncTabDatabase database = null;
@@ -144,8 +147,6 @@ public class TagManager {
      *
      * @param id the tag id.
      * @return the found tag by id.
-     *
-     * TODO - remove if not used
      */
     public Tag getTag(String id) {
         SyncTabDatabase database = null;
@@ -162,6 +163,188 @@ public class TagManager {
                 database.close();
             }
         }
+    }
+
+    /**
+     * Add new tag with specified name.
+     *
+     * @param name the new tag name.
+     * @return the remote operation status.
+     */
+    public RemoteOpStatus addTag(String name) {
+        SyncTabDatabase database = null;
+        try {
+            database = new SyncTabDatabase(application);
+            if (application.isOnLine()) {
+                String id = remote.addTag(name);
+                if (id != null) {
+                    database.addTag(id, name);
+                    return RemoteOpStatus.Success;
+                }
+            }
+
+            final Tag tag = database.addTag(null, name);
+            return application.getTaskQueueManager().addAddTagTask(tag.getId());
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to add a new tag.");
+        }
+        finally {
+            if (database != null) {
+                database.close();
+            }
+        }
+
+        return RemoteOpStatus.Failed;
+    }
+
+    /**
+     * Rename the specified tag.
+     *
+     * @param id      the id of the tag in local sqlite database.
+     * @param newName the new name for tag.
+     * @return the remote operation status.
+     */
+    public RemoteOpStatus renameTag(int id, String newName) {
+        SyncTabDatabase database = null;
+        try {
+            database = new SyncTabDatabase(application);
+
+            Tag tag = database.getTag(id);
+            if (tag == null) {
+                // nothing to rename... success?!
+                return RemoteOpStatus.Success;
+            }
+
+            // update database
+            tag.setName(newName);
+            database.updateTag(tag);
+
+            if (!tag.isLocal()) {
+                if (application.isOnLine()) {
+                    if (remote.renameTag(tag.getTagId(), newName)) {
+                        return RemoteOpStatus.Success;
+                    }
+                }
+
+                // enqueue only for existing tags, for new tags queue task has id dependency
+                return application.getTaskQueueManager().addRenameTagTask(tag.getTagId(), newName);
+            }
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to rename a tag.");
+        }
+        finally {
+            if (database != null) {
+                database.close();
+            }
+        }
+
+        return RemoteOpStatus.Failed;
+    }
+
+    /**
+     * Remove the specified tag.
+     *
+     * @param id the id of the tag in local sqlite database.
+     * @return the remote operation status.
+     */
+    public RemoteOpStatus removeTag(int id) {
+        SyncTabDatabase database = null;
+        try {
+            database = new SyncTabDatabase(application);
+
+            Tag tag = database.getTag(id);
+            if (tag == null) {
+                // nothing to remove... success?!
+                return RemoteOpStatus.Success;
+            }
+
+            // remove from local database
+            database.removeTag(id);
+
+            if (!tag.isLocal()) {
+
+                // -- remove remotely for non-local tasks
+                if (application.isOnLine()) {
+                    if (remote.removeTag(tag.getTagId())) {
+                        return RemoteOpStatus.Success;
+                    }
+                }
+
+                return application.getTaskQueueManager().addRemoveTabTask(tag.getTagId());
+            }
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to remove a tag.");
+        }
+        finally {
+            if (database != null) {
+                database.close();
+            }
+        }
+
+        return RemoteOpStatus.Failed;
+    }
+
+    /**
+     * Executes a queued sync task.
+     *
+     * @param task the task to execute.
+     * @return true if was executed.
+     */
+    public boolean executeTask(QueueTask task) {
+        if (task != null) {
+            final TaskType type = task.getType();
+
+            if (type == TaskType.AddTag) {
+                return executeAddTagTask(task);
+            }
+            if (type == TaskType.RemoveTag) {
+                return remote.removeTag(task.getParam1());
+            }
+            if (type == TaskType.RenameTag) {
+                return remote.renameTag(task.getParam1(), task.getParam2());
+            }
+        }
+
+        return false;
+    }
+
+    private boolean executeAddTagTask(QueueTask task) {
+        SyncTabDatabase database = null;
+        try {
+            database = new SyncTabDatabase(application);
+
+            Integer tagId = Integer.valueOf(task.getParam1());
+            if (tagId == null) {
+                // wrong id, no sense to enqueue it further
+                return true;
+            }
+            Tag tag = database.getTag(tagId);
+            if (tag == null) {
+                // was removed already
+                return true;
+            }
+
+            String id = remote.addTag(tag.getName());
+            if (id != null) {
+                tag.setTagId(id);
+                database.updateTag(tag);
+
+                return true;
+            }
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to add a tag.");
+        }
+        finally {
+            if (database != null) {
+                database.close();
+            }
+        }
+
+        return false;
     }
 
 }

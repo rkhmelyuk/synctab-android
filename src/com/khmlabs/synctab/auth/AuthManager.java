@@ -123,7 +123,7 @@ public class AuthManager {
      * @return true if was executed.
      */
     public boolean executeTask(QueueTask task) {
-        if (task.getType() == TaskType.Logout) {
+        if (task != null && task.getType() == TaskType.Logout) {
             return remote.logout(task.getParam1());
         }
 

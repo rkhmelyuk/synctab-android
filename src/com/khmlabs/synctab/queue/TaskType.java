@@ -18,7 +18,16 @@ public enum TaskType {
     ReshareTab(4),
 
     /** Load a tab icon. */
-    LoadFavicon(5);
+    LoadFavicon(5),
+
+    /** Add new tag. */
+    AddTag(6),
+
+    /** Rename the tag. */
+    RenameTag(7),
+
+    /** Remove the tag. */
+    RemoveTag(8);
 
     private final int id;
 
