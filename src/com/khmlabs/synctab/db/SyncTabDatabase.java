@@ -287,6 +287,12 @@ public class SyncTabDatabase {
         }
     }
 
+    public Cursor findTags() {
+        return getReadableDatabase().query(
+                DbMetadata.Table.TAGS,
+                null, null, null, null, null, null);
+    }
+
     public List<Tag> getTags() {
         final List<Tag> result = new ArrayList<Tag>();
 

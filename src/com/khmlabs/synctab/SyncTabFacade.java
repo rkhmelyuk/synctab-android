@@ -61,8 +61,8 @@ public class SyncTabFacade {
         return tabManager.enqueueSync(link, tagId);
     }
 
-    public void refreshTags() {
-        tagManager.refreshTags();
+    public boolean refreshTags() {
+        return tagManager.refreshTags();
     }
 
     /**

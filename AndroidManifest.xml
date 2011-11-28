@@ -32,6 +32,9 @@
         <activity android:name=".ui.SettingsActivity"
                   android:label="@string/settings_activity"/>
 
+        <activity android:name=".ui.TagEditActivity"
+                  android:label="@string/tag_edit_activity"/>
+
         <activity android:name=".ui.LoginActivity"
                   android:label="@string/login_activity"
                   android:theme="@style/ActivityWithBackground"

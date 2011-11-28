@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                style="@style/TagRowLayout">
+
+    <TextView android:layout_height="fill_parent"
+              android:layout_width="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:id="@+id/tag_name"
+              android:textSize="@dimen/tag_size"
+              android:textColor="@android:color/black"
+              android:singleLine="true"/>
+
+    <CheckBox android:id="@+id/tag_flag"
+              android:layout_alignParentRight="true"
+              android:layout_height="fill_parent"
+              android:layout_width="wrap_content"/>
+
+</RelativeLayout>

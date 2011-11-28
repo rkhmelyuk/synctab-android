@@ -14,6 +14,7 @@
     <string name="registration_activity">SyncTab: Registration</string>
     <string name="about_activity">About</string>
     <string name="settings_activity">Settings</string>
+    <string name="tag_edit_activity">Tags</string>
 
     <string name="sync_in_progress">Syncing Tab...</string>
     <string name="success_sync">Tab is shared.\n\nHave fun!</string>
@@ -97,6 +98,8 @@
     <string name="submit_issue_summary">Submit issue via online form</string>
     <string name="contact_summary">Contact us via online form</string>
     <string name="about_references">References</string>
+    <string name="edit_tags">Edit List of Tags</string>
+    <string name="edit_tags_summary">Add, rename and remove tags.</string>
 
     <plurals name="minutes">
         <item quantity="one">Every %d minute</item>

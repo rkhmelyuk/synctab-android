@@ -6,6 +6,9 @@
                     android:title="@string/current_tag"
                     android:summary="@string/current_tag_summary"/>
 
+    <Preference android:title="@string/edit_tags"
+                android:summary="@string/edit_tags_summary"/>
+
     <ListPreference android:key="REFRESH_PERIOD"
                     android:title="@string/refresh_interval"
                     android:summary="@string/refresh_interval_summary"

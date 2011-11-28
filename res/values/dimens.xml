@@ -31,4 +31,6 @@
     <dimen name="main_button_top_margin">7dp</dimen>
     <dimen name="main_button_bottom_margin">7dp</dimen>
 
+    <dimen name="tag_size">24sp</dimen>
+
 </resources>

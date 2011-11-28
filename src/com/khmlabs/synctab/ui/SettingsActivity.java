@@ -2,14 +2,12 @@ package com.khmlabs.synctab.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
+import android.preference.*;
 
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.tag.Tag;
+import com.khmlabs.synctab.util.IntentHelper;
 
 import java.util.List;
 
@@ -19,7 +17,8 @@ import java.util.List;
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final int CURRENT_TAG_INDEX = 0;
-    private static final int REFRESH_PERIOD_INDEX = 1;
+    private static final int EDIT_TAGS_INDEX = 1;
+    private static final int REFRESH_PERIOD_INDEX = 2;
 
     TitleBarHelper titlebarHelper;
 
@@ -76,9 +75,19 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             tagPref.setSummary(tag.getName());
         }
 
+        // -- Edit Tags shows a Tag Edit Activity
+
+        Preference tagEditPref = screen.getPreference(EDIT_TAGS_INDEX);
+        tagEditPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                IntentHelper.showTagEditActivity(SettingsActivity.this);
+                return true;
+            }
+        });
+
         // -- Refresh Period preference preparation
 
-        ListPreference refreshPref = (ListPreference) screen.getPreference(REFRESH_PERIOD_INDEX);
+        Preference refreshPref = screen.getPreference(REFRESH_PERIOD_INDEX);
         int minutes = (int) (app.getRefreshPeriod() / 60000);
         String message = getResources().getQuantityString(R.plurals.minutes, minutes, minutes);
         refreshPref.setSummary(message);

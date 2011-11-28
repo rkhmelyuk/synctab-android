@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.ui.AboutActivity;
+import com.khmlabs.synctab.ui.TagEditActivity;
 
 public class IntentHelper {
 
@@ -33,9 +34,18 @@ public class IntentHelper {
     /**
      * Starts About activity.
      *
-     * @param ctx the calling context;
+     * @param ctx the calling context.
      */
     public static void showAboutActivity(Context ctx) {
         ctx.startActivity(new Intent(ctx, AboutActivity.class));
+    }
+
+    /**
+     * Starts Tag Edit activity.
+     *
+     * @param ctx the calling context.
+     */
+    public static void showTagEditActivity(Context ctx) {
+        ctx.startActivity(new Intent(ctx, TagEditActivity.class));
     }
 }
