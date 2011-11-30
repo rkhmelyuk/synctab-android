@@ -1,0 +1,115 @@
+<resources>
+    <string name="application_label">SyncTab</string>
+
+    <string name="synctab">SyncTab</string>
+
+    <string name="synctab_activity">SyncTab</string>
+    <string name="login_activity">SyncTab: Вход</string>
+    <string name="registration_activity">SyncTab: Регистрация</string>
+    <string name="about_activity">О программе</string>
+    <string name="settings_activity">Настройки</string>
+    <string name="tag_edit_activity">Теги</string>
+
+    <string name="sync_in_progress">Отправка ссылки...</string>
+    <string name="success_sync">Ссылка отправлена.\n\nУдачи!</string>
+    <string name="enqueue_sync">Ссылка будет отправлена,\n когда вы будете находиться в Интернете.\n\n Удачи!</string>
+    <string name="failed_sync">Ошибка при отправке ссылки.\n\nИзвините ;(</string>
+    <string name="incorrect_url">То, что вы пытаетесь отправить - это не URL.\n\n Попробуйте что-нибудь еще!</string>
+    <string name="nothing_to_share">Ничего отправлять:\n URL не получен.</string>
+    <string name="synctab_service">Служба SyncTab</string>
+    <string name="refresh_service">Служба обновления SyncTab</string>
+
+    <string name="pref_url_title">SyncTab URL</string>
+    <string name="pref_url_summary">SyncTab Service URL</string>
+    <string name="open">Открыть</string>
+    <string name="hide">Скрыть</string>
+    <string name="failed_retrieve_shared_tabs">Не удалось обновить список ссылок</string>
+    <string name="email">Электронная почта</string>
+    <string name="password">Пароль</string>
+    <string name="login">Войти</string>
+    <string name="please_login">SyncTab: Вход</string>
+    <string name="registration">SyncTab: Регистрация</string>
+    <string name="register">Регистрация</string>
+    <string name="register_now">Регистрация</string>
+    <string name="please_wait">Пожалуйста, подождите...</string>
+    <string name="account_registration">Регистрации пользователя...</string>
+    <string name="authentication">Аутентификация...</string>
+    <string name="loading_tabs">Загрузка списка ссылок...</string>
+
+    <string name="email_password_required">Пожалуйста, введите адрес электронной почты и пароль.</string>
+    <string name="error_authenticate">Ошибка входа. Попробуйте еще раз!</string>
+    <string name="failed_authenticate">Неправильная электронная почта или пароль</string>
+    <string name="error_register">Ошибка при регистрации. Попробуйте еще раз!</string>
+    <string name="failed_register">Не удалось зарегистрировать</string>
+    <string name="no_connection">Потеряна связь</string>
+    <string name="logout">Выход</string>
+    <string name="logout_progress">Выход...</string>
+    <string name="help">Помощь</string>
+    <string name="refresh">Обновить</string>
+    <string name="home">Домой</string>
+    <string name="not_a_user">У вас нет учетной записи?</string>
+    <string name="unknown">Неизвестный</string>
+    <string name="resend">Переслан повторно</string>
+    <string name="remove">Удалить</string>
+    <string name="rename">Переименовать</string>
+    <string name="share_via">Поделиться с</string>
+    <string name="copy_link">Копировать ссылку</string>
+    <string name="touch_to_open">Нажмите, чтобы открыть</string>
+
+    <string name="msg_tab_is_removed">Ссылка удалена</string>
+    <string name="msg_tab_is_reshared">Ссылка повторно отправлена</string>
+    <string name="msg_failed_to_reshared_tab">Не удалось повторно отправить ссылку</string>
+    <string name="msg_failed_to_remove_tab">Не удалось удалить ссылку</string>
+    <string name="about">О программе</string>
+    <string name="username">Имя пользователя</string>
+    <string name="none">Никто</string>
+    <string name="version">Версия</string>
+    <string name="website">Веб-сайт</string>
+    <string name="documentation">Документация</string>
+    <string name="chrome_extension">Расширение для Chrome</string>
+    <string name="submit_issue">Отправить вопрос</string>
+    <string name="contact">Связаться с нами</string>
+    <string name="start_help_notice">
+        <b>СОВЕТЫ</b>:
+        \n\nУстановите расширение SyncTab для Chrome. Узнайте больше на сайте
+        <a href="http://synctab.khmelyuk.com">synctab.khmelyuk.com</a>.
+        \n\nИспользуйте теги для отправки ссылки на различные браузеры, как браузер вдома или на работе.
+        Вы также можете прислать ссылки на эту устройство с Chrome.
+        \n\nВы можете отправлять ссылки из одного браузера на другой, например, с рабочего компьютера на домашний.
+    </string>
+
+    <string name="send_tab_to">Отправить...</string>
+
+    <string name="settings">Настройки</string>
+    <string name="refresh_interval">Интервал обновления</string>
+    <string name="refresh_interval_summary">Как часто проверять новые ссылки, чтобы открыть</string>
+    <string name="current_tag">Открывать ссылки с тегом</string>
+    <string name="current_tag_summary">Фильтры ссылку, чтобы открыть на этом устройстве, путем специальных тэгов</string>
+    <string name="website_summary">Веб страница SyncTab</string>
+    <string name="chrome_extension_summary">Узнайте больше о расширение SyncTab для Chrome</string>
+    <string name="documentation_summary">Читать документацию онлайн</string>
+    <string name="submit_issue_summary">Отправить вопрос онлайн</string>
+    <string name="contact_summary">Связаться с нами онлайн</string>
+    <string name="about_references">Ссылки</string>
+    <string name="edit_tags">Редактировать теги</string>
+    <string name="edit_tags_summary">Добавить, переименовывать и удалять теги</string>
+    <string name="tag_context_menu">Выберите действие</string>
+    <string name="failed_remove_tag">Не удалось удалить тег</string>
+    <string name="failed_rename_tag">Не удалось переименовать тег</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отменить</string>
+    <string name="add_new_tag">Добавить новый тег</string>
+    <string name="yes_remove">Да, Удалить</string>
+    <string name="enter_new_tag_name">Введите имя для нового тега:</string>
+    <string name="tag_name_required">Ошибка: Имя тега обязательное!</string>
+    <string name="tag_name_too_long">Ошибка: Имя тега слишком длинное. Максимум 250 символов.</string>
+    <string name="confirm_remove_tag">Тег \'%s\' может использоваться. Вы действительно хотите удалить его?</string>
+
+    <string name="shared_from">Отравлено с&#160;</string>
+
+    <plurals name="minutes">
+        <item quantity="one">Каждаю %d минуту</item>
+        <item quantity="other">Каждые %d минут</item>
+    </plurals>
+
+</resources>
