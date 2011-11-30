@@ -11,12 +11,13 @@ import android.text.InputFilter;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
+
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.RemoteOpStatus;
+import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.db.DbMetadata;
 import com.khmlabs.synctab.db.DbMetadata.TagsColumns;
 import com.khmlabs.synctab.db.SyncTabDatabase;
-import com.khmlabs.synctab.util.StringUtil;
 
 /**
  * Activity to edit the list of tags: add new, rename and remove some.
@@ -25,11 +26,10 @@ public class TagEditActivity extends BaseUserActivity implements AddSupport, Ref
 
     private static final String TAG = "TagEditActivity";
 
-    private static final int TAB_CONTEXT_MENU_RENAME = 0;
-    private static final int TAB_CONTEXT_MENU_REMOVE = 1;
-
     static final String[] ADAPTER_FROM = {TagsColumns.NAME};
     static final int[] ADAPTER_TO = {R.id.tag_name};
+
+    private SimpleCursorAdapter.ViewBinder TAG_BINDER;
 
     ListView tags;
     SimpleCursorAdapter adapter;
@@ -41,11 +41,11 @@ public class TagEditActivity extends BaseUserActivity implements AddSupport, Ref
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_tagedit);
 
+        TAG_BINDER = new TagRowBinder(getSyncTabApplication());
+
         tags = (ListView) findViewById(R.id.tags);
 
         database = new SyncTabDatabase(this);
-
-        registerForContextMenu(tags);
     }
 
     protected void onResume() {
@@ -79,6 +79,7 @@ public class TagEditActivity extends BaseUserActivity implements AddSupport, Ref
                     this, R.layout.tag_row, cursor,
                     ADAPTER_FROM, ADAPTER_TO);
 
+            adapter.setViewBinder(TAG_BINDER);
             tags.setAdapter(adapter);
         }
         else {
@@ -134,73 +135,11 @@ public class TagEditActivity extends BaseUserActivity implements AddSupport, Ref
         ).show();
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, view, menuInfo);
-
-        if (view.getId() == R.id.tags) {
-            menu.setHeaderTitle(R.string.tag_context_menu);
-
-            boolean showRemoveOption = isNeedToShowRemoveOption(
-                    (AdapterView.AdapterContextMenuInfo) menuInfo);
-
-            menu.add(Menu.NONE, TAB_CONTEXT_MENU_RENAME, TAB_CONTEXT_MENU_RENAME,
-                    getResources().getString(R.string.rename));
-
-            if (showRemoveOption) {
-                menu.add(Menu.NONE, TAB_CONTEXT_MENU_REMOVE, TAB_CONTEXT_MENU_REMOVE,
-                        getResources().getString(R.string.remove));
-            }
-        }
-    }
-
-    private boolean isNeedToShowRemoveOption(AdapterView.AdapterContextMenuInfo menuInfo) {
-
-        final Cursor cursor = (Cursor) tags.getAdapter().getItem(menuInfo.position);
-        final int tagIdColumn = cursor.getColumnIndex(TagsColumns.ID);
-        final String tagId = cursor.getString(tagIdColumn);
-
-        if (StringUtil.isNotEmpty(tagId)) {
-            String currentTagId = getSyncTabApplication().getCurrentTag();
-            if (tagId.equals(currentTagId)) {
-                 return false;
-            }
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo ctxMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        final Cursor cursor = (Cursor) tags.getAdapter().getItem(ctxMenuInfo.position);
-
-        final int idColumn = cursor.getColumnIndex(DbMetadata.ID);
-        final int nameColumn = cursor.getColumnIndex(TagsColumns.NAME);
-
-        final int id = cursor.getInt(idColumn);
-        final String name = cursor.getString(nameColumn);
-
-        switch (item.getItemId()) {
-            case TAB_CONTEXT_MENU_RENAME: {
-                renameTag(id, name);
-                return true;
-            }
-            case TAB_CONTEXT_MENU_REMOVE: {
-                removeTag(id, name);
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     /**
      * Shows a dialog to rename specified tag.
      * User may cancel edition, or change a name and save it.
      *
-     * @param tagId the local id of the tag.
+     * @param tagId       the local id of the tag.
      * @param currentName the current tag name, so user just edit existing.
      */
     private void renameTag(final int tagId, final String currentName) {
@@ -227,12 +166,11 @@ public class TagEditActivity extends BaseUserActivity implements AddSupport, Ref
     /**
      * Build a tag add/edit dialog. This dialog only shows a message and an input field for name.
      *
-     * @param ctx the request context.
-     * @param title the dialog title.
-     * @param message the dialog message.
-     * @param input the input element for tag name.
+     * @param ctx          the request context.
+     * @param title        the dialog title.
+     * @param message      the dialog message.
+     * @param input        the input element for tag name.
      * @param saveListener the action to call on save listeners.
-     *
      * @return the built tag dialog.
      */
     private static AlertDialog buildTagDialog(Context ctx, int title, int message, EditText input,
@@ -255,7 +193,7 @@ public class TagEditActivity extends BaseUserActivity implements AddSupport, Ref
     /**
      * Validates a tag name.
      *
-     * @param ctx the current context.
+     * @param ctx  the current context.
      * @param name the tag name.
      * @return true if name if valid, otherwise false.
      */
@@ -302,6 +240,9 @@ public class TagEditActivity extends BaseUserActivity implements AddSupport, Ref
         builder.show();
     }
 
+    /**
+     * The asynchronous task to download the list of tags from server.
+     */
     private class RefreshTagsListTask extends AsyncTask<Void, Void, Boolean> {
 
         protected Boolean doInBackground(Void... voids) {
@@ -334,6 +275,9 @@ public class TagEditActivity extends BaseUserActivity implements AddSupport, Ref
         }
     }
 
+    /**
+     * The async task to rename the tag.
+     */
     private class RenameTagTask extends AsyncTask<Object, Void, RemoteOpStatus> {
 
         ProgressDialog progress;
@@ -375,6 +319,9 @@ public class TagEditActivity extends BaseUserActivity implements AddSupport, Ref
         }
     }
 
+    /**
+     * The async task to add the tag.
+     */
     private class AddTagTask extends AsyncTask<String, Void, RemoteOpStatus> {
 
         ProgressDialog progress;
@@ -415,6 +362,9 @@ public class TagEditActivity extends BaseUserActivity implements AddSupport, Ref
         }
     }
 
+    /**
+     * The async task to remove the tag.
+     */
     private class RemoveTagTask extends AsyncTask<Integer, Void, RemoteOpStatus> {
 
         ProgressDialog progress;
@@ -454,6 +404,99 @@ public class TagEditActivity extends BaseUserActivity implements AddSupport, Ref
             }
 
             return RemoteOpStatus.Failed;
+        }
+    }
+
+    /**
+     * The tag row binder. Responsible for binding actions to the rename/remove buttons,
+     * hiding remove button for current tag etc.
+     */
+    private class TagRowBinder implements SimpleCursorAdapter.ViewBinder {
+
+        // cache column indexes here
+        int idColumnIndex = -1;
+        int rowIdColumnIndex = -1;
+        int nameColumnIndex = -1;
+
+        // cache current tag.
+        String currentTag = null;
+
+        /** Single instance of the rename button click listener. */
+        final View.OnClickListener renameOnClickListener = new View.OnClickListener() {
+            public void onClick(View view) {
+                final int position = (Integer) view.getTag();
+                final Cursor cursor = (Cursor) tags.getAdapter().getItem(position);
+
+                final int id = cursor.getInt(rowIdColumnIndex);
+                final String name = cursor.getString(nameColumnIndex);
+
+                renameTag(id, name);
+            }
+        };
+
+        /** Single instance of the remove button click listener. */
+        final View.OnClickListener removeOnClickListener = new View.OnClickListener() {
+            public void onClick(View view) {
+                final int position = (Integer) view.getTag();
+                final Cursor cursor = (Cursor) tags.getAdapter().getItem(position);
+
+                final int id = cursor.getInt(rowIdColumnIndex);
+                final String name = cursor.getString(nameColumnIndex);
+
+                removeTag(id, name);
+            }
+        };
+
+        private TagRowBinder(SyncTabApplication app) {
+            currentTag = app.getCurrentTag();
+        }
+
+        public boolean setViewValue(final View view, final Cursor cursor, final int columnIndex) {
+            if (idColumnIndex == -1) {
+                // init column indexes
+                idColumnIndex = cursor.getColumnIndex(TagsColumns.ID);
+                rowIdColumnIndex = cursor.getColumnIndex(DbMetadata.ID);
+                nameColumnIndex = cursor.getColumnIndex(TagsColumns.NAME);
+            }
+
+            // get the root element of current row
+            final ViewGroup root = (ViewGroup) view.getParent();
+
+            // --- setup remove button
+
+            View remove = (View) root.getTag(R.id.remove);
+            if (remove == null) {
+                remove = root.findViewById(R.id.remove);
+                remove.setOnClickListener(removeOnClickListener);
+                root.setTag(R.id.remove, remove);
+            }
+
+            // if current tag then hide remove icon
+            final String tagId = cursor.getString(idColumnIndex);
+            if (currentTag != null && currentTag.equals(tagId)) {
+                remove.setVisibility(View.INVISIBLE);
+            }
+            else {
+                remove.setVisibility(View.VISIBLE);
+            }
+
+            // --- setup rename button
+
+            View rename = (View) root.getTag(R.id.rename);
+            if (rename == null) {
+                rename = root.findViewById(R.id.rename);
+                rename.setOnClickListener(renameOnClickListener);
+                root.setTag(R.id.rename, rename);
+            }
+
+            // --- setup position
+
+            int position = cursor.getPosition();
+
+            remove.setTag(position);
+            rename.setTag(position);
+
+            return false;
         }
     }
 }

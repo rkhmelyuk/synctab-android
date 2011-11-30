@@ -34,4 +34,6 @@
     <dimen name="tag_size">24sp</dimen>
     <dimen name="dialog_input_margin">20dp</dimen>
 
+    <dimen name="action_icon_left_padding">8dp</dimen>
+
 </resources>
