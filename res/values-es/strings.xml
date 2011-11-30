@@ -83,7 +83,7 @@
     <string name="settings">Сonfiguración</string>
     <string name="refresh_interval">Intervalo de actualización</string>
     <string name="refresh_interval_summary">Con qué frecuencia para comprobar si hay nuevos hiperenlaces para abrir</string>
-    <string name="current_tag">Los hiperenlaces se abren con la Etiqueta</string>
+    <string name="current_tag">Etiqueta actual</string>
     <string name="current_tag_summary">Filtrar los vínculos para abrir en este dispositivo por etiquetas especificadas</string>
     <string name="website_summary">Ver SyncTab sitio web en línea</string>
     <string name="chrome_extension_summary">Lea más acerca de SyncTab Chrome Extension</string>
@@ -105,6 +105,7 @@
     <string name="tag_name_too_long">Error: Nombre de la Etiqueta es demasiado largo. Máximo 250 símbolos.</string>
     <string name="confirm_remove_tag">Etiqueta \'%s\' puede estar en uso. ¿De verdad desea eliminarlo?</string>
     <string name="confirm_remove_tags">¿Realmente quiere eliminar %d etiquetas?</string>
+    <string name="shared_from">Compartida de&#160;</string>
 
     <plurals name="minutes">
         <item quantity="one">Cada %d minuto</item>

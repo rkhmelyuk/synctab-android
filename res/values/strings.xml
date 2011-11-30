@@ -108,6 +108,8 @@
     <string name="confirm_remove_tag">Tag \'%s\' can be in use. Do you really want to remove it?</string>
     <string name="confirm_remove_tags">Do you really want to remove %d tags?</string>
 
+    <string name="shared_from">Shared from&#160;</string>
+
     <plurals name="minutes">
         <item quantity="one">Every %d minute</item>
         <item quantity="other">Every %d minutes</item>

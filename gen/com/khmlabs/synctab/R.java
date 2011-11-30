@@ -176,12 +176,12 @@ public final class R {
         public static final int cancel=0x7f090053;
         public static final int chrome_extension=0x7f09003d;
         public static final int chrome_extension_summary=0x7f090048;
-        public static final int chrome_extension_url=0x7f09005f;
+        public static final int chrome_extension_url=0x7f090060;
         public static final int confirm_remove_tag=0x7f090059;
         public static final int confirm_remove_tags=0x7f09005a;
         public static final int contact=0x7f09003f;
         public static final int contact_summary=0x7f09004b;
-        public static final int contact_url=0x7f09005e;
+        public static final int contact_url=0x7f09005f;
         public static final int copy_link=0x7f090031;
         public static final int current_tag=0x7f090045;
         public static final int current_tag_summary=0x7f090046;
@@ -202,7 +202,7 @@ public final class R {
         public static final int failed_retrieve_shared_tabs=0x7f090014;
         public static final int failed_sync=0x7f09000b;
         public static final int help=0x7f090028;
-        public static final int help_url=0x7f09005b;
+        public static final int help_url=0x7f09005c;
         public static final int hide=0x7f090013;
         public static final int home=0x7f09002a;
         public static final int incorrect_url=0x7f09000c;
@@ -241,10 +241,11 @@ public final class R {
         public static final int settings=0x7f090042;
         public static final int settings_activity=0x7f090006;
         public static final int share_via=0x7f090030;
+        public static final int shared_from=0x7f09005b;
         public static final int start_help_notice=0x7f090040;
         public static final int submit_issue=0x7f09003e;
         public static final int submit_issue_summary=0x7f09004a;
-        public static final int submit_issue_url=0x7f09005d;
+        public static final int submit_issue_url=0x7f09005e;
         public static final int success_sync=0x7f090009;
         public static final int sync_in_progress=0x7f090008;
         public static final int synctab=0x7f090001;
@@ -260,7 +261,7 @@ public final class R {
         public static final int version=0x7f09003a;
         public static final int website=0x7f09003b;
         public static final int website_summary=0x7f090047;
-        public static final int website_url=0x7f09005c;
+        public static final int website_url=0x7f09005d;
         public static final int yes_remove=0x7f090055;
     }
     public static final class style {

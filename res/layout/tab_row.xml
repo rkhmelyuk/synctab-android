@@ -53,7 +53,7 @@
 
         <TextView android:layout_height="wrap_content"
                   android:layout_width="wrap_content"
-                  android:text="Shared from "
+                  android:text="@string/shared_from"
                   android:textSize="@dimen/shared_tab_details_text_size"
                   android:layout_toLeftOf="@+id/device"
                   android:textColor="@color/shared_tab_row_details"/>
