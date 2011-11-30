@@ -10,11 +10,13 @@ import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.tag.Tag;
 import com.khmlabs.synctab.util.IntentHelper;
+import com.khmlabs.synctab.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Ruslan Khmelyuk
+ * Activity to edit settings.
  */
 public class SettingsActivity extends PreferenceUserActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -58,27 +60,23 @@ public class SettingsActivity extends PreferenceUserActivity
     }
 
     private void initPreferences() {
-        final SyncTabApplication app = (SyncTabApplication) getApplication();
+        final SyncTabApplication app = getSyncTabApplication();
         final List<Tag> tags = app.getFacade().getTags();
 
-        final String[] tagIds = new String[tags.size()];
-        final String[] tagNames = new String[tags.size()];
+        final List<String> tagIds = new ArrayList<String>();
+        final List<String> tagNames = new ArrayList<String>();
 
-        int i = 0;
-        for (Tag each : tags) {
-            tagIds[i] = each.getTagId();
-            tagNames[i] = each.getName();
-
-            i++;
-        }
+        fillTagsEntries(tags, tagIds, tagNames);
 
         final PreferenceScreen screen = getPreferenceScreen();
 
         // -- Current Tag preference preparation
 
         ListPreference tagPref = (ListPreference) screen.getPreference(CURRENT_TAG_INDEX);
-        tagPref.setEntries(tagNames);
-        tagPref.setEntryValues(tagIds);
+
+        int size = tagNames.size();
+        tagPref.setEntries(tagNames.toArray(new String[size]));
+        tagPref.setEntryValues(tagIds.toArray(new String[size]));
 
         Tag tag = app.getFacade().getTag(app.getCurrentTag());
         if (tag != null && tag.getName() != null) {
@@ -103,5 +101,22 @@ public class SettingsActivity extends PreferenceUserActivity
         refreshPref.setSummary(message);
     }
 
+    /**
+     * Fill tags list entries: labels and values.
+     * Also filters the list of tags to include only synced remove tags.
+     *
+     * @param tags the list of all tags.
+     * @param tagIds the tags entries values.
+     * @param tagNames the tags entries labels.
+     */
+    private void fillTagsEntries(List<Tag> tags, List<String> tagIds, List<String> tagNames) {
+        for (Tag each : tags) {
+            // only add non-local tags
+            if (StringUtil.isNotEmpty(each.getTagId())) {
+                tagIds.add(each.getTagId());
+                tagNames.add(each.getName());
+            }
+        }
+    }
 
 }
