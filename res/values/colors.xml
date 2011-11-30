@@ -15,6 +15,9 @@
     <color name="titlebar_gradient_start">#444444</color>
     <color name="titlebar_gradient_end">#222222</color>
 
+    <color name="action_footer_gradient_start">#88000000</color>
+    <color name="action_footer_gradient_end">#cc000000</color>
+
     <color name="register_button_gradient_start">#3a7f2f</color>
     <color name="register_button_gradient_end">#2a5f2a</color>
 

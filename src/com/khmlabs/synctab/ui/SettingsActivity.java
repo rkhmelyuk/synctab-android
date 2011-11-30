@@ -2,8 +2,10 @@ package com.khmlabs.synctab.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.*;
-
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.tag.Tag;
@@ -14,13 +16,14 @@ import java.util.List;
 /**
  * @author Ruslan Khmelyuk
  */
-public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivity extends PreferenceUserActivity
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final int CURRENT_TAG_INDEX = 0;
     private static final int EDIT_TAGS_INDEX = 1;
     private static final int REFRESH_PERIOD_INDEX = 2;
 
-    TitleBarHelper titlebarHelper;
+    boolean refreshPreference = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,23 +31,30 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         addPreferencesFromResource(R.xml.prefs);
         setContentView(R.layout.activity_settings);
 
-        titlebarHelper = new TitleBarHelper(this);
-
-        initPreferences();
-
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         sp.registerOnSharedPreferenceChangeListener(this);
     }
 
+    @Override
     protected void onResume() {
         super.onResume();
 
-        // add any buttons to title bar
-        titlebarHelper.setup();
+        refreshPreference = true;
+
+        initPreferences();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        refreshPreference = false;
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        initPreferences();
+        if (refreshPreference) {
+            initPreferences();
+        }
     }
 
     private void initPreferences() {
@@ -71,7 +81,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         tagPref.setEntryValues(tagIds);
 
         Tag tag = app.getFacade().getTag(app.getCurrentTag());
-        if (tag != null) {
+        if (tag != null && tag.getName() != null) {
             tagPref.setSummary(tag.getName());
         }
 

@@ -7,9 +7,9 @@
 
     <include layout="@layout/titlebar"/>
 
-    <ListView android:layout_height="fill_parent"
+    <ListView android:id="@+id/tags"
+              android:layout_height="fill_parent"
               android:layout_width="fill_parent"
-              android:id="@+id/tags"
               android:fadeScrollbars="true"/>
 
 </LinearLayout>

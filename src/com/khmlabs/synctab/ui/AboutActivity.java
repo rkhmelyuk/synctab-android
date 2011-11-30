@@ -2,10 +2,8 @@ package com.khmlabs.synctab.ui;
 
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
-
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.util.AppHelper;
@@ -14,7 +12,7 @@ import com.khmlabs.synctab.util.IntentHelper;
 /**
  * Shows some detail information about user and application.
  */
-public class AboutActivity extends PreferenceActivity {
+public class AboutActivity extends PreferenceUserActivity {
 
     private static final int USERNAME = 0;
     private static final int VERSION = 1;
@@ -28,24 +26,13 @@ public class AboutActivity extends PreferenceActivity {
             R.string.contact_url
     };
 
-    TitleBarHelper titlebarHelper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.about);
         setContentView(R.layout.activity_about);
 
-        titlebarHelper = new TitleBarHelper(this);
-
         initInformation();
-    }
-
-    protected void onResume() {
-        super.onResume();
-
-        // add any buttons to title bar
-        titlebarHelper.setup();
     }
 
     private void initInformation() {

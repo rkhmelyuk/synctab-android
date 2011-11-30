@@ -1,3 +1,4 @@
 <resources>
     <integer name="link_max_size">65</integer>
+    <integer name="tag_name_maxlength">150</integer>
 </resources>

@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.khmlabs.synctab.db.DbMetadata.QueueTasksColumns;
 import com.khmlabs.synctab.db.DbMetadata.SharedTabsColumns;
 import com.khmlabs.synctab.db.DbMetadata.Table;
@@ -418,7 +417,7 @@ public class SyncTabDatabase {
                 db.beginTransaction();
 
                 final ContentValues values = new ContentValues();
-                values.put(TagsColumns.ID, tag.getId());
+                values.put(TagsColumns.ID, tag.getTagId());
                 values.put(TagsColumns.NAME, tag.getName());
 
                 db.update(Table.TAGS, values, DbMetadata.ID + "=" + Integer.toString(tag.getId()), null);

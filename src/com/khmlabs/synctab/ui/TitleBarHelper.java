@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
 
@@ -25,14 +24,14 @@ class TitleBarHelper {
      */
     final Activity activity;
 
-    /**
-     * The id of the home button.
-     */
+    /** The id of the home button. */
     private static final int HOME_BUTTON_ID = 0x7f0b9999;
-    /**
-     * The id of the refresh button.
-     */
+
+    /** The id of the refresh button. */
     private static final int REFRESH_BUTTON_ID = 0x7f0b9998;
+
+    /** The id of the add button. */
+    private static final int ADD_BUTTON_ID = 0x7f0b9997;
 
     public TitleBarHelper(Activity activity) {
         this.activity = activity;
@@ -54,17 +53,7 @@ class TitleBarHelper {
                 (int) activity.getResources().getDimension(R.dimen.titlebar_button_width),
                 (int) activity.getResources().getDimension(R.dimen.titlebar_button_height), 1);
 
-        if (activity instanceof MainActivity) {
-            // Add refresh button only to MainActivity
-            addSeparator(layout);
-            addButton(layout, layoutParams, R.drawable.ic_title_refresh, REFRESH_BUTTON_ID,
-                    new View.OnClickListener() {
-                        public void onClick(View view) {
-                            refreshTabs();
-                        }
-                    });
-        }
-        else {
+        if (isHomeVisible()) {
             // Add home button, but not for MainActivity (which is a Home itself).
             addSeparator(layout);
             addButton(layout, layoutParams, R.drawable.ic_title_home, HOME_BUTTON_ID,
@@ -74,6 +63,34 @@ class TitleBarHelper {
                         }
                     });
         }
+        if (activity instanceof AddSupport) {
+            // Add button only if supported
+            addSeparator(layout);
+            addButton(layout, layoutParams, R.drawable.ic_title_add, ADD_BUTTON_ID,
+                    new View.OnClickListener() {
+                        public void onClick(View view) {
+                            add();
+                        }
+                    });
+        }
+        if (activity instanceof RefreshSupport) {
+            // Add refresh button only if supported
+            addSeparator(layout);
+            addButton(layout, layoutParams, R.drawable.ic_title_refresh, REFRESH_BUTTON_ID,
+                    new View.OnClickListener() {
+                        public void onClick(View view) {
+                            refresh();
+                        }
+                    });
+        }
+    }
+
+    /**
+     * Whether home button is visible.
+     * @return true if visible and supported.
+     */
+    private boolean isHomeVisible() {
+        return !(activity instanceof MainActivity);
     }
 
     private boolean activityIsSupported() {
@@ -87,13 +104,20 @@ class TitleBarHelper {
         return app.isAuthenticated();
     }
 
-    private void refreshTabs() {
-        MainActivity mainActivity = (MainActivity) activity;
-        mainActivity.refreshSharedTabs();
+    private void refresh() {
+        if (activity instanceof RefreshSupport) {
+            ((RefreshSupport) activity).refresh();
+        }
+    }
+
+    private void add() {
+        if (activity instanceof AddSupport) {
+            ((AddSupport) activity).add();
+        }
     }
 
     private void goHome() {
-        if (activity instanceof MainActivity) {
+        if (!isHomeVisible()) {
             return;
         }
 

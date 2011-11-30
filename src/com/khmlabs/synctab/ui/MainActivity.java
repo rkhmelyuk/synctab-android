@@ -13,7 +13,6 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
-
 import com.khmlabs.synctab.*;
 import com.khmlabs.synctab.db.DbMetadata;
 import com.khmlabs.synctab.db.DbMetadata.SharedTabsColumns;
@@ -27,7 +26,7 @@ import java.util.Date;
 /**
  * This activity used to show and manipulate the list of shared tabs.
  */
-public class MainActivity extends BaseUserActivity {
+public class MainActivity extends BaseUserActivity implements RefreshSupport {
 
     private static final String TAG = "MainActivity";
 
@@ -102,7 +101,7 @@ public class MainActivity extends BaseUserActivity {
         super.onResume();
 
         if (getSyncTabApplication().isAuthenticated()) {
-            refreshSharedTabs();
+            refresh();
 
             // if not authenticated - then no cache
             // because we cleanup cache on logout
@@ -112,7 +111,7 @@ public class MainActivity extends BaseUserActivity {
 
     @Override
     protected void onDestroy() {
-        super.onStop();
+        super.onDestroy();
 
         database.close();
     }
@@ -254,7 +253,7 @@ public class MainActivity extends BaseUserActivity {
         if (!result) {
             switch (item.getItemId()) {
                 case R.id.refresh: {
-                    refreshSharedTabs();
+                    refresh();
                     return true;
                 }
             }
@@ -262,7 +261,7 @@ public class MainActivity extends BaseUserActivity {
         return result;
     }
 
-    public void refreshSharedTabs() {
+    public void refresh() {
         if (!refreshing) {
             // use some events
             boolean filled = refreshAdapter();
@@ -356,7 +355,7 @@ public class MainActivity extends BaseUserActivity {
             }
             else {
                 messageId = R.string.msg_tab_is_removed;
-                refreshSharedTabs();
+                refresh();
             }
 
             String message = getResources().getString(messageId);
@@ -381,7 +380,7 @@ public class MainActivity extends BaseUserActivity {
             }
             else {
                 messageId = R.string.msg_tab_is_reshared;
-                refreshSharedTabs();
+                refresh();
             }
 
             String message = getResources().getString(messageId);

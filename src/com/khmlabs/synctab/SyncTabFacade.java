@@ -1,7 +1,5 @@
 package com.khmlabs.synctab;
 
-import org.apache.http.HttpHost;
-
 import com.khmlabs.synctab.auth.AuthManager;
 import com.khmlabs.synctab.auth.RemoteAuthManager;
 import com.khmlabs.synctab.queue.QueueTask;
@@ -11,6 +9,7 @@ import com.khmlabs.synctab.tab.TabManager;
 import com.khmlabs.synctab.tag.RemoteTagManager;
 import com.khmlabs.synctab.tag.Tag;
 import com.khmlabs.synctab.tag.TagManager;
+import org.apache.http.HttpHost;
 
 import java.util.List;
 
@@ -110,5 +109,17 @@ public class SyncTabFacade {
 
     public Tag getTag(String tagId) {
         return tagManager.getTag(tagId);
+    }
+
+    public RemoteOpStatus removeTag(int tagId) {
+        return tagManager.removeTag(tagId);
+    }
+
+    public RemoteOpStatus renameTag(int tagId, String newName) {
+        return tagManager.renameTag(tagId, newName);
+    }
+
+    public RemoteOpStatus addTag(String name) {
+        return tagManager.addTag(name);
     }
 }

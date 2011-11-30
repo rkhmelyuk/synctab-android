@@ -1,7 +1,6 @@
 package com.khmlabs.synctab.tag;
 
 import android.util.Log;
-
 import com.khmlabs.synctab.AppConstants;
 import com.khmlabs.synctab.RemoteOpStatus;
 import com.khmlabs.synctab.SyncTabApplication;
@@ -262,12 +261,18 @@ public class TagManager {
 
             // remove from local database
             database.removeTag(id);
+            if (AppConstants.LOG) {
+                Log.i(TAG, "Removed tag locally by id " + id);
+            }
 
             if (!tag.isLocal()) {
 
                 // -- remove remotely for non-local tasks
                 if (application.isOnLine()) {
                     if (remote.removeTag(tag.getTagId())) {
+                        if (AppConstants.LOG) {
+                            Log.i(TAG, "Removed tag remotely by id " + id);
+                        }
                         return RemoteOpStatus.Success;
                     }
                 }
