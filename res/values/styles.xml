@@ -57,7 +57,7 @@
     <style name="TagRowLayout">
         <item name="android:orientation">horizontal</item>
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingLeft">15dp</item>
@@ -98,6 +98,13 @@
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:text">@string/register</item>
+    </style>
+
+    <style name="ItemButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:paddingLeft">@dimen/action_icon_left_padding</item>
     </style>
 
 </resources>
