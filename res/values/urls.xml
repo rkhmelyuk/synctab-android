@@ -1,0 +1,7 @@
+<resources>
+    <string name="help_url">http://synctab.khmelyuk.com/m/help/</string>
+    <string name="website_url">http://synctab.khmelyuk.com/m/</string>
+    <string name="submit_issue_url">http://synctab.khmelyuk.com/m/submit-issue</string>
+    <string name="contact_url">http://synctab.khmelyuk.com/m/contact</string>
+    <string name="chrome_extension_url">https://chrome.google.com/webstore/detail/hjjpbgkpgdfnjkgbghajpgcnaolcfcgf</string>
+</resources>
