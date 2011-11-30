@@ -40,12 +40,11 @@ public class TagEditActivity extends BaseUserActivity implements AddSupport, Ref
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_tagedit);
-
-        TAG_BINDER = new TagRowBinder(getSyncTabApplication());
-
-        tags = (ListView) findViewById(R.id.tags);
+        titlebarHelper.setTitle(R.string.tags);
 
         database = new SyncTabDatabase(this);
+        tags = (ListView) findViewById(R.id.tags);
+        TAG_BINDER = new TagRowBinder(getSyncTabApplication());
     }
 
     protected void onResume() {

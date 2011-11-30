@@ -6,6 +6,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.tag.Tag;
@@ -32,6 +33,7 @@ public class SettingsActivity extends PreferenceUserActivity
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefs);
         setContentView(R.layout.activity_settings);
+        titlebarHelper.setTitle(R.string.settings);
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         sp.registerOnSharedPreferenceChangeListener(this);

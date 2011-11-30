@@ -6,10 +6,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.*;
 
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
@@ -34,6 +31,30 @@ class TitleBarHelper {
 
     public TitleBarHelper(Activity activity) {
         this.activity = activity;
+    }
+
+    /**
+     * Set the title for activity.
+     *
+     * @param text the title text.
+     */
+    public void setTitle(String text) {
+        final ViewGroup titlebar = (ViewGroup) activity.findViewById(R.id.titlebar);
+        TextView title = (TextView) titlebar.findViewById(R.id.titlebar_title);
+
+        title.setText(text);
+    }
+
+    /**
+     * Set the title for activity.
+     *
+     * @param id the id of the string resource.
+     */
+    public void setTitle(int id) {
+        final ViewGroup titlebar = (ViewGroup) activity.findViewById(R.id.titlebar);
+        TextView title = (TextView) titlebar.findViewById(R.id.titlebar_title);
+
+        title.setText(activity.getResources().getString(id));
     }
 
     /**
@@ -196,4 +217,5 @@ class TitleBarHelper {
             button.setClickable(true);
         }
     }
+
 }

@@ -100,6 +100,7 @@
     <string name="contact_summary">Contact us via online form</string>
     <string name="about_references">References</string>
     <string name="edit_tags">Edit Tags</string>
+    <string name="tags">Tags</string>
     <string name="edit_tags_summary">Add, rename and remove tags</string>
     <string name="tag_context_menu">Select Action</string>
     <string name="failed_remove_tag">Failed to remove a tag</string>

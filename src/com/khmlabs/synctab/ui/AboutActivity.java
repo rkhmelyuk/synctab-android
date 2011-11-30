@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
+
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.util.AppHelper;
@@ -31,6 +32,7 @@ public class AboutActivity extends PreferenceUserActivity {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.about);
         setContentView(R.layout.activity_about);
+        titlebarHelper.setTitle(R.string.about);
 
         initInformation();
     }

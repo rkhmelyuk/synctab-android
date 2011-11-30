@@ -6,6 +6,7 @@
     <ImageView android:id="@+id/titlebar_icon"
                style="@style/TitleBarIcon"/>
 
-    <TextView style="@style/TitleBarTitle"/>
+    <TextView android:id="@+id/titlebar_title"
+              style="@style/TitleBarTitle"/>
 
 </RelativeLayout>

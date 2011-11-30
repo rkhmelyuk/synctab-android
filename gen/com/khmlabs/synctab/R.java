@@ -108,23 +108,23 @@ public final class R {
         public static final int yes=0x7f020020;
     }
     public static final class id {
-        public static final int about=0x7f0d0017;
-        public static final int add=0x7f0d001d;
+        public static final int about=0x7f0d0018;
+        public static final int add=0x7f0d001e;
         public static final int device=0x7f0d0011;
         public static final int email=0x7f0d0003;
         public static final int email_label=0x7f0d0002;
-        public static final int help=0x7f0d0018;
+        public static final int help=0x7f0d0019;
         public static final int login=0x7f0d0006;
         public static final int login_label=0x7f0d0001;
-        public static final int logout=0x7f0d001b;
+        public static final int logout=0x7f0d001c;
         public static final int password=0x7f0d0005;
         public static final int password_label=0x7f0d0004;
-        public static final int refresh=0x7f0d0019;
+        public static final int refresh=0x7f0d001a;
         public static final int register=0x7f0d0007;
         public static final int registration_label=0x7f0d000a;
         public static final int remove=0x7f0d0014;
         public static final int rename=0x7f0d0013;
-        public static final int settings=0x7f0d001a;
+        public static final int settings=0x7f0d001b;
         public static final int share_tab_status_img=0x7f0d000b;
         public static final int start_help_notice=0x7f0d0009;
         public static final int sync_tab_status=0x7f0d000c;
@@ -137,7 +137,8 @@ public final class R {
         public static final int tags=0x7f0d0000;
         public static final int titlebar=0x7f0d0015;
         public static final int titlebar_icon=0x7f0d0016;
-        public static final int view_shared_tabs=0x7f0d001c;
+        public static final int titlebar_title=0x7f0d0017;
+        public static final int view_shared_tabs=0x7f0d001d;
     }
     public static final class integer {
         public static final int link_max_size=0x7f080000;
@@ -169,15 +170,15 @@ public final class R {
         public static final int about_activity=0x7f09000a;
         public static final int about_references=0x7f090051;
         public static final int account_registration=0x7f090022;
-        public static final int add_new_tag=0x7f090059;
+        public static final int add_new_tag=0x7f09005a;
         public static final int application_label=0x7f090005;
         public static final int authentication=0x7f090023;
-        public static final int cancel=0x7f090058;
+        public static final int cancel=0x7f090059;
         public static final int chrome_extension=0x7f090042;
         public static final int chrome_extension_summary=0x7f09004d;
         public static final int chrome_extension_url=0x7f090004;
-        public static final int confirm_remove_tag=0x7f09005e;
-        public static final int confirm_remove_tags=0x7f09005f;
+        public static final int confirm_remove_tag=0x7f09005f;
+        public static final int confirm_remove_tags=0x7f090060;
         public static final int contact=0x7f090044;
         public static final int contact_summary=0x7f090050;
         public static final int contact_url=0x7f090003;
@@ -187,17 +188,17 @@ public final class R {
         public static final int documentation=0x7f090041;
         public static final int documentation_summary=0x7f09004e;
         public static final int edit_tags=0x7f090052;
-        public static final int edit_tags_summary=0x7f090053;
+        public static final int edit_tags_summary=0x7f090054;
         public static final int email=0x7f09001a;
         public static final int email_password_required=0x7f090025;
         public static final int enqueue_sync=0x7f09000f;
-        public static final int enter_new_tag_name=0x7f09005b;
+        public static final int enter_new_tag_name=0x7f09005c;
         public static final int error_authenticate=0x7f090026;
         public static final int error_register=0x7f090028;
         public static final int failed_authenticate=0x7f090027;
         public static final int failed_register=0x7f090029;
-        public static final int failed_remove_tag=0x7f090055;
-        public static final int failed_rename_tag=0x7f090056;
+        public static final int failed_remove_tag=0x7f090056;
+        public static final int failed_rename_tag=0x7f090057;
         public static final int failed_retrieve_shared_tabs=0x7f090019;
         public static final int failed_sync=0x7f090010;
         public static final int help=0x7f09002d;
@@ -235,7 +236,7 @@ public final class R {
         public static final int remove=0x7f090033;
         public static final int rename=0x7f090034;
         public static final int resend=0x7f090032;
-        public static final int save=0x7f090057;
+        public static final int save=0x7f090058;
         public static final int send_tab_to=0x7f090046;
         public static final int settings=0x7f090047;
         public static final int settings_activity=0x7f09000b;
@@ -249,10 +250,11 @@ public final class R {
         public static final int synctab=0x7f090006;
         public static final int synctab_activity=0x7f090007;
         public static final int synctab_service=0x7f090013;
-        public static final int tag_context_menu=0x7f090054;
+        public static final int tag_context_menu=0x7f090055;
         public static final int tag_edit_activity=0x7f09000c;
-        public static final int tag_name_required=0x7f09005c;
-        public static final int tag_name_too_long=0x7f09005d;
+        public static final int tag_name_required=0x7f09005d;
+        public static final int tag_name_too_long=0x7f09005e;
+        public static final int tags=0x7f090053;
         public static final int touch_to_open=0x7f090037;
         public static final int unknown=0x7f090031;
         public static final int username=0x7f09003d;
@@ -260,7 +262,7 @@ public final class R {
         public static final int website=0x7f090040;
         public static final int website_summary=0x7f09004c;
         public static final int website_url=0x7f090001;
-        public static final int yes_remove=0x7f09005a;
+        public static final int yes_remove=0x7f09005b;
     }
     public static final class style {
         public static final int ActivityWithBackground=0x7f0b0001;
