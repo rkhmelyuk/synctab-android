@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
 import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
 
@@ -19,11 +20,6 @@ import com.khmlabs.synctab.SyncTabApplication;
  */
 class TitleBarHelper {
 
-    /**
-     * The activity where to show a title bar.
-     */
-    final Activity activity;
-
     /** The id of the home button. */
     private static final int HOME_BUTTON_ID = 0x7f0b9999;
 
@@ -32,6 +28,9 @@ class TitleBarHelper {
 
     /** The id of the add button. */
     private static final int ADD_BUTTON_ID = 0x7f0b9997;
+
+    /** The activity where to show a title bar. */
+    final Activity activity;
 
     public TitleBarHelper(Activity activity) {
         this.activity = activity;
@@ -87,6 +86,7 @@ class TitleBarHelper {
 
     /**
      * Whether home button is visible.
+     *
      * @return true if visible and supported.
      */
     private boolean isHomeVisible() {

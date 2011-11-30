@@ -57,6 +57,17 @@ public class ShareTabActivity extends BaseUserActivity {
     private void showShareTags(SyncTabApplication app) {
         final SyncTabFacade facade = app.getFacade();
         final List<Tag> tags = facade.getShareTags();
+
+        if (tags.size() == 1) {
+            // if only one tag then share with it
+            shareLink(tags.get(0));
+        }
+        else {
+            showSelectTagDialog(tags);
+        }
+    }
+
+    private void showSelectTagDialog(final List<Tag> tags) {
         final String[] tagsArray = tagsListToNameArray(tags);
 
         // Build a dialog with a list of tags, user must select one
@@ -82,7 +93,7 @@ public class ShareTabActivity extends BaseUserActivity {
         tagsDialog.show();
     }
 
-    private String[] tagsListToNameArray(List<Tag> tags) {
+    private static String[] tagsListToNameArray(List<Tag> tags) {
         String[] result = new String[tags.size()];
 
         int i = 0;
