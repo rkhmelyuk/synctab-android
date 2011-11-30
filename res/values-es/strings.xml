@@ -1,0 +1,114 @@
+<resources>
+    <string name="application_label">SyncTab</string>
+
+    <string name="synctab">SyncTab</string>
+
+    <string name="synctab_activity">SyncTab</string>
+    <string name="login_activity">SyncTab: Iniciar Sesión</string>
+    <string name="registration_activity">SyncTab: Registro</string>
+    <string name="about_activity">Sobre</string>
+    <string name="settings_activity">Configuración</string>
+    <string name="tag_edit_activity">Etiquetas</string>
+
+    <string name="sync_in_progress">Syncing Hiperenlace...</string>
+    <string name="success_sync">Hiperenlace es enviado.\n\n¡Que se diviertan!</string>
+    <string name="enqueue_sync">Hiperenlace se le enviará\ncuando se estará en línea.\n\n ¡Que se diviertan!</string>
+    <string name="failed_sync">Error al enviar un hiperenlace.\n\n¡Lo siento! ;(</string>
+    <string name="incorrect_url">Lo que usted está tratando de enviar una URL no es un.\n\n Intentar otra cosa!</string>
+    <string name="nothing_to_share">No hay nada que enviar:\n URL no recibió.</string>
+    <string name="synctab_service">SyncTab Servicio</string>
+    <string name="refresh_service">SyncTab Actualizar Servicio</string>
+
+    <string name="pref_url_title">SyncTab URL</string>
+    <string name="pref_url_summary">SyncTab Servicio URL</string>
+    <string name="open">Abierto</string>
+    <string name="hide">Ocultar</string>
+    <string name="failed_retrieve_shared_tabs">No se pudo actualizar la lista de hiperenlaces</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="please_login">SyncTab: Iniciar Sesión</string>
+    <string name="registration">SyncTab: Registro</string>
+    <string name="register">Regístrese</string>
+    <string name="register_now">Regístrese ahora</string>
+    <string name="please_wait">Por favor espere...</string>
+    <string name="account_registration">Cuenta Regístrese...</string>
+    <string name="authentication">Autenticación...</string>
+    <string name="loading_tabs">Carga de una lista de hiperenlaces...</string>
+
+    <string name="email_password_required">Por favor, introduzca correo electrónico y contraseña.</string>
+    <string name="error_authenticate">Error de inicio de sesión. ¡Otra vez!</string>
+    <string name="failed_authenticate">De correo electrónico incorrecta / contraseña</string>
+    <string name="error_register">Error de registro. ¡Otra vez!</string>
+    <string name="failed_register">No se pudo registrar</string>
+    <string name="no_connection">Ha perdido la conexión</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="logout_progress">Cerrar sesión...</string>
+    <string name="help">Ayuda</string>
+    <string name="refresh">Refrescar</string>
+    <string name="home">Casa</string>
+    <string name="not_a_user">¿No tienes una cuenta?</string>
+    <string name="unknown">Incógnita</string>
+    <string name="resend">Reenviar</string>
+    <string name="remove">Eliminar</string>
+    <string name="rename">Cambiar el nombre de</string>
+    <string name="share_via">Compartir a través de</string>
+    <string name="copy_link">Copiar un hiperenlace</string>
+    <string name="touch_to_open">Pulse para abrir</string>
+
+    <string name="msg_tab_is_removed">Hiperenlace se retira</string>
+    <string name="msg_tab_is_reshared">Hiperenlace es enviado de nuevo</string>
+    <string name="msg_failed_to_reshared_tab">No se pudo enviar un hiperenlace nuevo</string>
+    <string name="msg_failed_to_remove_tab">No se pudo eliminar un hiperenlace</string>
+    <string name="about">Sobre</string>
+    <string name="username">Cuenta</string>
+    <string name="none">Ninguno</string>
+    <string name="version">Versión</string>
+    <string name="website">Sitio web</string>
+    <string name="documentation">Documentación</string>
+    <string name="chrome_extension">Chrome Extension</string>
+    <string name="submit_issue">Enviar tema</string>
+    <string name="contact">Contacto</string>
+    <string name="start_help_notice">
+        <b>TIPS</b>:
+        \n\nInstalar una extensión de SyncTab cromo de su navegador de escritorio. Lea más en
+        <a href="http://synctab.khmelyuk.com">synctab.khmelyuk.com</a>.
+        \n\nUtilice las etiquetas para enviar hiperenlaces a los diferentes navegadores, al igual que en un Home o el Work.
+        Usted también puede enviar los hiperenlaces a este dispositivo desde el Chrome.
+        \n\nPuede enviar hiperenlaces desde el navegador que se ejecuta en la computadora de su casa en el navegador en su ordenador de Work.
+    </string>
+
+    <string name="send_tab_to">Enviar a...</string>
+
+    <string name="settings">Сonfiguración</string>
+    <string name="refresh_interval">Intervalo de actualización</string>
+    <string name="refresh_interval_summary">Con qué frecuencia para comprobar si hay nuevos hiperenlaces para abrir</string>
+    <string name="current_tag">Los hiperenlaces se abren con la Etiqueta</string>
+    <string name="current_tag_summary">Filtrar los vínculos para abrir en este dispositivo por etiquetas especificadas</string>
+    <string name="website_summary">Ver SyncTab sitio web en línea</string>
+    <string name="chrome_extension_summary">Lea más acerca de SyncTab Chrome Extension</string>
+    <string name="documentation_summary">Lea la documentación en línea</string>
+    <string name="submit_issue_summary">Enviar tema a través del formulario en línea</string>
+    <string name="contact_summary">En contacto con nosotros a través del formulario en línea</string>
+    <string name="about_references">Referencias</string>
+    <string name="edit_tags">Editar Etiquetas</string>
+    <string name="edit_tags_summary">Añadir, renombrar y eliminar Etiquetas</string>
+    <string name="tag_context_menu">Seleccione Acción</string>
+    <string name="failed_remove_tag">No se ha podido eliminar una etiqueta</string>
+    <string name="failed_rename_tag">No se pudo cambiar el nombre de una etiqueta</string>
+    <string name="save">Ahorrar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="add_new_tag">Añadir nuevo etiqueta</string>
+    <string name="yes_remove">Sí, eliminar</string>
+    <string name="enter_new_tag_name">Escriba un nombre para nueva etiqueta:</string>
+    <string name="tag_name_required">Error: Nombre de la Etiqueta es necesario</string>
+    <string name="tag_name_too_long">Error: Nombre de la Etiqueta es demasiado largo. Máximo 250 símbolos.</string>
+    <string name="confirm_remove_tag">Etiqueta \'%s\' puede estar en uso. ¿De verdad desea eliminarlo?</string>
+    <string name="confirm_remove_tags">¿Realmente quiere eliminar %d etiquetas?</string>
+
+    <plurals name="minutes">
+        <item quantity="one">Cada %d minuto</item>
+        <item quantity="other">Cada %d minutos</item>
+    </plurals>
+
+</resources>

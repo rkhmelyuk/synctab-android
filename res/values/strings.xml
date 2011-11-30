@@ -23,7 +23,7 @@
     <string name="pref_url_summary">SyncTab Service URL</string>
     <string name="open">Open</string>
     <string name="hide">Hide</string>
-    <string name="failed_retrieve_shared_tabs">Failed to refresh the list of shared tabs</string>
+    <string name="failed_retrieve_shared_tabs">Failed to refresh the list of links</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
@@ -34,7 +34,7 @@
     <string name="please_wait">Please wait...</string>
     <string name="account_registration">Account registration...</string>
     <string name="authentication">Authenticating...</string>
-    <string name="loading_tabs">Loading a List of Shared Links...</string>
+    <string name="loading_tabs">Loading a List of Links...</string>
 
     <string name="email_password_required">Please enter email and password.</string>
     <string name="error_authenticate">Error to login. Try again!</string>
