@@ -1,10 +1,4 @@
 <resources>
-    <string name="help_url">http://synctab.khmelyuk.com/m/help/</string>
-    <string name="website_url">http://synctab.khmelyuk.com/m/</string>
-    <string name="submit_issue_url">http://synctab.khmelyuk.com/m/submit-issue</string>
-    <string name="contact_url">http://synctab.khmelyuk.com/m/contact</string>
-    <string name="chrome_extension_url">https://chrome.google.com/webstore/detail/hjjpbgkpgdfnjkgbghajpgcnaolcfcgf</string>
-
     <string name="application_label">SyncTab</string>
 
     <string name="synctab">SyncTab</string>
@@ -16,12 +10,12 @@
     <string name="settings_activity">Settings</string>
     <string name="tag_edit_activity">Tags</string>
 
-    <string name="sync_in_progress">Syncing Tab...</string>
-    <string name="success_sync">Tab is shared.\n\nHave fun!</string>
-    <string name="enqueue_sync">Tab will be synced\n when you\'ll be online.\n\n Have fun!</string>
-    <string name="failed_sync">Error to sync tab.\n\nSorry ;(</string>
-    <string name="incorrect_url">What you\'re trying to share is a not a URL.\n\n Try something else!</string>
-    <string name="nothing_to_share">Nothing to share:\n no URL received.</string>
+    <string name="sync_in_progress">Syncing Link...</string>
+    <string name="success_sync">Link is sent.\n\nHave fun!</string>
+    <string name="enqueue_sync">Link will be send\n when you\'ll be online.\n\n Have fun!</string>
+    <string name="failed_sync">Error to send a link.\n\nSorry ;(</string>
+    <string name="incorrect_url">What you\'re trying to send is a not a URL.\n\n Try something else!</string>
+    <string name="nothing_to_share">Nothing to send:\n no URL received.</string>
     <string name="synctab_service">SyncTab Service</string>
     <string name="refresh_service">SyncTab Refresh Service</string>
 
@@ -40,7 +34,7 @@
     <string name="please_wait">Please wait...</string>
     <string name="account_registration">Account registration...</string>
     <string name="authentication">Authenticating...</string>
-    <string name="loading_tabs">Loading a List of Shared Tabs...</string>
+    <string name="loading_tabs">Loading a List of Shared Links...</string>
 
     <string name="email_password_required">Please enter email and password.</string>
     <string name="error_authenticate">Error to login. Try again!</string>
@@ -62,10 +56,10 @@
     <string name="copy_link">Copy Link</string>
     <string name="touch_to_open">Press To Open</string>
 
-    <string name="msg_tab_is_removed">Tab is removed</string>
-    <string name="msg_tab_is_reshared">Tab is re-shared</string>
-    <string name="msg_failed_to_reshared_tab">Failed to re-share a tab</string>
-    <string name="msg_failed_to_remove_tab">Failed to remove a tab</string>
+    <string name="msg_tab_is_removed">Link is removed</string>
+    <string name="msg_tab_is_reshared">Link is re-sent</string>
+    <string name="msg_failed_to_reshared_tab">Failed to re-send a link</string>
+    <string name="msg_failed_to_remove_tab">Failed to remove a link</string>
     <string name="about">About</string>
     <string name="username">Username</string>
     <string name="none">None</string>
@@ -90,9 +84,9 @@
 
     <string name="settings">Settings</string>
     <string name="refresh_interval">Refresh Interval</string>
-    <string name="refresh_interval_summary">How ofter to check for new links to open</string>
+    <string name="refresh_interval_summary">How often to check for new links to open</string>
     <string name="current_tag">Open Links with Tag</string>
-    <string name="current_tag_summary">Filter the tabs to open in this device by specified tags</string>
+    <string name="current_tag_summary">Filter the links to open in this device by specified tags</string>
     <string name="website_summary">View SyncTab website online</string>
     <string name="chrome_extension_summary">Read more about SyncTab Chrome Extension</string>
     <string name="documentation_summary">Read documentation online</string>
@@ -100,7 +94,6 @@
     <string name="contact_summary">Contact us via online form</string>
     <string name="about_references">References</string>
     <string name="edit_tags">Edit Tags</string>
-    <string name="tags">Tags</string>
     <string name="edit_tags_summary">Add, rename and remove tags</string>
     <string name="tag_context_menu">Select Action</string>
     <string name="failed_remove_tag">Failed to remove a tag</string>

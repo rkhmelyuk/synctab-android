@@ -1,0 +1,113 @@
+<resources>
+    <string name="application_label">SyncTab</string>
+
+    <string name="synctab">SyncTab</string>
+
+    <string name="synctab_activity">SyncTab</string>
+    <string name="login_activity">SyncTab: Вхід</string>
+    <string name="registration_activity">SyncTab: Реєстрація</string>
+    <string name="about_activity">Про</string>
+    <string name="settings_activity">Опції</string>
+    <string name="tag_edit_activity">Теги</string>
+
+    <string name="sync_in_progress">Синхронізація Посилання...</string>
+    <string name="success_sync">Посилання відіслано.\n\nПродовжуйте!</string>
+    <string name="enqueue_sync">Посилання буде відіслано\n коли ви будете онлайн.\n\n Продовжуйте!</string>
+    <string name="failed_sync">Помилка при висиланні повідомлення.\n\nЗвиняйте ;(</string>
+    <string name="incorrect_url">Те що ви хочете вислати не є посиланням..\n\n Спробуйте щось інше!</string>
+    <string name="nothing_to_share">Нічого не висилаю:\n жодного посилання не отримано.</string>
+    <string name="synctab_service">Служба SyncTab</string>
+    <string name="refresh_service">Служба обновлення SyncTab</string>
+
+    <string name="pref_url_title">SyncTab URL</string>
+    <string name="pref_url_summary">SyncTab Service URL</string>
+    <string name="open">Відкрити</string>
+    <string name="hide">Сховати</string>
+    <string name="failed_retrieve_shared_tabs">Не зміг обновитит список посилань</string>
+    <string name="email">Адреса електронної пошти</string>
+    <string name="password">Пароль</string>
+    <string name="login">Вхід в систему</string>
+    <string name="please_login">SyncTab: Вхід</string>
+    <string name="registration">SyncTab: Реєстрація</string>
+    <string name="register">Реєструватися</string>
+    <string name="register_now">Реєструватися Зараз</string>
+    <string name="please_wait">Зачекайте...</string>
+    <string name="account_registration">Реєстрації рахунку...</string>
+    <string name="authentication">Автентифікація...</string>
+    <string name="loading_tabs">Завантаження списку посилань...</string>
+
+    <string name="email_password_required">Введіть адресу поштової скриньки та пароль.</string>
+    <string name="error_authenticate">Помилка при вході. Повторіть спробу!</string>
+    <string name="failed_authenticate">Невірна адреса електронної скриньки або пароль</string>
+    <string name="error_register">Помилка при реєстрації. Повторіть спробу!</string>
+    <string name="failed_register">Не зміг зареєструватиregister</string>
+    <string name="no_connection">Підключення втрачене</string>
+    <string name="logout">Вихід</string>
+    <string name="logout_progress">Виходимо...</string>
+    <string name="help">Допомога</string>
+    <string name="refresh">Обновити</string>
+    <string name="home">До дому</string>
+    <string name="not_a_user">Ще не маєете рахунку?</string>
+    <string name="unknown">Невідомий</string>
+    <string name="resend">Перевислати</string>
+    <string name="remove">Видалити</string>
+    <string name="rename">Переіменувати</string>
+    <string name="share_via">Поділитися з</string>
+    <string name="copy_link">Скопіювати посилання</string>
+    <string name="touch_to_open">Натисніть, щоб відкрити</string>
+
+    <string name="msg_tab_is_removed">Посилання видалене</string>
+    <string name="msg_tab_is_reshared">Посилання перевислано</string>
+    <string name="msg_failed_to_reshared_tab">Не зміг перевислати посилання</string>
+    <string name="msg_failed_to_remove_tab">Не зміг вислати посилання</string>
+    <string name="about">Про</string>
+    <string name="username">Ім\'я користувача</string>
+    <string name="none">Відсутнє</string>
+    <string name="version">Версія</string>
+    <string name="website">Вебсайт (англ)</string>
+    <string name="documentation">Документація (англ)</string>
+    <string name="chrome_extension">Розширення для Chrome</string>
+    <string name="submit_issue">Повідомити про помилку</string>
+    <string name="contact">Написати нам</string>
+    <string name="start_help_notice">
+        <b>TIPS</b>:
+        \n\nВстановіть SyncTab розширення для Chrome. Прочитати більше тут
+        <a href="http://synctab.khmelyuk.com">synctab.khmelyuk.com</a>.
+        \n\nВикористовуйте теги для відсилання посилань на різні броузери, наприклад, на домашній або робочий.
+        Ви можете також відсилати повідомлення з броузера Chrome.
+        \n\nВи можете відсилати повідомлення з одного броузера на інший, наприклад, з домашного на робочий і навпаки.
+    </string>
+
+    <string name="send_tab_to">Відправити...</string>
+
+    <string name="settings">Опції</string>
+    <string name="refresh_interval">Інтервал обновлення</string>
+    <string name="refresh_interval_summary">Як часто перевіряти чи є нові посилання для відкриття</string>
+    <string name="current_tag">Відкривати Посилання за Тегом</string>
+    <string name="current_tag_summary">Фільтрувати посилання, які будуть відкриті на цьому пристрої по вказаному тегу.</string>
+    <string name="website_summary">Переглянути веб-сайт SyncTab</string>
+    <string name="chrome_extension_summary">Читати більше про розширення SyncTab для Chrome</string>
+    <string name="documentation_summary">Читати документацію онлайн</string>
+    <string name="submit_issue_summary">Повідомити про помилку</string>
+    <string name="contact_summary">Написати нам</string>
+    <string name="about_references">Посилання</string>
+    <string name="edit_tags">Редагувати Теги</string>
+    <string name="edit_tags_summary">Добавити, редагувати та видалити теги</string>
+    <string name="failed_remove_tag">Не зміг видалити тег</string>
+    <string name="failed_rename_tag">Не зміг переіменувати тег</string>
+    <string name="save">Зберегти</string>
+    <string name="cancel">Відмінити</string>
+    <string name="add_new_tag">Добавити Новий Тег</string>
+    <string name="yes_remove">Так, Видалити</string>
+    <string name="enter_new_tag_name">Ведіть ім\'я для нового тегу:</string>
+    <string name="tag_name_required">Помилка: Ім\'я тегу є обовязковим!</string>
+    <string name="tag_name_too_long">Помилка: Ім\'я тегу за довге. Максимально 250 символів.</string>
+    <string name="confirm_remove_tag">Тег \'%s\' може використовуватися. Ви справді хочете його видалити?</string>
+    <string name="confirm_remove_tags">Ви справді хочете видалити %d тегів?</string>
+
+    <plurals name="minutes">
+        <item quantity="one">Кожну %d хвилину</item>
+        <item quantity="other">Кожні %d хвилин</item>
+    </plurals>
+
+</resources>
