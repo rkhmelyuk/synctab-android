@@ -7,7 +7,7 @@
     <string name="login_activity">SyncTab: Login</string>
     <string name="registration_activity">SyncTab: Registratie</string>
     <string name="about_activity">Ongeveer</string>
-    <string name="settings_activity">Montages</string>
+    <string name="settings_activity">Instellingen</string>
     <string name="tag_edit_activity">Tags</string>
 
     <string name="sync_in_progress">Syncing Link...</string>
@@ -82,7 +82,7 @@
 
     <string name="send_tab_to">Stuur naar...</string>
 
-    <string name="settings">Montages</string>
+    <string name="settings">Instellingen</string>
     <string name="refresh_interval">Verfris Interval</string>
     <string name="refresh_interval_summary">How often to check for new links to open</string>
     <string name="current_tag">Open Links met Tag</string>
