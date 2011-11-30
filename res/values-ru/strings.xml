@@ -49,11 +49,11 @@
     <string name="home">Домой</string>
     <string name="not_a_user">У вас нет учетной записи?</string>
     <string name="unknown">Неизвестный</string>
-    <string name="resend">Переслан повторно</string>
+    <string name="resend">Переслать повторно</string>
     <string name="remove">Удалить</string>
     <string name="rename">Переименовать</string>
-    <string name="share_via">Поделиться с</string>
-    <string name="copy_link">Копировать ссылку</string>
+    <string name="share_via">Поделиться с...</string>
+    <string name="copy_link">Скопировать ссылку</string>
     <string name="touch_to_open">Нажмите, чтобы открыть</string>
 
     <string name="msg_tab_is_removed">Ссылка удалена</string>
