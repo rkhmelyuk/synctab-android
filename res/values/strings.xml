@@ -2,6 +2,7 @@
     <string name="application_label">SyncTab</string>
 
     <string name="synctab">SyncTab</string>
+    <string name="share_synctab">&#160;SyncTab</string>
 
     <string name="synctab_activity">SyncTab</string>
     <string name="login_activity">SyncTab: Login</string>
@@ -11,11 +12,18 @@
     <string name="tag_edit_activity">Tags</string>
 
     <string name="sync_in_progress">Syncing Link...</string>
-    <string name="success_sync">Link is sent.\n\nHave fun!</string>
+    <string name="success_sync">Link was sent.\n\nHave fun!</string>
     <string name="enqueue_sync">Link will be send\n when you\'ll be online.\n\n Have fun!</string>
     <string name="failed_sync">Error to send a link.\n\nSorry ;(</string>
     <string name="incorrect_url">What you\'re trying to send is a not a URL.\n\n Try something else!</string>
     <string name="nothing_to_share">Nothing to send:\n no URL received.</string>
+
+    <string name="success_sync_m">SyncTab: Link was sent successfully.</string>
+    <string name="enqueue_sync_m">SyncTab: Link will be send when you\'ll be online.</string>
+    <string name="failed_sync_m">SyncTab: Error to send a link. Sorry ;(</string>
+    <string name="incorrect_url_m">SyncTab: What you\'re trying to send is a not a URL. Try something else!</string>
+    <string name="nothing_to_share_m">SyncTab: Nothing to send - no URL received.</string>
+
     <string name="synctab_service">SyncTab Service</string>
     <string name="refresh_service">SyncTab Refresh Service</string>
 
@@ -91,6 +99,9 @@
     <string name="documentation_summary">Read documentation online</string>
     <string name="submit_issue_summary">Submit issue via online form</string>
     <string name="contact_summary">Contact us via online form</string>
+    <string name="show_sharing_status">Show Sync Status</string>
+    <string name="show_sharing_status_summary">Show a screen with the status of sharing a link</string>
+
     <string name="about_references">References</string>
     <string name="edit_tags">Edit Tags</string>
     <string name="edit_tags_summary">Add, rename and remove tags</string>

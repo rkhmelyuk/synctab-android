@@ -16,4 +16,9 @@
                     android:entries="@array/refreshIntervals"
                     android:entryValues="@array/refreshIntervalValues"/>
 
+    <CheckBoxPreference android:key="SHOW_SHARING_STATUS"
+                        android:title="@string/show_sharing_status"
+                        android:summary="@string/show_sharing_status_summary"
+                        android:defaultValue="false"/>
+
 </PreferenceScreen>

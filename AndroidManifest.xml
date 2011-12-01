@@ -19,7 +19,7 @@
                   android:label="@string/synctab_activity"
                   android:theme="@style/ActivityWithBackground"
                   android:noHistory="true">
-            <intent-filter android:label="SyncTab">
+            <intent-filter android:label="@string/share_synctab">
                 <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:mimeType="text/plain"/>
