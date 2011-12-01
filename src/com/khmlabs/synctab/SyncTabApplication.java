@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.khmlabs.synctab.queue.TaskQueueManager;
+import com.khmlabs.synctab.util.StringUtil;
 
 import java.net.URL;
 
@@ -221,24 +222,14 @@ public class SyncTabApplication extends Application {
      */
     public long getRefreshPeriod() {
         String value = preferences.getString(AppConstants.REFRESH_PERIOD, null);
-
-        try {
-            if (value != null) {
-                return Long.parseLong(value);
-            }
-        }
-        catch (NumberFormatException e) {
-            // do nothing
-        }
-        return 0L;
+        return StringUtil.getLongValue(value, 0L);
     }
 
     /**
-     * Set refresh period.
-     * @param value the refresh period.
+     * Gets the flag whether show sharing screen, by default false.
+     * @return the flag value.
      */
-    public void setRefreshPeriod(long value) {
-        String stringValue = Long.toString(value);
-        preferences.edit().putString(AppConstants.REFRESH_PERIOD, stringValue).commit();
+    public boolean isShowSharingStatus() {
+        return preferences.getBoolean(AppConstants.SHOW_SHARING_STATUS, false);
     }
 }

@@ -33,9 +33,12 @@ public interface AppConstants {
     /** The device name for this app.*/
     String DEVICE_NAME = "Android";
 
+    /** The key for refresh period preference. */
     String REFRESH_PERIOD = "REFRESH_PERIOD";
+
+    /** The key for preference used to show/hide sharing status. */
+    String SHOW_SHARING_STATUS = "SHOW_SHARING_STATUS";
 
     // 30 days
     long CACHE_CLEANUP_PERIOD = 1000L * 3600L * 24L * 30L;
-
 }

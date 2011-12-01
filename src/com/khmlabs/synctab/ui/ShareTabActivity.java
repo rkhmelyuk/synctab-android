@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.khmlabs.synctab.*;
 import com.khmlabs.synctab.tag.Tag;
@@ -120,13 +121,16 @@ public class ShareTabActivity extends BaseUserActivity {
                 new SyncTabTask().execute(link, tagId);
             }
             else {
-                statusImage.setImageResource(R.drawable.fail);
-                statusText.setText(R.string.incorrect_url);
+                showResultStatus(R.string.incorrect_url, R.string.incorrect_url_m, false);
             }
         }
         else {
-            statusImage.setImageResource(R.drawable.fail);
-            statusText.setText(R.string.nothing_to_share);
+            showResultStatus(R.string.nothing_to_share, R.string.nothing_to_share_m, false);
+        }
+
+        if (!getSyncTabApplication().isShowSharingStatus()) {
+            // close the activity if not need to show sharing status
+            ShareTabActivity.this.finish();
         }
     }
 
@@ -154,6 +158,21 @@ public class ShareTabActivity extends BaseUserActivity {
         return result;
     }
 
+    private void showResultStatus(int messageId, int shortMessageId, boolean success) {
+        if (getSyncTabApplication().isShowSharingStatus()) {
+            if (success) {
+                statusImage.setImageResource(R.drawable.yes);
+            }
+            else {
+                statusImage.setImageResource(R.drawable.fail);
+            }
+            statusText.setText(messageId);
+        }
+        else {
+            Toast.makeText(this, shortMessageId, 10000).show();
+        }
+    }
+
     class SyncTabTask extends AsyncTask<String, String, RemoteOpStatus> {
 
         protected RemoteOpStatus doInBackground(String... strings) {
@@ -171,16 +190,13 @@ public class ShareTabActivity extends BaseUserActivity {
             super.onPostExecute(result);
 
             if (result == RemoteOpStatus.Success) {
-                statusImage.setImageResource(R.drawable.yes);
-                statusText.setText(R.string.success_sync);
+                showResultStatus(R.string.success_sync, R.string.success_sync_m, true);
             }
             else if (result == RemoteOpStatus.Queued) {
-                statusImage.setImageResource(R.drawable.yes);
-                statusText.setText(R.string.enqueue_sync);
+                showResultStatus(R.string.enqueue_sync, R.string.enqueue_sync_m, true);
             }
             else if (result == RemoteOpStatus.Failed) {
-                statusImage.setImageResource(R.drawable.fail);
-                statusText.setText(R.string.failed_sync);
+                showResultStatus(R.string.failed_sync, R.string.failed_sync_m, false);
             }
         }
     }

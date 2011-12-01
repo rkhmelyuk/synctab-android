@@ -16,6 +16,13 @@
     <string name="failed_sync">Error al enviar un hiperenlace.\n\n¡Lo siento! ;(</string>
     <string name="incorrect_url">Lo que usted está tratando de enviar una URL no es un.\n\n Intentar otra cosa!</string>
     <string name="nothing_to_share">No hay nada que enviar:\n URL no recibió.</string>
+
+    <string name="success_sync_m">SyncTab: Hiperenlace es enviado.</string>
+    <string name="enqueue_sync_m">SyncTab: Hiperenlace se le enviará cuando se estará en línea.</string>
+    <string name="failed_sync_m">SyncTab: Error al enviar un hiperenlace. ¡Lo siento! ;(</string>
+    <string name="incorrect_url_m">SyncTab: Lo que usted está tratando de enviar una URL no es un. Intentar otra cosa!</string>
+    <string name="nothing_to_share_m">SyncTab: No hay nada que enviar: URL no recibió.</string>
+
     <string name="synctab_service">SyncTab Servicio</string>
     <string name="refresh_service">SyncTab Actualizar Servicio</string>
 

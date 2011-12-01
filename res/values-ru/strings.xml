@@ -16,6 +16,13 @@
     <string name="failed_sync">Ошибка при отправке ссылки.\n\nИзвините ;(</string>
     <string name="incorrect_url">То, что вы пытаетесь отправить - это не URL.\n\n Попробуйте что-нибудь еще!</string>
     <string name="nothing_to_share">Ничего отправлять:\n URL не получен.</string>
+
+    <string name="success_sync_m">SyncTab: Ссылка отправлена успешно.</string>
+    <string name="enqueue_sync_m">SyncTab: Ссылка будет отправлена, когда вы будете находиться в Интернете.</string>
+    <string name="failed_sync_m">SyncTab: Ошибка при отправке ссылки. Извините ;(</string>
+    <string name="incorrect_url_m">SyncTab: То, что вы пытаетесь отправить - это не URL. Попробуйте что-нибудь еще!</string>
+    <string name="nothing_to_share_m">SyncTab: Ничего отправлять - URL не получен.</string>
+
     <string name="synctab_service">Служба SyncTab</string>
     <string name="refresh_service">Служба обновления SyncTab</string>
 

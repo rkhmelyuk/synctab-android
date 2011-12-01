@@ -1,8 +1,6 @@
 package com.khmlabs.synctab.util;
 
-/**
- * Utils to work with strings.
- */
+/** Utils to work with strings. */
 public class StringUtil {
 
     /**
@@ -24,4 +22,24 @@ public class StringUtil {
     public static boolean isNotEmpty(String string) {
         return (string != null && string.length() > 0);
     }
+
+    /**
+     * Gets the long value from string.
+     *
+     * @param value        the string value.
+     * @param defaultValue the default value.
+     * @return the parsed long value, otherwise defaultValue.
+     */
+    public static Long getLongValue(String value, Long defaultValue) {
+        try {
+            if (value != null && value.length() > 0) {
+                return Long.parseLong(value);
+            }
+        }
+        catch (NumberFormatException e) {
+            // do nothing
+        }
+        return defaultValue;
+    }
+
 }

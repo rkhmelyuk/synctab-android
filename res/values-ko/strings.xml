@@ -16,6 +16,13 @@
     <string name="failed_sync">링크를 보내 오류가 발생했습니다.\n\n죄송합니다 ;(</string>
     <string name="incorrect_url">What you\'re trying to send is a not a URL.\n\n 다른 방법을 시도해!</string>
     <string name="nothing_to_share">Nothing to send:\n no URL received.</string>
+
+    <string name="success_sync_m">SyncTab: 링크가 전송되었습니다.</string>
+    <string name="enqueue_sync_m">SyncTab: 당신이 온라인으로 될 때 링크가 전송됩니다.</string>
+    <string name="failed_sync_m">SyncTab: 링크를 보내 오류가 발생했습니다. n죄송합니다 ;(</string>
+    <string name="incorrect_url_m">SyncTab: What you\'re trying to send is a not a URL. Try something else!</string>
+    <string name="nothing_to_share_m">SyncTab: Nothing to send - no URL received.</string>
+
     <string name="synctab_service">SyncTab Service</string>
     <string name="refresh_service">SyncTab Refresh Service</string>
 

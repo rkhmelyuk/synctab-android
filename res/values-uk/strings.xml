@@ -14,8 +14,15 @@
     <string name="success_sync">Посилання відіслано.\n\nПродовжуйте!</string>
     <string name="enqueue_sync">Посилання буде відіслано\n коли ви будете онлайн.\n\n Продовжуйте!</string>
     <string name="failed_sync">Помилка при висиланні повідомлення.\n\nЗвиняйте ;(</string>
-    <string name="incorrect_url">Те що ви хочете вислати не є посиланням..\n\n Спробуйте щось інше!</string>
+    <string name="incorrect_url">Те, що ви хочете вислати, не є посиланням.\n\n Спробуйте щось інше!</string>
     <string name="nothing_to_share">Нічого не висилаю:\n жодного посилання не отримано.</string>
+
+    <string name="success_sync_m">SyncTab: Посилання відіслано успішно.</string>
+    <string name="enqueue_sync_m">SyncTab: Посилання буде відіслано коли ви будете онлайн.</string>
+    <string name="failed_sync_m">SyncTab: Помилка при висиланні повідомлення. Звиняйте ;(</string>
+    <string name="incorrect_url_m">SyncTab: Те, що ви хочете вислати, не є посиланням. Спробуйте щось інше!</string>
+    <string name="nothing_to_share_m">SyncTab: Нічого не висилаю -  жодного посилання не отримано.</string>
+
     <string name="synctab_service">Служба SyncTab</string>
     <string name="refresh_service">Служба обновлення SyncTab</string>
 
