@@ -54,7 +54,6 @@
     <string name="rename">Rename</string>
     <string name="share_via">Share Via</string>
     <string name="copy_link">Copy Link</string>
-    <string name="touch_to_open">Press To Open</string>
 
     <string name="msg_tab_is_removed">Link is removed</string>
     <string name="msg_tab_is_reshared">Link is re-sent</string>
@@ -86,7 +85,7 @@
     <string name="refresh_interval">Refresh Interval</string>
     <string name="refresh_interval_summary">How often to check for new links to open</string>
     <string name="current_tag">Open Links with Tag</string>
-    <string name="current_tag_summary">Filter the links to open on this device by specified tags</string>
+    <string name="current_tag_summary">Open links with specified Tag only</string>
     <string name="website_summary">View SyncTab website online</string>
     <string name="chrome_extension_summary">Read more about SyncTab Chrome Extension</string>
     <string name="documentation_summary">Read documentation online</string>

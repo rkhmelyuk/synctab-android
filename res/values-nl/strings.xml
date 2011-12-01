@@ -4,8 +4,8 @@
     <string name="synctab">SyncTab</string>
 
     <string name="synctab_activity">SyncTab</string>
-    <string name="login_activity">SyncTab: Login</string>
-    <string name="registration_activity">SyncTab: Registratie</string>
+    <string name="login_activity">Login</string>
+    <string name="registration_activity">Registratie</string>
     <string name="about_activity">Ongeveer</string>
     <string name="settings_activity">Instellingen</string>
     <string name="tag_edit_activity">Tags</string>
@@ -54,7 +54,6 @@
     <string name="rename">Andere naam geven</string>
     <string name="share_via">Share Via</string>
     <string name="copy_link">Copy Link</string>
-    <string name="touch_to_open">Drukken om te openen</string>
 
     <string name="msg_tab_is_removed">De hyperlink wordt verwijderd</string>
     <string name="msg_tab_is_reshared">Link is re-sent</string>

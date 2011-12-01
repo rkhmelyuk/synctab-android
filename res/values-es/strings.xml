@@ -4,8 +4,8 @@
     <string name="synctab">SyncTab</string>
 
     <string name="synctab_activity">SyncTab</string>
-    <string name="login_activity">SyncTab: Iniciar Sesión</string>
-    <string name="registration_activity">SyncTab: Registro</string>
+    <string name="login_activity">Iniciar Sesión</string>
+    <string name="registration_activity">Registro</string>
     <string name="about_activity">Sobre</string>
     <string name="settings_activity">Ajustes</string>
     <string name="tag_edit_activity">Etiquetas</string>
@@ -54,7 +54,6 @@
     <string name="rename">Cambiar el nombre de</string>
     <string name="share_via">Compartir a través de</string>
     <string name="copy_link">Copiar un hiperenlace</string>
-    <string name="touch_to_open">Pulse para abrir</string>
 
     <string name="msg_tab_is_removed">Hiperenlace se retira</string>
     <string name="msg_tab_is_reshared">Hiperenlace es enviado de nuevo</string>

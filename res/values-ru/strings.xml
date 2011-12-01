@@ -4,8 +4,8 @@
     <string name="synctab">SyncTab</string>
 
     <string name="synctab_activity">SyncTab</string>
-    <string name="login_activity">SyncTab: Вход</string>
-    <string name="registration_activity">SyncTab: Регистрация</string>
+    <string name="login_activity">Вход</string>
+    <string name="registration_activity">Регистрация</string>
     <string name="about_activity">О программе</string>
     <string name="settings_activity">Настройки</string>
     <string name="tag_edit_activity">Теги</string>
@@ -54,7 +54,6 @@
     <string name="rename">Переименовать</string>
     <string name="share_via">Поделиться с...</string>
     <string name="copy_link">Скопировать ссылку</string>
-    <string name="touch_to_open">Нажмите, чтобы открыть</string>
 
     <string name="msg_tab_is_removed">Ссылка удалена</string>
     <string name="msg_tab_is_reshared">Ссылка повторно отправлена</string>

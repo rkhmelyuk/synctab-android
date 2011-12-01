@@ -4,8 +4,8 @@
     <string name="synctab">SyncTab</string>
 
     <string name="synctab_activity">SyncTab</string>
-    <string name="login_activity">SyncTab: Вхід</string>
-    <string name="registration_activity">SyncTab: Реєстрація</string>
+    <string name="login_activity">Вхід</string>
+    <string name="registration_activity">Реєстрація</string>
     <string name="about_activity">Про</string>
     <string name="settings_activity">Опції</string>
     <string name="tag_edit_activity">Теги</string>
@@ -46,7 +46,7 @@
     <string name="logout_progress">Виходимо...</string>
     <string name="help">Допомога</string>
     <string name="refresh">Обновити</string>
-    <string name="home">До дому</string>
+    <string name="home">Додому</string>
     <string name="not_a_user">Ще не маєете рахунку?</string>
     <string name="unknown">Невідомий</string>
     <string name="resend">Перевислати</string>
@@ -54,7 +54,6 @@
     <string name="rename">Переіменувати</string>
     <string name="share_via">Поділитися з</string>
     <string name="copy_link">Скопіювати посилання</string>
-    <string name="touch_to_open">Натисніть, щоб відкрити</string>
 
     <string name="msg_tab_is_removed">Посилання видалене</string>
     <string name="msg_tab_is_reshared">Посилання перевислано</string>
@@ -70,7 +69,7 @@
     <string name="submit_issue">Повідомити про помилку</string>
     <string name="contact">Написати нам</string>
     <string name="start_help_notice">
-        <b>TIPS</b>:
+        <b>Порада</b>:
         \n\nВстановіть SyncTab розширення для Chrome. Прочитати більше тут
         <a href="http://synctab.khmelyuk.com">synctab.khmelyuk.com</a>.
         \n\nВикористовуйте теги для відсилання посилань на різні броузери, наприклад, на домашній або робочий.

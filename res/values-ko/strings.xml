@@ -1,0 +1,111 @@
+<resources>
+    <string name="application_label">SyncTab</string>
+
+    <string name="synctab">SyncTab</string>
+
+    <string name="synctab_activity">SyncTab</string>
+    <string name="login_activity">로그인</string>
+    <string name="registration_activity">등록</string>
+    <string name="about_activity">약</string>
+    <string name="settings_activity">설정</string>
+    <string name="tag_edit_activity">태그</string>
+
+    <string name="sync_in_progress">하이퍼 링크를 보내기...</string>
+    <string name="success_sync">링크가 전송되었습니다.\n\n를 즐기세요</string>
+    <string name="enqueue_sync">당신이 온라인으로 될 \n때 링크가 전송됩니다.\n\n를 즐기세요</string>
+    <string name="failed_sync">링크를 보내 오류가 발생했습니다.\n\n죄송합니다 ;(</string>
+    <string name="incorrect_url">What you\'re trying to send is a not a URL.\n\n 다른 방법을 시도해!</string>
+    <string name="nothing_to_share">Nothing to send:\n no URL received.</string>
+    <string name="synctab_service">SyncTab Service</string>
+    <string name="refresh_service">SyncTab Refresh Service</string>
+
+    <string name="pref_url_title">SyncTab URL</string>
+    <string name="pref_url_summary">SyncTab Service URL</string>
+    <string name="open">열린</string>
+    <string name="hide">숨기기</string>
+    <string name="failed_retrieve_shared_tabs">링크의 목록을 새로 고침하는 데 실패했습니다</string>
+    <string name="email">이메일</string>
+    <string name="password">암호</string>
+    <string name="login">로그인</string>
+    <string name="please_login">로그인</string>
+    <string name="registration">레지스터</string>
+    <string name="register">레지스터</string>
+    <string name="register_now">지금 회원 가입</string>
+    <string name="please_wait">기다려주십시오...</string>
+    <string name="account_registration">계정 등록...</string>
+    <string name="authentication">로그인...</string>
+    <string name="loading_tabs">링크 목록을로드...</string>
+
+    <string name="email_password_required">이메일과 비밀 번호를 입력하세요.</string>
+    <string name="error_authenticate">오류가 로그인합니다. 다시 시도해보세요!</string>
+    <string name="failed_authenticate">이메일 또는 비밀 번호가 잘못되었습니다</string>
+    <string name="error_register">오류가 등록합니다. 다시 시도해보세요!</string>
+    <string name="failed_register">등록 실패</string>
+    <string name="no_connection">잃어버린 연결</string>
+    <string name="logout">로그아웃</string>
+    <string name="logout_progress">로그아웃...</string>
+    <string name="help">도움</string>
+    <string name="refresh">새로고침</string>
+    <string name="home">홈</string>
+    <string name="not_a_user">아직 계정이 없으십니까?</string>
+    <string name="unknown">알 수없는</string>
+    <string name="resend">다시 보내기</string>
+    <string name="remove">삭제</string>
+    <string name="rename">이름 바꾸기</string>
+    <string name="share_via">경유 보내기</string>
+    <string name="copy_link">복사 링크</string>
+
+    <string name="msg_tab_is_removed">링크가 삭제되었습니다</string>
+    <string name="msg_tab_is_reshared">링크가 다시 보냈습니다</string>
+    <string name="msg_failed_to_reshared_tab">다시 링크를 보내지 못했습니다</string>
+    <string name="msg_failed_to_remove_tab">링크를 제거하는 데 실패했습니다</string>
+    <string name="about">약</string>
+    <string name="username">사용자 이름</string>
+    <string name="none">없음</string>
+    <string name="version">버전</string>
+    <string name="website">웹사이트</string>
+    <string name="documentation">문서</string>
+    <string name="chrome_extension">Chrome Extension</string>
+    <string name="submit_issue">문제 제출</string>
+    <string name="contact">접촉</string>
+    <string name="start_help_notice">
+        <b>팁</b>:
+        \n\nSyncTab 크롬 확장을 설치합니다. 에서 자세히보기
+        <a href="http://synctab.khmelyuk.com">synctab.khmelyuk.com</a>.
+    </string>
+
+    <string name="send_tab_to">로 보내기...</string>
+
+    <string name="settings">설정</string>
+    <string name="refresh_interval">새로 고침 간격</string>
+    <string name="refresh_interval_summary">새로운 링크가 열려 있는지 확인 얼마나 자주?</string>
+    <string name="current_tag">태그 링크 열기</string>
+    <string name="current_tag_summary">지정된 태그와 링크 열기만을</string>
+    <string name="website_summary">보기 SyncTab 웹사이트 온라인으로</string>
+    <string name="chrome_extension_summary">SyncTab Chrome Extension 에 대해 자세히 알아보십시오</string>
+    <string name="documentation_summary">문서를 온라인으로 읽기</string>
+    <string name="submit_issue_summary">온라인 양식을 통해 문제를 제출</string>
+    <string name="contact_summary">온라인 양식을 통해 문의</string>
+    <string name="about_references">참조</string>
+    <string name="edit_tags">태그 편집</string>
+    <string name="edit_tags_summary">추가 이름을 변경하고 태그를 제거</string>
+    <string name="tag_context_menu">작업 선택</string>
+    <string name="failed_remove_tag">태그를 제거하는 데 실패했습니다</string>
+    <string name="failed_rename_tag">태그 이름을 바꾸려하지 못했습니다</string>
+    <string name="save">저장</string>
+    <string name="cancel">취소</string>
+    <string name="add_new_tag">새 태그 추가</string>
+    <string name="yes_remove">삭제</string>
+    <string name="enter_new_tag_name">새 태그의 이름을 입력:</string>
+    <string name="tag_name_required">오류: 태그 이름이 필요합니다!</string>
+    <string name="tag_name_too_long">오류: 태그 이름이 너무 깁니다.</string>
+    <string name="confirm_remove_tag">태그 \'%s\' 사용이 될 수 있습니다. 당신은 정말 제거하시겠습니까?</string>
+
+    <string name="shared_from">에서 보내&#160;</string>
+
+    <plurals name="minutes">
+        <item quantity="one">모든 %d 분</item>
+        <item quantity="other">모든 %d 분</item>
+    </plurals>
+
+</resources>
