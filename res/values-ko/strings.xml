@@ -107,6 +107,7 @@
     <string name="tag_name_required">오류: 태그 이름이 필요합니다!</string>
     <string name="tag_name_too_long">오류: 태그 이름이 너무 깁니다.</string>
     <string name="confirm_remove_tag">태그 \'%s\' 사용이 될 수 있습니다. 당신은 정말 제거하시겠습니까?</string>
+    <string name="never_refresh">새로고침하고 열기 링크를 수신하지 마십시오</string>
 
     <string name="shared_from">에서 보내&#160;</string>
 

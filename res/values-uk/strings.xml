@@ -109,6 +109,7 @@
     <string name="tag_name_required">Помилка: Ім\'я тегу є обовязковим!</string>
     <string name="tag_name_too_long">Помилка: Ім\'я тегу за довге. Максимально 250 символів.</string>
     <string name="confirm_remove_tag">Тег \'%s\' може використовуватися. Ви справді хочете його видалити?</string>
+    <string name="never_refresh">Ніколи не обновляти та відкривати отримані посилання</string>
     <string name="shared_from">Вислано з&#160;</string>
 
     <plurals name="minutes">

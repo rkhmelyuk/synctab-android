@@ -176,11 +176,11 @@ public final class R {
         public static final int cancel=0x7f09005a;
         public static final int chrome_extension=0x7f090042;
         public static final int chrome_extension_summary=0x7f09004d;
-        public static final int chrome_extension_url=0x7f090066;
+        public static final int chrome_extension_url=0x7f090067;
         public static final int confirm_remove_tag=0x7f090060;
         public static final int contact=0x7f090044;
         public static final int contact_summary=0x7f090050;
-        public static final int contact_url=0x7f090065;
+        public static final int contact_url=0x7f090066;
         public static final int copy_link=0x7f090037;
         public static final int current_tag=0x7f09004a;
         public static final int current_tag_summary=0x7f09004b;
@@ -203,7 +203,7 @@ public final class R {
         public static final int failed_sync=0x7f09000c;
         public static final int failed_sync_m=0x7f090011;
         public static final int help=0x7f09002e;
-        public static final int help_url=0x7f090062;
+        public static final int help_url=0x7f090063;
         public static final int hide=0x7f090019;
         public static final int home=0x7f090030;
         public static final int incorrect_url=0x7f09000d;
@@ -217,6 +217,7 @@ public final class R {
         public static final int msg_failed_to_reshared_tab=0x7f09003a;
         public static final int msg_tab_is_removed=0x7f090038;
         public static final int msg_tab_is_reshared=0x7f090039;
+        public static final int never_refresh=0x7f090061;
         public static final int no_connection=0x7f09002b;
         public static final int none=0x7f09003e;
         public static final int not_a_user=0x7f090031;
@@ -245,13 +246,13 @@ public final class R {
         public static final int settings_activity=0x7f090007;
         public static final int share_synctab=0x7f090002;
         public static final int share_via=0x7f090036;
-        public static final int shared_from=0x7f090061;
+        public static final int shared_from=0x7f090062;
         public static final int show_sharing_status=0x7f090051;
         public static final int show_sharing_status_summary=0x7f090052;
         public static final int start_help_notice=0x7f090045;
         public static final int submit_issue=0x7f090043;
         public static final int submit_issue_summary=0x7f09004f;
-        public static final int submit_issue_url=0x7f090064;
+        public static final int submit_issue_url=0x7f090065;
         public static final int success_sync=0x7f09000a;
         public static final int success_sync_m=0x7f09000f;
         public static final int sync_in_progress=0x7f090009;
@@ -267,7 +268,7 @@ public final class R {
         public static final int version=0x7f09003f;
         public static final int website=0x7f090040;
         public static final int website_summary=0x7f09004c;
-        public static final int website_url=0x7f090063;
+        public static final int website_url=0x7f090064;
         public static final int yes_remove=0x7f09005c;
     }
     public static final class style {

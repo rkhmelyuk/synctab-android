@@ -116,6 +116,7 @@
     <string name="tag_name_required">Error: Tag name is required!</string>
     <string name="tag_name_too_long">Error: Tag name is too long. Max 250 chars.</string>
     <string name="confirm_remove_tag">Tag \'%s\' can be in use. Do you really want to remove it?</string>
+    <string name="never_refresh">Never refresh and open received links</string>
 
     <string name="shared_from">Shared from&#160;</string>
 

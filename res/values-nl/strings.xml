@@ -112,6 +112,7 @@
     <string name="tag_name_required">Fout: De naam van de tag wordt vereist!</string>
     <string name="tag_name_too_long">Fout: De naam van de tag is te lang. Max 250 chars.</string>
     <string name="confirm_remove_tag">Tag \'%s\' can be in use. Do you really want to remove it?</string>
+    <string name="never_refresh">Never refresh and open received links</string>
 
     <string name="shared_from">Ontvangen van&#160;</string>
 

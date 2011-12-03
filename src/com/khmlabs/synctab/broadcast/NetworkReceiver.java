@@ -28,7 +28,9 @@ public class NetworkReceiver extends BroadcastReceiver {
         if (networkInfo != null && networkInfo.isConnected()) {
             app.setOnLine(true);
             ctx.startService(syncIntent);
-            ctx.startService(refreshIntent);
+            if (app.isRefreshServiceAvailable()) {
+                ctx.startService(refreshIntent);
+            }
         }
         else {
             app.setOnLine(false);

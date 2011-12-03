@@ -2,6 +2,7 @@ package com.khmlabs.synctab;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -9,11 +10,12 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.khmlabs.synctab.queue.TaskQueueManager;
+import com.khmlabs.synctab.service.RefreshService;
 import com.khmlabs.synctab.util.StringUtil;
 
 import java.net.URL;
 
-public class SyncTabApplication extends Application {
+public class SyncTabApplication extends Application implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = "SyncTabApplication";
 
@@ -33,6 +35,7 @@ public class SyncTabApplication extends Application {
         super.onCreate();
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences.registerOnSharedPreferenceChangeListener(this);
 
         setOnlineStatus();
 
@@ -58,7 +61,18 @@ public class SyncTabApplication extends Application {
     private void setOnlineStatus() {
         ConnectivityManager connectionManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
-        onLine =  networkInfo != null && connectionManager.getActiveNetworkInfo().isConnected();
+        onLine = networkInfo != null && connectionManager.getActiveNetworkInfo().isConnected();
+    }
+
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (AppConstants.REFRESH_PERIOD.equals(key)) {
+            if (isRefreshServiceAvailable()) {
+                startService(new Intent(this, RefreshService.class));
+            }
+            else {
+                stopService(new Intent(this, RefreshService.class));
+            }
+        }
     }
 
     private synchronized void initSyncTabRemoteService() {
@@ -114,10 +128,11 @@ public class SyncTabApplication extends Application {
         preferences.edit().putString(AppConstants.AUTH_TOKEN, token).commit();
     }
 
-    /**
-     * Logout user from application.
-     */
+    /** Logout user from application. */
     public void logout() {
+        // stop the service first, it may take some time
+        stopService(new Intent(this, RefreshService.class));
+
         final String token = getAuthToken();
 
         setAuthToken(null);
@@ -186,6 +201,7 @@ public class SyncTabApplication extends Application {
 
     /**
      * Check whether tags were loaded already.
+     *
      * @return true if tags were loaded.
      */
     public boolean isTagsLoaded() {
@@ -194,6 +210,7 @@ public class SyncTabApplication extends Application {
 
     /**
      * Set whether tags where loaded.
+     *
      * @param value true if tags where loaded.
      */
     public void setTagsLoaded(boolean value) {
@@ -202,6 +219,7 @@ public class SyncTabApplication extends Application {
 
     /**
      * Gets the current tag.
+     *
      * @return the current tag or null if none.
      */
     public String getCurrentTag() {
@@ -210,6 +228,7 @@ public class SyncTabApplication extends Application {
 
     /**
      * Sets the current tag.
+     *
      * @param tag the current tag.
      */
     public void setCurrentTag(String tag) {
@@ -218,6 +237,7 @@ public class SyncTabApplication extends Application {
 
     /**
      * Gets the refresh period.
+     *
      * @return the refresh period.
      */
     public long getRefreshPeriod() {
@@ -226,7 +246,25 @@ public class SyncTabApplication extends Application {
     }
 
     /**
+     * Check if refresh is enabled by user.
+     *
+     * @return true if enabled, otherwise is disabled.
+     */
+    public boolean isRefreshEnabled() {
+        return (getRefreshPeriod() != 0L);
+    }
+
+    /**
+     * Check if refresh service is enabled.
+     * @return true if service is enabled.
+     */
+    public boolean isRefreshServiceAvailable() {
+        return isOnLine() && isAuthenticated() && isRefreshEnabled();
+    }
+
+    /**
      * Gets the flag whether show sharing screen, by default false.
+     *
      * @return the flag value.
      */
     public boolean isShowSharingStatus() {

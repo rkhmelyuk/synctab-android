@@ -110,6 +110,7 @@
     <string name="tag_name_required">Error: Nombre de la Etiqueta es necesario</string>
     <string name="tag_name_too_long">Error: Nombre de la Etiqueta es demasiado largo. Máximo 250 símbolos.</string>
     <string name="confirm_remove_tag">Etiqueta \'%s\' puede estar en uso. ¿De verdad desea eliminarlo?</string>
+    <string name="never_refresh">Nunca actualizar y abrir los enlaces recibidos</string>
     <string name="shared_from">Compartida de&#160;</string>
 
     <plurals name="minutes">

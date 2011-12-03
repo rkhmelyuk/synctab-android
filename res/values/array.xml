@@ -1,17 +1,21 @@
 <resources>
 
     <string-array name="refreshIntervals">
+        <item>Never</item>
         <item>Every 1 minute</item>
         <item>Every 2 minute</item>
         <item>Every 5 minute</item>
         <item>Every 10 minute</item>
+        <item>Every 30 minutes</item>
     </string-array>
 
     <string-array name="refreshIntervalValues">
+        <item>0</item>
         <item>60000</item>
         <item>120000</item>
         <item>300000</item>
         <item>600000</item>
+        <item>1800000</item>
     </string-array>
 
 </resources>

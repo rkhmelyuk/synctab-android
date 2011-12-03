@@ -98,8 +98,19 @@ public class SettingsActivity extends PreferenceUserActivity
         // -- Refresh Period preference preparation
 
         Preference refreshPref = screen.getPreference(REFRESH_PERIOD_INDEX);
-        int minutes = (int) (app.getRefreshPeriod() / 60000);
-        String message = getResources().getQuantityString(R.plurals.minutes, minutes, minutes);
+        long refreshPeriod = app.getRefreshPeriod();
+
+        final String message;
+        if (refreshPeriod == 0) {
+            // never refresh selected
+            message = getResources().getString(R.string.never_refresh);
+        }
+        else {
+            // show a time message
+            int minutes = (int) (app.getRefreshPeriod() / 60000);
+            message = getResources().getQuantityString(R.plurals.minutes, minutes, minutes);
+        }
+
         refreshPref.setSummary(message);
     }
 

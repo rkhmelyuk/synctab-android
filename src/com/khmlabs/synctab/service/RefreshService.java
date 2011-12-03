@@ -56,14 +56,14 @@ public class RefreshService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
 
-        final SyncTabApplication app = (SyncTabApplication) getApplication();
-
-        if (!running && app.isOnLine() && app.isAuthenticated()) {
+        if (!running) {
             running = true;
             refresher.start();
+
+            return START_STICKY;
         }
 
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     class Refresher extends Thread {

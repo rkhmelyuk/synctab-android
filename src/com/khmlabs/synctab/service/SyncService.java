@@ -58,9 +58,11 @@ public class SyncService extends Service {
         if (!running && app.isOnLine()) {
             running = true;
             synchronizer.start();
+
+            return START_STICKY;
         }
 
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     class Synchronizer extends Thread {

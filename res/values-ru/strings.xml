@@ -110,6 +110,7 @@
     <string name="tag_name_required">Ошибка: Имя тега обязательное!</string>
     <string name="tag_name_too_long">Ошибка: Имя тега слишком длинное. Максимум 250 символов.</string>
     <string name="confirm_remove_tag">Тег \'%s\' может использоваться. Вы действительно хотите удалить его?</string>
+    <string name="never_refresh">Никогда не обновлять и открывать ссылки</string>
 
     <string name="shared_from">Отравлено с&#160;</string>
 
