@@ -6,6 +6,7 @@
 
     <string name="synctab_activity">SyncTab</string>
     <string name="login_activity">SyncTab: Login</string>
+    <string name="reset_password_activity">SyncTab: Reset Password</string>
     <string name="registration_activity">SyncTab: Registration</string>
     <string name="about_activity">About</string>
     <string name="settings_activity">Settings</string>
@@ -36,19 +37,28 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="please_login">SyncTab: Login</string>
+    <string name="please_reset_password">Reset Password</string>
+    <string name="reset_password_desc">Please enter your email address, so we can send you an email with reset password link.
+            Follow this link to change your current password.</string>
     <string name="registration">SyncTab: Registration</string>
     <string name="register">Register</string>
     <string name="register_now">Register Now</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="reset_now">Reset Now</string>
     <string name="please_wait">Please wait...</string>
     <string name="account_registration">Account registration...</string>
     <string name="authentication">Authenticating...</string>
     <string name="loading_tabs">Loading a List of Links...</string>
 
+    <string name="email_required">Email is required to reset password.</string>
     <string name="email_password_required">Please enter email and password.</string>
     <string name="error_authenticate">Error to login. Try again!</string>
     <string name="failed_authenticate">Incorrect email/password</string>
     <string name="error_register">Error to register. Try again!</string>
     <string name="failed_register">Failed to register</string>
+    <string name="error_reset_password">Error to reset a password. Try again!</string>
+    <string name="failed_reset_password">Failed to reset a password.</string>
+    <string name="reset_password_successfully">We sent you an email with instructions. Read and follow those instructions to change password.</string>
     <string name="no_connection">Lost Connection</string>
     <string name="logout">Logout</string>
     <string name="logout_progress">Logout...</string>
@@ -68,6 +78,7 @@
     <string name="msg_failed_to_reshared_tab">Failed to re-send a link</string>
     <string name="msg_failed_to_remove_tab">Failed to remove a link</string>
     <string name="about">About</string>
+    <string name="done">Done</string>
     <string name="username">Username</string>
     <string name="none">None</string>
     <string name="version">Version</string>

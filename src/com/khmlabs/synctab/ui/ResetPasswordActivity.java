@@ -1,6 +1,8 @@
 package com.khmlabs.synctab.ui;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,69 +17,44 @@ import com.khmlabs.synctab.R;
 import com.khmlabs.synctab.SyncTabApplication;
 import com.khmlabs.synctab.SyncTabFacade;
 
-public class LoginActivity extends BaseGuestActivity {
+public class ResetPasswordActivity extends BaseGuestActivity {
 
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = "ResetPasswordActivity";
 
     EditText emailInput;
-    EditText passwordInput;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_reset_password);
 
         emailInput = (EditText) findViewById(R.id.email);
 
-        passwordInput = (EditText) findViewById(R.id.password);
-        passwordInput.setOnKeyListener(new View.OnKeyListener() {
+        emailInput.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    login();
+                    resetPassword();
                     return true;
                 }
                 return false;
             }
         });
 
-        final Button loginButton = (Button) findViewById(R.id.login);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                login();
-            }
-        });
-
-        final Button registerButton = (Button) findViewById(R.id.register);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent registerIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
-                registerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                startActivity(registerIntent);
-                finish();
-            }
-        });
-
-        final Button resetPasswordButton = (Button) findViewById(R.id.forget_password);
+        final Button resetPasswordButton = (Button) findViewById(R.id.reset_password);
         resetPasswordButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent resetPasswordIntent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
-                resetPasswordIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                startActivity(resetPasswordIntent);
-                finish();
+                resetPassword();
             }
         });
     }
 
-    private void login() {
+    private void resetPassword() {
         String email = emailInput.getText().toString().trim();
-        String password = passwordInput.getText().toString().trim();
 
-        if (email.length() != 0 && password.length() != 0) {
-            new AuthorizeTask().execute(email, password);
+        if (email.length() != 0) {
+            new ResetPasswordTask().execute(email);
         }
         else {
-            Toast.makeText(this, R.string.email_password_required, 3000).show();
+            Toast.makeText(this, R.string.email_required, 3000).show();
         }
     }
 
@@ -87,12 +64,12 @@ public class LoginActivity extends BaseGuestActivity {
 
         final SyncTabApplication app = (SyncTabApplication) getApplication();
         if (app.isAuthenticated()) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            startActivity(new Intent(ResetPasswordActivity.this, MainActivity.class));
             finish();
         }
     }
 
-    private class AuthorizeTask extends AsyncTask<String, String, Integer> {
+    private class ResetPasswordTask extends AsyncTask<String, String, Integer> {
 
         static final int RESULT_SUCCESS = 0;
         static final int RESULT_FAILED = 1;
@@ -105,8 +82,8 @@ public class LoginActivity extends BaseGuestActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            final String message = getResources().getString(R.string.authentication);
-            progress = ProgressDialog.show(LoginActivity.this, null, message, true, false);
+            final String message = getResources().getString(R.string.please_wait);
+            progress = ProgressDialog.show(ResetPasswordActivity.this, null, message, true, false);
         }
 
         @Override
@@ -115,14 +92,14 @@ public class LoginActivity extends BaseGuestActivity {
                 final SyncTabApplication app = (SyncTabApplication) getApplication();
                 if (app.isOnLine()) {
                     final SyncTabFacade facade = app.getFacade();
-                    final boolean result = facade.authenticate(strings[0], strings[1]);
+                    final boolean result = facade.resetPassword(strings[0]);
 
                     return result ? RESULT_SUCCESS : RESULT_FAILED;
                 }
                 return RESULT_OFFLINE;
             }
             catch (Exception e) {
-                Log.e(TAG, "Failed to authenticate");
+                Log.e(TAG, "Failed to reset a password");
                 return RESULT_ERROR;
             }
         }
@@ -134,17 +111,28 @@ public class LoginActivity extends BaseGuestActivity {
             progress.dismiss();
 
             if (status == RESULT_SUCCESS) {
-                setResult(RESULT_OK);
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ResetPasswordActivity.this);
+                builder.setTitle(getResources().getString(R.string.done));
+                builder.setCancelable(false);
+                builder.setMessage(R.string.reset_password_successfully);
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        final Intent loginIntent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
+                        loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(loginIntent);
+                    }
+                });
+
+                builder.create().show();
             }
             else if (status == RESULT_FAILED) {
-                Toast.makeText(LoginActivity.this, R.string.failed_authenticate, 5000).show();
+                Toast.makeText(ResetPasswordActivity.this, R.string.failed_reset_password, 5000).show();
             }
             else if (status == RESULT_ERROR) {
-                Toast.makeText(LoginActivity.this, R.string.error_authenticate, 5000).show();
+                Toast.makeText(ResetPasswordActivity.this, R.string.error_reset_password, 5000).show();
             }
             else if (status == RESULT_OFFLINE) {
-                Toast.makeText(LoginActivity.this, R.string.no_connection, 5000).show();
+                Toast.makeText(ResetPasswordActivity.this, R.string.no_connection, 5000).show();
             }
         }
     }

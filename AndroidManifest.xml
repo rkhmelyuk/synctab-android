@@ -40,6 +40,11 @@
                   android:theme="@style/ActivityWithBackground"
                   android:noHistory="true"/>
 
+        <activity android:name=".ui.ResetPasswordActivity"
+                  android:label="@string/login_activity"
+                  android:theme="@style/ActivityWithBackground"
+                  android:noHistory="true"/>
+
         <activity android:name=".ui.RegistrationActivity"
                   android:label="@string/registration_activity"
                   android:theme="@style/ActivityWithBackground"

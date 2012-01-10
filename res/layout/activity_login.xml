@@ -67,27 +67,52 @@
                         android:layout_below="@id/password"
                         style="@style/LoginButton"/>
 
+                <Button android:id="@+id/forget_password"
+                        style="@style/LinkButton"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/reset_password"
+                        android:layout_alignBaseline="@id/login"
+                        android:layout_below="@id/password"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="5dp"/>
+
             </RelativeLayout>
 
-            <RelativeLayout android:orientation="horizontal"
+            <LinearLayout android:orientation="horizontal"
                             android:layout_marginTop="20dp"
                             android:layout_height="wrap_content"
                             android:layout_width="fill_parent">
 
-                <Button android:id="@+id/register"
-                        style="@style/ToolButton"
-                        android:text="@string/register_now"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginLeft="12dp"/>
+                <RelativeLayout android:orientation="horizontal"
+                                android:layout_marginTop="20dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_height="wrap_content"
+                                android:layout_width="fill_parent">
 
-                <TextView android:layout_height="wrap_content"
-                          android:layout_width="wrap_content"
-                          android:text="@string/not_a_user"
-                          android:layout_alignBaseline="@id/register"
-                          android:layout_toLeftOf="@id/register"
-                          android:textSize="14sp"/>
-            </RelativeLayout>
+                    <!--<TextView android:layout_height="wrap_content"
+                              android:layout_width="wrap_content"
+                              android:text="@string/forgot_password"
+                              android:layout_alignBaseline="@id/forget_password"
+                              android:layout_toLeftOf="@id/forget_password"
+                              android:textSize="14sp"/>-->
+
+                    <Button android:id="@+id/register"
+                            style="@style/ToolButton"
+                            android:text="@string/register_now"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="12dp"/>
+
+                    <TextView android:layout_height="wrap_content"
+                              android:layout_width="wrap_content"
+                              android:text="@string/not_a_user"
+                              android:layout_alignBaseline="@id/register"
+                              android:layout_toLeftOf="@id/register"
+                              android:textSize="14sp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

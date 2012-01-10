@@ -27,7 +27,7 @@ public class AuthManager {
     /**
      * Authenticate (login) user into the system.
      *
-     * @param email the user email address.
+     * @param email    the user email address.
      * @param password the user password.
      * @return true if user is authenticated, otherwise false.
      */
@@ -37,7 +37,7 @@ public class AuthManager {
         }
 
         try {
-            String token =  remote.authenticate(email, password);
+            String token = remote.authenticate(email, password);
             if (token != null && token.length() > 0) {
                 application.setAuthEmail(email);
                 application.setAuthToken(token);
@@ -83,7 +83,7 @@ public class AuthManager {
     /**
      * Register new user by email and password.
      *
-     * @param email the user email address.
+     * @param email    the user email address.
      * @param password the user password.
      * @return the registration status.
      */
@@ -97,9 +97,7 @@ public class AuthManager {
         return remote.register(email, password);
     }
 
-    /**
-     * Remove current user data.
-     */
+    /** Remove current user data. */
     public void removeUserData() {
         SyncTabDatabase database = null;
         try {
@@ -114,6 +112,26 @@ public class AuthManager {
                 database.close();
             }
         }
+    }
+
+    /**
+     * Sends a reset password action for user with specified email.
+     *
+     * @param email the email address for user to reset a password.
+     * @return true if password was reset, otherwise false.
+     */
+    public boolean resetPassword(String email) {
+        if (!application.isOnLine()) {
+            return false;
+        }
+
+        try {
+            return remote.resetPassword(email);
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to reset a password.", e);
+        }
+        return false;
     }
 
     /**

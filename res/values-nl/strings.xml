@@ -44,6 +44,7 @@
     <string name="loading_tabs">Loading a List of Links...</string>
 
     <string name="email_password_required">Please enter email and password.</string>
+    <string name="email_required">Email is required to reset password.</string>
     <string name="error_authenticate">Error to login. Try again!</string>
     <string name="failed_authenticate">Onjuist email/wachtwoord</string>
     <string name="error_register">Error to register. Try again!</string>

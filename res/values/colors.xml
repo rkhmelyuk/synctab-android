@@ -24,6 +24,8 @@
     <color name="register_button_pressed_gradient_start">#2a6f2a</color>
     <color name="register_button_pressed_gradient_end">#203f20</color>
 
+    <color name="link">#ff255b9c</color>
+
     <color name="main_button_gradient_start">#3F6ED4</color>
     <color name="main_button_gradient_end">#2B55AD</color>
 

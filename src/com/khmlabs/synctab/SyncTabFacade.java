@@ -1,5 +1,7 @@
 package com.khmlabs.synctab;
 
+import org.apache.http.HttpHost;
+
 import com.khmlabs.synctab.auth.AuthManager;
 import com.khmlabs.synctab.auth.RemoteAuthManager;
 import com.khmlabs.synctab.queue.QueueTask;
@@ -9,7 +11,6 @@ import com.khmlabs.synctab.tab.TabManager;
 import com.khmlabs.synctab.tag.RemoteTagManager;
 import com.khmlabs.synctab.tag.Tag;
 import com.khmlabs.synctab.tag.TagManager;
-import org.apache.http.HttpHost;
 
 import java.util.List;
 
@@ -34,6 +35,10 @@ public class SyncTabFacade {
 
     public boolean authenticate(String email, String password) {
         return authManager.authenticate(email, password);
+    }
+
+    public boolean resetPassword(String email) {
+        return authManager.resetPassword(email);
     }
 
     public void logout(String token) {
@@ -66,6 +71,7 @@ public class SyncTabFacade {
 
     /**
      * Gets the list of shared tabs.
+     *
      * @return the list of shared tabs.
      */
     public List<SharedTab> receiveSharedTabs() {

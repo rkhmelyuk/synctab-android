@@ -88,10 +88,22 @@
         <item name="android:layout_width">wrap_content</item>
     </style>
 
+    <style name="LinkButton">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/link</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="LoginButton" parent="MainButton">
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:text">@string/login</item>
+    </style>
+
+    <style name="ResetPasswordButton" parent="MainButton">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:text">@string/reset_now</item>
     </style>
 
     <style name="RegisterButton" parent="MainButton">

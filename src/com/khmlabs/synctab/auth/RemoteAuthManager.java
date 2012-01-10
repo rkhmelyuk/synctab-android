@@ -18,9 +18,7 @@ import com.khmlabs.synctab.remote.RemoteManager;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Ruslan Khmelyuk
- */
+/** @author Ruslan Khmelyuk */
 public class RemoteAuthManager extends RemoteManager {
 
     private static final String TAG = "RemoteAuthManager";
@@ -28,6 +26,7 @@ public class RemoteAuthManager extends RemoteManager {
     private static final String EMAIL = "email";
     private static final String PASSWORD = "password";
 
+    private static final String API_RESET_PASSWORD = "/api/resetPassword";
     private static final String API_AUTHORIZE = "/api/authorize";
     private static final String API_REGISTER = "/api/register";
     private static final String API_LOGOUT = "/api/logout";
@@ -118,5 +117,27 @@ public class RemoteAuthManager extends RemoteManager {
             Log.e(TAG, "Error to logout.", e);
             return false;
         }
+    }
+
+    public boolean resetPassword(String email) {
+        try {
+            final HttpPost post = new HttpPost(API_RESET_PASSWORD);
+
+            final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+            nameValuePairs.add(new BasicNameValuePair(EMAIL, email));
+            post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            final HttpClient client = new DefaultHttpClient();
+            HttpResponse response = client.execute(host, post);
+            if (successResponseStatus(response)) {
+                JsonResponse jsonResponse = readResponse(response);
+                return jsonResponse.isSuccess();
+            }
+            Log.e(TAG, "Failed to reset a password");
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error to reset a password.", e);
+        }
+        return false;
     }
 }
